@@ -1,0 +1,45 @@
+// Media Queries
+$phone: 480px;
+$tablets: 768px;
+$laptop: 1024px;
+$desktop: 1440px;
+
+// Colors
+$primary: #e1b129;
+$secondary: #241c00;
+$tertiary: #000000;
+$quaternary: #666666;
+$quinary: #ffffff;
+$senary: #cccccc;
+$septenary: #898989;
+
+$font-principal: #f4f4f4;
+$font-secondary: #000000;
+
+$warning: #b95700;
+$error: #f44336;
+
+// BOX SHADOW
+$primary-box-shadow: 6px 6px 30px 0px rgba(0, 0, 0);
+$primary-box-shadow-50: 6px 6px 30px 0px rgba(0, 0, 0, 0.5);
+$primary-box-shadow-40: 6px 6px 30px 0px rgba(0, 0, 0, 0.4);
+
+$secondary-box-shadow: 6px 6px 30px 0px rgb(36, 28, 0);
+$secondary-box-shadow-5: 6px 6px 30px 0px rgb(36, 28, 0, 0.5);
+$secondary-box-shadow-8: 0px 0px 5px 0px rgb(36, 28, 0.8);
+
+$tertiary-box-shadow: 6px 6px 30px 0px rgb(225, 177, 41);
+$tertiary-box-shadow-5: 6px 6px 30px 0px rgb(225, 177, 41, 0.5);
+$tertiary-box-shadow-8: 6px 6px 30px 0px rgb(225, 177, 41, 0.8);
+
+$quaternary-box-shadow: 6px 6px 30px 0px rgb(255, 255, 255);
+$quaternary-box-shadow-1: 6px 6px 30px 0px rgb(255, 255, 255, 0.1);
+$quaternary-box-shadow-5: 6px 6px 30px 0px rgb(255, 255, 255, 0.5);
+$quaternary-box-shadow-8: 6px 6px 30px 0px rgb(255, 255, 255, 0.8);
+
+$text-primary-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+$text-secondary-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+$text-tertiary-shadow: 2px 2px 4px rgb(225, 177, 41, 0.8);
+
+// PIXELES
+$border-radius: 0.75rem;

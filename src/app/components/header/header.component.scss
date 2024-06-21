@@ -1,0 +1,63 @@
+@use "./../../../assets/scss/variables.scss" as v;
+@use "./../../../assets/scss/mixins.scss" as mixins;
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 99999 !important;
+  transition: all 0.5s ease-in-out, width 0.5s ease-in-out;
+
+  button {
+    z-index: 9999 !important;
+  }
+
+  //   @include mixins.laptop {
+  //     display: none;
+  //   }
+}
+
+// .icon-menu {
+//   color: white;
+//   width: 1.5;
+//   height: 1.5;
+// }
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 53px);
+  margin-right: 2rem;
+
+  img {
+    width: 40%;
+    height: 40px;
+  }
+}
+
+// ::ng-deep #mat-menu-panel-0 {
+//   margin-top: 0.6rem;
+//   background-color: rgb(87 87 87);
+//   backdrop-filter: blur(2px);
+// }
+
+// .btn-menu {
+//   color: white;
+
+//   .item {
+//     width: 1.5rem;
+//     height: 1.5rem;
+//     border-radius: 8px;
+//   }
+// }
+
+// ::ng-deep .mat-mdc-menu-item-text {
+//   display: flex;
+//   align-items: center;
+//   gap: 0.5rem;
+// }
