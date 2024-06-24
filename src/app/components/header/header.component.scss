@@ -15,17 +15,7 @@
   button {
     z-index: 9999 !important;
   }
-
-  //   @include mixins.laptop {
-  //     display: none;
-  //   }
 }
-
-// .icon-menu {
-//   color: white;
-//   width: 1.5;
-//   height: 1.5;
-// }
 
 .logo-container {
   display: flex;
@@ -39,25 +29,3 @@
     height: 40px;
   }
 }
-
-// ::ng-deep #mat-menu-panel-0 {
-//   margin-top: 0.6rem;
-//   background-color: rgb(87 87 87);
-//   backdrop-filter: blur(2px);
-// }
-
-// .btn-menu {
-//   color: white;
-
-//   .item {
-//     width: 1.5rem;
-//     height: 1.5rem;
-//     border-radius: 8px;
-//   }
-// }
-
-// ::ng-deep .mat-mdc-menu-item-text {
-//   display: flex;
-//   align-items: center;
-//   gap: 0.5rem;
-// }

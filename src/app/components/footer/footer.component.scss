@@ -1,5 +1,5 @@
 @use "./../../../assets/scss/variables.scss" as v;
-// @use "./../../../assets/scss/mixins.scss" as mixins;
+@use "./../../../assets/scss/mixins.scss" as mixins;
 
 .footer {
   background-color: #000000;
@@ -12,10 +12,14 @@
     width: 100%;
     max-width: 1200px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    // gap: 1rem;
+
+    @include mixins.tablets {
+      flex-direction: row;
+    }
   }
 }
 
