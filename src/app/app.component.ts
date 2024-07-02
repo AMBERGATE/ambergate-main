@@ -55,4 +55,19 @@ export class AppComponent {
       url: './../assets/img/2-flooring-demolition-removal/02.webp',
     },
   ];
+
+  JUNK_REMOVAL = [
+    {
+      url: './../assets/img/4-junk-removal/01.webp',
+    },
+    {
+      url: './../assets/img/4-junk-removal/02.webp',
+    },
+    {
+      url: './../assets/img/4-junk-removal/03.webp',
+    },
+    {
+      url: './../assets/img/4-junk-removal/04.webp',
+    },
+  ];
 }

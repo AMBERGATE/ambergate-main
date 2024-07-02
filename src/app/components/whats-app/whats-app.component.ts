@@ -10,7 +10,7 @@ import { MaterialModule } from '../../shared/material/material.module';
 })
 export class WhatsAppComponent {
   openWhatsApp() {
-    const whatsappNumber = '+13058138672';
+    const whatsappNumber = '+13058138683';
     const whatsappMessage = 'Hello, I am reaching out to you from my website.';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
       whatsappMessage

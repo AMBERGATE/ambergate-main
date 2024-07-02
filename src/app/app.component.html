@@ -220,6 +220,54 @@
     </div>
   </div>
 
+  <div class="service service-02">
+    <div class="card">
+      <div class="card__carrousel">
+        <div class="carrousel">
+          <swiper-container
+            pagination="false"
+            effect="fade"
+            grab-cursor="true"
+            centered-slides="true"
+            slides-per-view="auto"
+            autoplay-delay="100000"
+            autoplay-disable-on-interaction="false"
+            space-between="10"
+            pagination="false"
+          >
+            @for (img of JUNK_REMOVAL; track $index) {
+            <swiper-slide>
+              <img class="swiper-slide__img" [src]="img.url" alt="" srcset="" />
+            </swiper-slide>
+            }
+          </swiper-container>
+        </div>
+      </div>
+      <div class="card__info">
+        <div class="card__title">
+          <h2>JUNK REMOVAL</h2>
+        </div>
+        <div class="divition">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="card__text">
+          <p>Construction Waste Removal</p>
+
+          <p>Yard Waste Removal</p>
+
+          <p>Furniture & Appliances Removal/Disposal</p>
+
+          <p>Foreclosure Clean Outs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <app-footer></app-footer>
 </div>
 
