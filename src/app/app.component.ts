@@ -10,10 +10,12 @@ import { SwiperOptions } from 'swiper/types';
 // register Swiper custom elements
 register();
 
+import { Services3dComponent } from './components/services3d/services3d.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent, WhatsAppComponent, HeaderComponent],
+  imports: [RouterOutlet, FooterComponent, WhatsAppComponent, HeaderComponent, Services3dComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
