@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MaterialModule } from '../../shared/material/material.module';
 
 @Component({
     selector: 'app-whats-app',
     imports: [MaterialModule],
     templateUrl: './whats-app.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './whats-app.component.scss'
 })
 export class WhatsAppComponent {

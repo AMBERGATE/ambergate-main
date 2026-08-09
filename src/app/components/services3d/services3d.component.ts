@@ -7,9 +7,10 @@ import {
   ViewChild,
   HostListener,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,8 +19,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 @Component({
     selector: 'app-services3d',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './services3d.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './services3d.component.scss'
 })
 export class Services3dComponent implements OnInit, AfterViewInit, OnDestroy {

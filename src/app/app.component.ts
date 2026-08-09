@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, signal } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -17,6 +17,7 @@ import { Services3dComponent } from './components/services3d/services3d.componen
     imports: [RouterOutlet, FooterComponent, WhatsAppComponent, HeaderComponent, Services3dComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent {
