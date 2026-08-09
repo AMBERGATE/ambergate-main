@@ -2,11 +2,10 @@ import { Component, HostListener, Renderer2 } from '@angular/core';
 import { MaterialModule } from '../../shared/material/material.module';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [MaterialModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+    selector: 'app-header',
+    imports: [MaterialModule],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   // Variable para almacenar el valor del desplazamiento

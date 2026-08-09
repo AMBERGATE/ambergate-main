@@ -17,11 +17,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
-  selector: 'app-services3d',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './services3d.component.html',
-  styleUrl: './services3d.component.scss'
+    selector: 'app-services3d',
+    imports: [CommonModule],
+    templateUrl: './services3d.component.html',
+    styleUrl: './services3d.component.scss'
 })
 export class Services3dComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvasElement', { static: true })

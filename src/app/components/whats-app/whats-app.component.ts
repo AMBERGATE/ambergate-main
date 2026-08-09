@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { MaterialModule } from '../../shared/material/material.module';
 
 @Component({
-  selector: 'app-whats-app',
-  standalone: true,
-  imports: [MaterialModule],
-  templateUrl: './whats-app.component.html',
-  styleUrl: './whats-app.component.scss',
+    selector: 'app-whats-app',
+    imports: [MaterialModule],
+    templateUrl: './whats-app.component.html',
+    styleUrl: './whats-app.component.scss'
 })
 export class WhatsAppComponent {
   openWhatsApp() {

@@ -3,11 +3,10 @@ import { MaterialModule } from '../../shared/material/material.module';
 import { ContactFormComponent } from '../contact-form/contact-form.component';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [MaterialModule, ContactFormComponent],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+    selector: 'app-footer',
+    imports: [MaterialModule, ContactFormComponent],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
   redirectToInstagram() {
