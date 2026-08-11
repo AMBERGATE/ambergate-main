@@ -1,7 +1,7 @@
 .runner-container {
   position: relative;
   width: 100%;
-  background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+  background: #090D16;
   border-top: 3px solid #F59E0B;
   border-bottom: 2px solid #000000;
   overflow: hidden;
@@ -25,12 +25,10 @@
   .score-badge {
     display: flex;
     flex-direction: column;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background: #0F172A;
+    border: 1px solid rgba(245, 158, 11, 0.4);
     padding: 0.35rem 0.8rem;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 0;
 
     .label {
       font-family: system-ui, sans-serif;
@@ -64,26 +62,25 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #CBD5E1;
+    background: #0F172A;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-radius: 0;
 
     .key-icon {
-      background: #0F172A;
-      color: #F59E0B;
+      background: #F59E0B;
+      color: #0F172A;
       font-family: monospace;
       font-size: 0.65rem;
       font-weight: 800;
       padding: 0.15rem 0.4rem;
-      border-radius: 4px;
+      border-radius: 0;
     }
 
     .hint-text {
       font-size: 0.65rem;
       font-weight: 800;
-      color: #475569;
+      color: #CBD5E1;
       letter-spacing: 0.5px;
     }
   }
@@ -108,18 +105,14 @@
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    background: rgba(15, 23, 42, 0.92);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(245, 158, 11, 0.5);
+    background: #0F172A;
+    border: 1px solid #F59E0B;
     padding: 0.4rem 0.5rem 0.4rem 0.9rem;
-    border-radius: 30px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    transition: all 0.25s ease;
+    border-radius: 0;
+    transition: all 0.2s ease;
 
     &:hover {
-      transform: scale(1.03);
-      border-color: #F59E0B;
-      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+      background: #1E293B;
 
       .mini-btn {
         background: #D97706;
@@ -127,16 +120,16 @@
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background-color: #F59E0B;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #F59E0B;
+      border-radius: 0;
+      box-shadow: 0 0 6px #F59E0B;
       animation: pulseDot 1.5s infinite alternate;
     }
 
     .play-text {
-      color: #F8FAFC;
+      color: #FFFFFF;
       font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.8px;
@@ -148,7 +141,7 @@
       color: #0F172A;
       border: none;
       padding: 0.3rem 0.8rem;
-      border-radius: 20px;
+      border-radius: 0;
       font-size: 0.65rem;
       font-weight: 900;
       letter-spacing: 1px;

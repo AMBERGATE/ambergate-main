@@ -129,88 +129,85 @@ export class Services3dComponent implements OnInit, AfterViewInit, OnDestroy {
     const cube = this.cubeMesh;
     if (!cube) return;
 
+    cube.position.set(-2.6, 0, 0);
+    cube.scale.set(0.85, 0.85, 0.85);
+
+    // Pinning and smooth sync timeline per section
     this.scrollTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: '.services-3d-wrapper',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.5,
+        scrub: 0.8,
         invalidateOnRefresh: true
       }
     });
 
-    // Section 1 (card at Right -> cube at Left -2.6)
-    // Section 2 (card at Left -> cube at Right +2.6)
-    // Section 3 (card at Right -> cube at Left -2.6)
-    // Section 4 (card at Left -> cube at Right +2.6)
-
+    // 4 Distinct Stops corresponding to Section 1 (Card 01), Section 2 (Card 02), Section 3 (Card 03), Section 4 (Card 04)
     this.scrollTimeline
-      // Phase 1: Section 1 -> Section 2
+      // Section 1 -> Section 2 Transition
       .to(cube.position, {
         x: 2.6,
         y: 0,
         z: 0,
         duration: 1,
-        ease: 'none'
-      }, 0)
+        ease: 'power2.inOut'
+      }, 0.2)
       .to(cube.rotation, {
         x: Math.PI * 0.5,
         y: Math.PI * 1.5,
         z: 0,
         duration: 1,
-        ease: 'none'
-      }, 0)
+        ease: 'power2.inOut'
+      }, 0.2)
 
-      // Phase 2: Section 2 -> Section 3
+      // Section 2 -> Section 3 Transition
       .to(cube.position, {
         x: -2.6,
         y: 0,
         z: 0,
         duration: 1,
-        ease: 'none'
-      }, 1)
+        ease: 'power2.inOut'
+      }, 1.2)
       .to(cube.rotation, {
         x: Math.PI * 1.0,
         y: Math.PI * 2.5,
         z: 0,
         duration: 1,
-        ease: 'none'
-      }, 1)
+        ease: 'power2.inOut'
+      }, 1.2)
 
-      // Phase 3: Section 3 -> Section 4
+      // Section 3 -> Section 4 Transition
       .to(cube.position, {
         x: 2.6,
         y: 0,
         z: 0,
         duration: 1,
-        ease: 'none'
-      }, 2)
+        ease: 'power2.inOut'
+      }, 2.2)
       .to(cube.rotation, {
         x: Math.PI * 1.5,
         y: Math.PI * 3.5,
         z: 0,
         duration: 1,
-        ease: 'none'
-      }, 2)
-      // Step 4 -> Landing Transition: Animate 3D Cube smoothly down to the truck ground position
-      .to(cube.position, {
-        x: -2.8,
-        y: -2.1,
-        z: 0,
-        duration: 1,
-        ease: 'power1.inOut'
-      }, 3)
-      .to(cube.scale, {
-        x: 0.12,
-        y: 0.12,
-        z: 0.12,
-        duration: 1,
-        ease: 'power1.inOut'
-      }, 3);
+        ease: 'power2.inOut'
+      }, 2.2)
 
-    // Initial position for Section 1 (Cube at Left -2.6, card at Right)
-    cube.position.set(-2.6, 0, 0);
-    cube.scale.set(0.85, 0.85, 0.85);
+      // Final Exit on scroll down to runner
+      .to(cube.position, {
+        x: 0,
+        y: -3.5,
+        z: 0,
+        duration: 0.8,
+        ease: 'power1.in'
+      }, 3.2)
+      .to(cube.scale, {
+        x: 0.05,
+        y: 0.05,
+        z: 0.05,
+        duration: 0.8,
+        ease: 'power1.in'
+      }, 3.2);
   }
 
   private animate = (): void => {

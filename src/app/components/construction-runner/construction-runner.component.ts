@@ -15,7 +15,7 @@ interface Obstacle {
   x: number;
   width: number;
   height: number;
-  type: 'cone' | 'block' | 'barrier';
+  type: 'beam' | 'rock' | 'barrier';
 }
 
 @Component({
@@ -164,14 +164,14 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
       this.truck.isJumping = false;
     }
 
-    // Spawn obstacles
+    // Spawn industrial obstacles
     const minFrameInterval = Math.max(50, 100 - Math.floor(this.gameSpeed * 4));
     if (this.frameCount % minFrameInterval === 0) {
       const rand = Math.random();
-      const type: 'cone' | 'block' | 'barrier' = rand > 0.6 ? 'cone' : rand > 0.3 ? 'block' : 'barrier';
+      const type: 'beam' | 'rock' | 'barrier' = rand > 0.6 ? 'beam' : rand > 0.3 ? 'rock' : 'barrier';
       
-      const width = type === 'cone' ? 22 : type === 'block' ? 30 : 38;
-      const height = type === 'cone' ? 28 : type === 'block' ? 24 : 32;
+      const width = type === 'beam' ? 34 : type === 'rock' ? 26 : 36;
+      const height = type === 'beam' ? 30 : type === 'rock' ? 22 : 30;
 
       this.obstacles.push({
         x: this.canvasRef.nativeElement.width,
@@ -223,25 +223,43 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 1. Map Background: Parallax Construction Skyline & Cranes
-    ctx.fillStyle = '#090D16';
+    // 1. Map Background: Miami Vice / Magic City Sunset Skyline & Palms
+    const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    skyGradient.addColorStop(0, '#0B0F19');
+    skyGradient.addColorStop(0.5, '#1E1B4B');
+    skyGradient.addColorStop(1, '#31103F');
+    ctx.fillStyle = skyGradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const bgOffset = (this.frameCount * (this.gameSpeed * 0.2)) % 400;
+    const bgOffset = (this.frameCount * (this.gameSpeed * 0.2)) % 500;
 
-    // Distant City / Construction Silhouette
-    ctx.fillStyle = '#1E293B';
-    for (let x = -bgOffset; x < canvas.width + 400; x += 90) {
-      ctx.fillRect(x, canvas.height - 120, 45, 75);
-      ctx.fillRect(x + 50, canvas.height - 150, 35, 105);
-      // Crane arm
-      ctx.strokeStyle = '#334155';
-      ctx.lineWidth = 2;
+    // Miami Coastal Skyline (High-rises & Art Deco Towers)
+    ctx.fillStyle = '#1E1B4B';
+    for (let x = -bgOffset; x < canvas.width + 500; x += 110) {
+      // Modern Glass Tower
+      ctx.fillRect(x, canvas.height - 140, 50, 95);
+      // Tower Neon Trim
+      ctx.fillStyle = '#F59E0B';
+      ctx.fillRect(x + 23, canvas.height - 140, 4, 95);
+      ctx.fillStyle = '#1E1B4B';
+
+      // Art Deco Building with step top
+      ctx.fillRect(x + 60, canvas.height - 110, 40, 65);
+      ctx.fillRect(x + 68, canvas.height - 125, 24, 15);
+      
+      // Palm Tree Silhouette
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(x + 65, canvas.height - 150);
-      ctx.lineTo(x + 65, canvas.height - 180);
-      ctx.lineTo(x + 110, canvas.height - 180);
+      ctx.moveTo(x + 105, canvas.height - 45);
+      ctx.quadraticCurveTo(x + 110, canvas.height - 85, x + 118, canvas.height - 105);
       ctx.stroke();
+
+      // Palm Fronds
+      ctx.fillStyle = '#0F172A';
+      ctx.beginPath();
+      ctx.arc(x + 118, canvas.height - 105, 12, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     // 2. Road & Ground Layer
@@ -355,41 +373,77 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
       ctx.stroke();
     });
 
-    // Draw Obstacles
+    // Draw Crisp High-Definition Industrial Obstacles
     for (const obs of this.obstacles) {
       const oy = groundLevel - obs.height;
 
-      if (obs.type === 'cone') {
-        // Traffic Cone
-        ctx.fillStyle = '#ef4444';
+      if (obs.type === 'beam') {
+        // Structural Steel H-Beam (Angled Construction Beam)
+        ctx.fillStyle = '#DC2626'; // High-vis Safety Red Beam
+        ctx.fillRect(obs.x, oy + 4, obs.width, 10);
+        ctx.fillRect(obs.x + 4, oy, 8, obs.height);
+        ctx.fillRect(obs.x + obs.width - 12, oy, 8, obs.height);
+
+        // Gold Industrial Highlight
+        ctx.fillStyle = '#F59E0B';
+        ctx.fillRect(obs.x + 2, oy + 6, obs.width - 4, 3);
+        
+        // Steel Bolt Detail
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(obs.x + 6, oy + 2, 2, 2);
+        ctx.fillRect(obs.x + obs.width - 10, oy + 2, 2, 2);
+
+      } else if (obs.type === 'rock') {
+        // Concrete Debris & Cut Rock Stack
+        ctx.fillStyle = '#64748B'; // Concrete Grey
         ctx.beginPath();
-        ctx.moveTo(obs.x + obs.width / 2, oy);
+        ctx.moveTo(obs.x, oy + obs.height);
+        ctx.lineTo(obs.x + 4, oy + 6);
+        ctx.lineTo(obs.x + 14, oy);
+        ctx.lineTo(obs.x + obs.width - 2, oy + 8);
         ctx.lineTo(obs.x + obs.width, oy + obs.height);
-        ctx.lineTo(obs.x, oy + obs.height);
         ctx.closePath();
         ctx.fill();
-
-        // White Stripe
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(obs.x + 4, oy + obs.height * 0.4, obs.width - 8, 4);
-      } else if (obs.type === 'block') {
-        // Concrete Block
-        ctx.fillStyle = '#64748b';
-        ctx.fillRect(obs.x, oy, obs.width, obs.height);
+        
+        // Sharp Rock Edges & Shadows
         ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(obs.x, oy, obs.width, obs.height);
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#94A3B8';
+        ctx.fillRect(obs.x + 6, oy + 4, 6, 6);
+        ctx.fillRect(obs.x + 16, oy + 8, 5, 5);
+
       } else {
-        // Road Barrier
-        ctx.fillStyle = '#f59e0b';
-        ctx.fillRect(obs.x, oy + 4, obs.width, 10);
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(obs.x + 4, oy + 4, 6, 10);
-        ctx.fillRect(obs.x + 18, oy + 4, 6, 10);
-        // Legs
+        // Heavy Industrial Demolition Barrier with Warning Flasher
+        ctx.fillStyle = '#F59E0B';
+        ctx.fillRect(obs.x, oy + 8, obs.width, 12);
+
+        // Black Diagonal Hazard Stripes
+        ctx.fillStyle = '#0F172A';
+        for (let sx = obs.x + 2; sx < obs.x + obs.width - 4; sx += 10) {
+          ctx.beginPath();
+          ctx.moveTo(sx, oy + 8);
+          ctx.lineTo(sx + 5, oy + 8);
+          ctx.lineTo(sx + 2, oy + 20);
+          ctx.lineTo(sx - 3, oy + 20);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        // Steel Support Legs
         ctx.fillStyle = '#475569';
-        ctx.fillRect(obs.x + 4, oy + 14, 4, obs.height - 14);
-        ctx.fillRect(obs.x + obs.width - 8, oy + 14, 4, obs.height - 14);
+        ctx.fillRect(obs.x + 4, oy + 20, 4, obs.height - 20);
+        ctx.fillRect(obs.x + obs.width - 8, oy + 20, 4, obs.height - 20);
+
+        // Amber Flashing Safety Beacon
+        const isBeaconOn = (this.frameCount % 20) < 10;
+        ctx.fillStyle = isBeaconOn ? '#EF4444' : '#7F1D1D';
+        ctx.fillRect(obs.x + obs.width / 2 - 3, oy + 1, 6, 7);
+        if (isBeaconOn) {
+          ctx.fillStyle = '#FCA5A5';
+          ctx.fillRect(obs.x + obs.width / 2 - 1, oy + 2, 2, 3);
+        }
       }
     }
   }

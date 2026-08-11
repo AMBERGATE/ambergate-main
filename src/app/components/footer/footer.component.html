@@ -1,43 +1,107 @@
 <app-construction-runner></app-construction-runner>
-<div class="footer">
-  <div class="container">
-    <div class="left">
-      <app-contact-form></app-contact-form>
-    </div>
 
-    <div class="right-container">
-      <div class="right">
-        <ul>
-          <li class="row">
-            <div class="icon">
-              <img src="./assets/img/icons/Vector.svg" alt="" />
-            </div>
-            <!-- Icono de teléfono -->
-            <p>(305) 8138683</p>
-          </li>
-          <li class="row">
-            <div class="icon">
-              <img src="./assets/img/icons/location.svg" alt="" />
-            </div>
-            <!-- Icono de ubicación -->
-            <p>Miami-Dade, Broward and Palm Beach Counties, Florida</p>
-          </li>
-          <li class="row">
-            <div (click)="redirectToInstagram()" class="icon instagram">
-              <img src="./assets/img/icons/Instagram.svg" alt="" />
-            </div>
-            <!-- Icono de Instagram -->
-            <p>AmbergateUSA</p>
-          </li>
-          <li class="row">
-            <div (click)="openFacebookProfile()" class="icon facebook">
-              <img src="./assets/img/icons/facebook_3.svg" alt="" />
-            </div>
-            <!-- Icono de Facebook -->
-            <p>AmbergateUSA</p>
-          </li>
-        </ul>
+<footer class="footer-modern">
+  <div class="footer-container">
+    
+    <!-- Columna 1: Tarjeta QR Sutil -->
+    <div class="footer-card qr-card">
+      <div class="qr-wrapper">
+        <div class="qr-box">
+          <img
+            src="./assets/img/AMBERGATE_USA_0unAnpD3aF0J_qrcode (1).png"
+            alt="AMBERGATE USA Digital Contact QR"
+            class="qr-img"
+          />
+          <div class="qr-scan-line"></div>
+        </div>
+      </div>
+      <div class="qr-info">
+        <span class="qr-badge">SCAN TO CONNECT</span>
+        <h4 class="qr-title">Instant Mobile VCard</h4>
+        <p class="qr-desc">Scan with your phone camera to save contact information and 24/7 dispatch.</p>
       </div>
     </div>
+
+    <!-- Columna 2: Contacto & Redes Sociales -->
+    <div class="footer-card contact-card">
+      <div class="brand-header">
+        <h3 class="brand-name">AMBERGATE<span>USA</span></h3>
+        <p class="brand-subtitle">Commercial Demolition & Site Logistics</p>
+      </div>
+
+      <ul class="contact-list">
+        <li class="contact-item">
+          <div class="icon-bubble">
+            <img src="./assets/img/icons/Vector.svg" alt="Phone" />
+          </div>
+          <div class="contact-details">
+            <span class="contact-label">DISPATCH & SALES</span>
+            <a href="tel:3058138683" class="contact-link">(305) 813-8683</a>
+          </div>
+        </li>
+
+        <li class="contact-item">
+          <div class="icon-bubble">
+            <img src="./assets/img/icons/location.svg" alt="Location" />
+          </div>
+          <div class="contact-details">
+            <span class="contact-label">SERVICE COVERAGE</span>
+            <span class="contact-text">Miami-Dade, Broward & Palm Beach Counties, FL</span>
+          </div>
+        </li>
+
+        <li class="contact-item social-row">
+          <div (click)="redirectToInstagram()" class="social-btn instagram" title="Instagram">
+            <img src="./assets/img/icons/instagram.svg" alt="Instagram" />
+            <span>Instagram</span>
+          </div>
+          <div (click)="openFacebookProfile()" class="social-btn facebook" title="Facebook">
+            <img src="./assets/img/icons/facebook_3.svg" alt="Facebook" />
+            <span>Facebook</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Mapa de Google Embed -->
+    <div class="footer-card map-card">
+      <div class="map-header">
+        <span class="map-label">OPERATIONS HUB</span>
+        <a 
+          href="https://maps.google.com/?q=Miami-Dade+County+FL" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="map-link-btn"
+        >
+          <span>Open Google Maps</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+
+      <div class="map-frame-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d459756.2413280054!2d-80.48512165000001!3d25.78254535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b0a20ec8c111%3A0xff96f271ddad4f65!2sMiami-Dade%20County%2C%20FL!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="google-map-iframe"
+        ></iframe>
+      </div>
+    </div>
+
   </div>
-</div>
+
+  <!-- Sub-Footer Copyright Line -->
+  <div class="bottom-bar">
+    <div class="bottom-container">
+      <p>© {{ currentYear }} AMBERGATE USA INC. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>

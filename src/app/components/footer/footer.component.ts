@@ -11,6 +11,10 @@ import { ConstructionRunnerComponent } from '../construction-runner/construction
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+  get currentYear(): number {
+    return new Date().getFullYear();
+  }
+
   redirectToInstagram() {
     const instagramUrl =
       'https://www.instagram.com/ambergateusa?igsh=djZyNm00aHR0N3hl';
