@@ -1,0 +1,36 @@
+<div class="runner-container">
+  <!-- HUD Arcade Header -->
+  <div class="hud-arcade">
+    <div class="score-badge">
+      <span class="label">DEBRIS CLEARED</span>
+      <span class="value">{{ score }} <small>YD</small></span>
+    </div>
+
+    <div class="controls-hint">
+      <span class="key-icon">SPACE</span>
+      <span class="key-icon">TAP</span>
+      <span class="hint-text">TO JUMP</span>
+    </div>
+
+    <div class="score-badge best">
+      <span class="label">RECORD</span>
+      <span class="value">{{ highScore }} <small>YD</small></span>
+    </div>
+  </div>
+
+  <!-- Canvas del Juego -->
+  <canvas #gameCanvas (click)="onCanvasClick()" class="game-canvas"></canvas>
+
+  <!-- Pantalla de Inicio / Game Over: Banner Minimalista de Acción -->
+  @if (!gameStarted) {
+    <div class="start-banner-container" (click)="startGame()">
+      <div class="start-pill">
+        <span class="status-dot"></span>
+        <span class="play-text">
+          {{ gameOver ? '¡OBSTÁCULO IMPACTADO! — CLICK O ESPACIO PARA REINTENTAR' : 'AMBERGATE DEMO RUNNER — PRESIONA ESPACIO O HAZ CLICK PARA JUGAR' }}
+        </span>
+        <button class="mini-btn">{{ gameOver ? 'REINTENTAR' : 'JUGAR' }}</button>
+      </div>
+    </div>
+  }
+</div>

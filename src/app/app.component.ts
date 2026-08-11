@@ -1,10 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, signal, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, signal, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { SwiperContainer, register } from 'swiper/element/bundle';
 import { WhatsAppComponent } from './components/whats-app/whats-app.component';
-import { HeaderComponent } from './components/header/header.component';
 
 import { SwiperOptions } from 'swiper/types';
 // register Swiper custom elements
@@ -14,7 +12,7 @@ import { Services3dComponent } from './components/services3d/services3d.componen
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, FooterComponent, WhatsAppComponent, HeaderComponent, Services3dComponent],
+    imports: [FooterComponent, WhatsAppComponent, Services3dComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -22,8 +20,14 @@ import { Services3dComponent } from './components/services3d/services3d.componen
 })
 export class AppComponent {
   title = 'ambergate-fe';
+  isScrolled = signal(false);
 
   constructor() {}
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.isScrolled.set(window.scrollY > 80);
+  }
 
   interior_selective_demolitions = [
     {

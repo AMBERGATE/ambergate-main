@@ -74,7 +74,6 @@ export class Services3dComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // 1. Scene
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x07090e);
 
     // 2. Camera: Increased distance for proper scale and clearance
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -91,15 +90,15 @@ export class Services3dComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.2;
 
-    // 4. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // 4. Lights - Enhanced for bright light/white background
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
     this.scene.add(ambientLight);
 
-    const directionalLight1 = new THREE.DirectionalLight(0xf59e0b, 3.0); // Warm Amber
+    const directionalLight1 = new THREE.DirectionalLight(0xf59e0b, 3.5); // Amber
     directionalLight1.position.set(5, 5, 5);
     this.scene.add(directionalLight1);
 
-    const directionalLight2 = new THREE.DirectionalLight(0x38bdf8, 1.5); // Cool Cyan Rim
+    const directionalLight2 = new THREE.DirectionalLight(0x0f172a, 1.5); // Dark Slate Accent
     directionalLight2.position.set(-5, -5, -2);
     this.scene.add(directionalLight2);
 
@@ -135,86 +134,83 @@ export class Services3dComponent implements OnInit, AfterViewInit, OnDestroy {
         trigger: '.services-3d-wrapper',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.2,
+        scrub: 0.5,
         invalidateOnRefresh: true
       }
     });
 
-    // Scroll Animation Sequence across 4 sections:
-    // Section 1: Cube at Left (-1.6, 0, 0), Card at Right
-    // Section 2: Cube moves Right (+1.6, 0, 0), Rotates to display Top/Side faces, Card at Left
-    // Section 3: Cube moves back to Left (-1.6, -0.2, 0), Spins 360, Card at Right
-    // Section 4: Cube moves to Center Right (+1.4, 0.2, 0.5), Tilts 3D, Card at Left
+    // Section 1 (card at Right -> cube at Left -2.6)
+    // Section 2 (card at Left -> cube at Right +2.6)
+    // Section 3 (card at Right -> cube at Left -2.6)
+    // Section 4 (card at Left -> cube at Right +2.6)
 
     this.scrollTimeline
-      // Phase 1 -> Phase 2 (Section 1 to Section 2)
+      // Phase 1: Section 1 -> Section 2
       .to(cube.position, {
-        x: 1.6,
-        y: 0.1,
-        z: 0.2,
-        duration: 2,
-        ease: 'power2.inOut'
+        x: 2.6,
+        y: 0,
+        z: 0,
+        duration: 1,
+        ease: 'none'
       }, 0)
       .to(cube.rotation, {
         x: Math.PI * 0.5,
-        y: Math.PI * 1.25,
-        z: Math.PI * 0.25,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, 0)
-      .to(cube.scale, {
-        x: 1.15,
-        y: 1.15,
-        z: 1.15,
-        duration: 2,
-        ease: 'power2.inOut'
+        y: Math.PI * 1.5,
+        z: 0,
+        duration: 1,
+        ease: 'none'
       }, 0)
 
-      // Phase 2 -> Phase 3 (Section 2 to Section 3)
+      // Phase 2: Section 2 -> Section 3
       .to(cube.position, {
-        x: -1.6,
-        y: -0.2,
-        z: -0.2,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, '+=0.2')
+        x: -2.6,
+        y: 0,
+        z: 0,
+        duration: 1,
+        ease: 'none'
+      }, 1)
       .to(cube.rotation, {
-        x: Math.PI * 1.75,
+        x: Math.PI * 1.0,
         y: Math.PI * 2.5,
-        z: Math.PI * 1.0,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, '<')
-      .to(cube.scale, {
-        x: 0.95,
-        y: 0.95,
-        z: 0.95,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, '<')
+        z: 0,
+        duration: 1,
+        ease: 'none'
+      }, 1)
 
-      // Phase 3 -> Phase 4 (Section 3 to Section 4)
+      // Phase 3: Section 3 -> Section 4
       .to(cube.position, {
-        x: 1.5,
-        y: 0.2,
-        z: 0.4,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, '+=0.2')
+        x: 2.6,
+        y: 0,
+        z: 0,
+        duration: 1,
+        ease: 'none'
+      }, 2)
       .to(cube.rotation, {
-        x: Math.PI * 2.5,
-        y: Math.PI * 3.75,
-        z: Math.PI * 1.75,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, '<')
+        x: Math.PI * 1.5,
+        y: Math.PI * 3.5,
+        z: 0,
+        duration: 1,
+        ease: 'none'
+      }, 2)
+      // Step 4 -> Landing Transition: Animate 3D Cube smoothly down to the truck ground position
+      .to(cube.position, {
+        x: -2.8,
+        y: -2.1,
+        z: 0,
+        duration: 1,
+        ease: 'power1.inOut'
+      }, 3)
       .to(cube.scale, {
-        x: 1.1,
-        y: 1.1,
-        z: 1.1,
-        duration: 2,
-        ease: 'power2.inOut'
-      }, '<');
+        x: 0.12,
+        y: 0.12,
+        z: 0.12,
+        duration: 1,
+        ease: 'power1.inOut'
+      }, 3);
+
+    // Initial position for Section 1 (Cube at Left -2.6, card at Right)
+    cube.position.set(-2.6, 0, 0);
+    cube.scale.set(0.85, 0.85, 0.85);
   }
 
   private animate = (): void => {
