@@ -1,0 +1,40 @@
+<div class="service-card-wrapper" [class.align-right]="alignRight">
+  <!-- 3D Cube Canvas Container for this specific service -->
+  <div class="cube-canvas-container">
+    <canvas #cubeCanvas></canvas>
+  </div>
+
+  <!-- Clean Professional Corporate Information Card -->
+  <div class="pro-card">
+    <div class="card-header">
+      <span class="card-step">{{ serviceData.step }}</span>
+      <span class="card-badge">{{ serviceData.badge }}</span>
+    </div>
+    <h2 class="card-title">{{ serviceData.title }}</h2>
+    
+    <div class="divition">
+      <div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+
+    <p class="card-description">
+      {{ serviceData.description }}
+    </p>
+    
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-value">{{ serviceData.stat1Value }}</span>
+        <span class="stat-label">{{ serviceData.stat1Label }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ serviceData.stat2Value }}</span>
+        <span class="stat-label">{{ serviceData.stat2Label }}</span>
+      </div>
+    </div>
+    
+    <div class="card-footer">
+      <div class="card-tags">
+        <span *ngFor="let tag of serviceData.tags">{{ tag }}</span>
+      </div>
+    </div>
+  </div>
+</div>

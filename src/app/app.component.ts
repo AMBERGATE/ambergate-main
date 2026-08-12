@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, signal, ChangeDetectionStrategy, Hos
 import { FooterComponent } from './components/footer/footer.component';
 
 import { SwiperContainer, register } from 'swiper/element/bundle';
-import { WhatsAppComponent } from './components/whats-app/whats-app.component';
 
 import { SwiperOptions } from 'swiper/types';
 // register Swiper custom elements
@@ -12,10 +11,10 @@ import { Services3dComponent } from './components/services3d/services3d.componen
 
 @Component({
     selector: 'app-root',
-    imports: [FooterComponent, WhatsAppComponent, Services3dComponent],
+    imports: [FooterComponent, Services3dComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent {

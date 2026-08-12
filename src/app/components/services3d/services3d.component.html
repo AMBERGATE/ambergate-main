@@ -1,173 +1,54 @@
 <div class="services-3d-wrapper">
-  <!-- Fixed 3D WebGL Canvas Background -->
-  <div class="canvas-container">
-    <canvas #canvasElement></canvas>
+  <!-- Fixed Floating Navigation Arrow Controls -->
+  <div class="nav-arrow-controls">
+    <button 
+      class="nav-arrow-btn prev-btn" 
+      (click)="navigatePrev()" 
+      title="Previous Section"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+    <div class="nav-divider"></div>
+    <button 
+      class="nav-arrow-btn next-btn" 
+      (click)="navigateNext()" 
+      title="Next Section"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
   </div>
 
-  <!-- Scrollable Viewport Cards Overlay -->
-  <div class="scroll-content">
-    <!-- Section 1 -->
-    <section class="viewport-section align-right" id="section-1">
-      <div class="card-container pro-card">
-        <div class="card-header">
-          <span class="card-step">01 / 04</span>
-          <span class="card-badge">DEMOLITION & REMOVAL</span>
-        </div>
-        <h2 class="card-title">Interior Selective Demolitions</h2>
-        
-        <div class="divition">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
-        <p class="card-description">
-          Our expert selective interior demolition teams excel at preparing your space for its next big transformation. Removing parts of an existing structure demands exceptional craftsmanship and precision equipment.
-        </p>
-        
-        <div class="card-stats">
-          <div class="stat-item">
-            <span class="stat-value">100%</span>
-            <span class="stat-label">Precision</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">Dust-Free</span>
-            <span class="stat-label">Containment</span>
-          </div>
-        </div>
-        
-        <div class="card-tags">
-          <span>Selective Strip-Out</span>
-          <span>MEP Preservation</span>
-          <span>Zero Structural Impact</span>
+  <!-- Hero Section -->
+  <section class="viewport-section hero-showcase-section" id="section-0">
+    <div class="hero-brand-card">
+      <span class="hero-badge">PREMIUM SITE SERVICES</span>
+      <h1 class="hero-main-title">COMMERCIAL DEMOLITION & LOGISTICS</h1>
+      <p class="hero-subtitle">High-performance fleet & certified environmental execution across South Florida.</p>
+      <div class="scroll-indicator">
+        <span>SCROLL TO DISCOVER SERVICES</span>
+        <div class="mouse-icon">
+          <div class="wheel"></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Section 2 -->
-    <section class="viewport-section align-left" id="section-2">
-      <div class="card-container pro-card">
-        <div class="card-header">
-          <span class="card-step">02 / 04</span>
-          <span class="card-badge">FLOORING SPECIALISTS</span>
-        </div>
-        <h2 class="card-title">Flooring Demolition & Removal</h2>
-        
-        <div class="divition">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
-        <p class="card-description">
-          Ambergate USA is a leading professional flooring removal company. Our advanced floor removal equipment cuts floor covering and preparation time by 90% while ensuring effective dust containment.
-        </p>
-        
-        <div class="card-stats">
-          <div class="stat-item">
-            <span class="stat-value">90%</span>
-            <span class="stat-label">Time Saved</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">HEPA</span>
-            <span class="stat-label">Filtered</span>
-          </div>
-        </div>
-        
-        <div class="card-tags">
-          <span>Tile & VCT Removal</span>
-          <span>Adhesive Grinding</span>
-          <span>Subfloor Repair</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3 -->
-    <section class="viewport-section align-right" id="section-3">
-      <div class="card-container pro-card">
-        <div class="card-header">
-          <span class="card-step">03 / 04</span>
-          <span class="card-badge">SURFACE RESTORATION</span>
-        </div>
-        <h2 class="card-title">High Pressure Cleaning</h2>
-        
-        <div class="divition">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
-        <p class="card-description">
-          Premier provider of high-pressure cleaning services for residential and commercial properties. With state-of-the-art equipment and skilled technicians, we deliver unmatched cleanliness and surface restoration.
-        </p>
-        
-        <div class="card-stats">
-          <div class="stat-item">
-            <span class="stat-value">4000+</span>
-            <span class="stat-label">PSI Power</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">Eco</span>
-            <span class="stat-label">Compliant</span>
-          </div>
-        </div>
-        
-        <div class="card-tags">
-          <span>Concrete Restoration</span>
-          <span>Oil Stain Removal</span>
-          <span>Exterior Prep</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4 -->
-    <section class="viewport-section align-left" id="section-4">
-      <div class="card-container pro-card">
-        <div class="card-header">
-          <span class="card-step">04 / 04</span>
-          <span class="card-badge">SITE LOGISTICS</span>
-        </div>
-        <h2 class="card-title">Junk Removal & Site Clean</h2>
-        
-        <div class="divition">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
-        <p class="card-description">
-          Rapid debris haulage, construction waste removal, yard waste removal, furniture & appliance disposal, and foreclosure cleanouts. Full OSHA compliance and site cleanup.
-        </p>
-        
-        <div class="card-stats">
-          <div class="stat-item">
-            <span class="stat-value">24/7</span>
-            <span class="stat-label">Fleet Dispatch</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">LEED</span>
-            <span class="stat-label">Certified</span>
-          </div>
-        </div>
-        
-        <div class="card-tags">
-          <span>Debris Hauling</span>
-          <span>Yard & Foreclosure</span>
-          <span>Recycling Paths</span>
-        </div>
-      </div>
-    </section>
-  </div>
+  <!-- 4 Standalone Modular Service Cards with Independent 3D Cubes -->
+  <section 
+    *ngFor="let item of servicesList; let i = index" 
+    class="viewport-section" 
+    [id]="'section-' + (i + 1)"
+  >
+    <app-service-card 
+      [serviceData]="item" 
+      [alignRight]="i % 2 === 0"
+      [currentIndex]="i + 1"
+      [totalServices]="servicesList.length"
+      (navigateRequested)="scrollToSection($event)"
+    ></app-service-card>
+  </section>
 </div>

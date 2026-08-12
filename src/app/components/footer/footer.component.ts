@@ -1,13 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MaterialModule } from '../../shared/material/material.module';
-import { ContactFormComponent } from '../contact-form/contact-form.component';
-import { ConstructionRunnerComponent } from '../construction-runner/construction-runner.component';
 
 @Component({
     selector: 'app-footer',
-    imports: [MaterialModule, ContactFormComponent, ConstructionRunnerComponent],
+    imports: [MaterialModule],
     templateUrl: './footer.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent {

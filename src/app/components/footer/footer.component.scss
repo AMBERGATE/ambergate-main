@@ -8,6 +8,8 @@
   color: #FFFFFF;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   border-top: 2px solid #F59E0B;
+  scroll-snap-align: end;
+  scroll-snap-stop: normal;
 
   .footer-container {
     max-width: 1200px;

@@ -7,7 +7,7 @@ import { MaterialModule } from '../../shared/material/material.module';
     selector: 'app-contact-form',
     imports: [FormsModule, MaterialModule],
     templateUrl: './contact-form.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './contact-form.component.scss'
 })
 export class ContactFormComponent {

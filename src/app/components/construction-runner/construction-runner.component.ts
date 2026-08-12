@@ -24,7 +24,7 @@ interface Obstacle {
   imports: [CommonModule],
   templateUrl: './construction-runner.component.html',
   styleUrl: './construction-runner.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('gameCanvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;

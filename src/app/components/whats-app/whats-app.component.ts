@@ -5,7 +5,7 @@ import { MaterialModule } from '../../shared/material/material.module';
     selector: 'app-whats-app',
     imports: [MaterialModule],
     templateUrl: './whats-app.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './whats-app.component.scss'
 })
 export class WhatsAppComponent {
