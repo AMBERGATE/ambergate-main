@@ -23,7 +23,8 @@ export class Services3dComponent {
       stat2Value: 'Dust-Free',
       stat2Label: 'Containment',
       tags: ['Selective Strip-Out', 'MEP Preservation', 'Zero Structural Impact'],
-      cubeColor: 0xDBA622
+      cubeColor: 0xDBA622,
+      shapeType: 'block-assembly'
     },
     {
       step: '02 / 04',
@@ -35,7 +36,8 @@ export class Services3dComponent {
       stat2Value: 'HEPA',
       stat2Label: 'Filtered',
       tags: ['Tile & VCT Removal', 'Adhesive Grinding', 'Subfloor Repair'],
-      cubeColor: 0xF59E0B
+      cubeColor: 0x10B981,
+      shapeType: 'layered-slab'
     },
     {
       step: '03 / 04',
@@ -47,7 +49,8 @@ export class Services3dComponent {
       stat2Value: 'Eco',
       stat2Label: 'Compliant',
       tags: ['Concrete Restoration', 'Oil Stain Removal', 'Exterior Prep'],
-      cubeColor: 0x38BDF8
+      cubeColor: 0x38BDF8,
+      shapeType: 'hydro-crystal'
     },
     {
       step: '04 / 04',
@@ -59,7 +62,8 @@ export class Services3dComponent {
       stat2Value: 'LEED',
       stat2Label: 'Certified',
       tags: ['Debris Hauling', 'Yard & Foreclosure', 'Recycling Paths'],
-      cubeColor: 0xDBA622
+      cubeColor: 0xF59E0B,
+      shapeType: 'logistics-matrix'
     }
   ];
 

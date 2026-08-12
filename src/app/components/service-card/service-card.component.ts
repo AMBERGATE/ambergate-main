@@ -26,6 +26,7 @@ export interface ServiceItemData {
   stat2Label: string;
   tags: string[];
   cubeColor?: number;
+  shapeType?: 'block-assembly' | 'layered-slab' | 'hydro-crystal' | 'logistics-matrix';
 }
 
 @Component({
@@ -51,14 +52,14 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
   
-  private faceMeshes: THREE.Mesh[] = [];
-  private cubeGroup!: THREE.Group;
+  private mainGroup!: THREE.Group;
+  private animatedSubObjects: THREE.Object3D[] = [];
 
   private animFrameId: number | null = null;
   private isBrowser: boolean;
   private observer: IntersectionObserver | null = null;
   private isVisible: boolean = false;
-  private animationProgress: number = 0; // 0 = split/exploded, 1 = assembled cube
+  private animationProgress: number = 0;
 
   constructor(@Inject(PLATFORM_ID) platformId: object) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -77,7 +78,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (this.isBrowser) {
       setTimeout(() => {
-        this.initFacesAssemblyScene();
+        this.init3DScene();
         this.setupIntersectionObserver();
       }, 0);
     }
@@ -88,24 +89,22 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // When card enters viewport -> animate assemble (progress to 1)
-          // When card leaves viewport -> animate disassemble (progress back to 0)
           this.isVisible = entry.isIntersecting;
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.3 }
     );
     this.observer.observe(element);
   }
 
-  private initFacesAssemblyScene(): void {
+  private init3DScene(): void {
     const canvas = this.canvasRef.nativeElement;
     const width = canvas.clientWidth || 300;
     const height = canvas.clientHeight || 300;
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    this.camera.position.set(0, 0, 4.2);
+    this.camera.position.set(0, 0, 4.5);
 
     this.renderer = new THREE.WebGLRenderer({
       canvas,
@@ -115,7 +114,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Studio Lighting
+    // Balanced Studio Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     this.scene.add(ambientLight);
 
@@ -123,80 +122,220 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     mainLight.position.set(4, 5, 4);
     this.scene.add(mainLight);
 
-    const accentLight = new THREE.DirectionalLight(0xDBA622, 2.0);
+    const shapeType = this.serviceData.shapeType || 'block-assembly';
+    const baseColor = this.serviceData.cubeColor || 0xDBA622;
+
+    const accentLight = new THREE.DirectionalLight(baseColor, 1.8);
     accentLight.position.set(-4, -3, -2);
     this.scene.add(accentLight);
 
-    this.cubeGroup = new THREE.Group();
-    this.scene.add(this.cubeGroup);
+    this.mainGroup = new THREE.Group();
+    this.scene.add(this.mainGroup);
+    this.animatedSubObjects = [];
 
-    const baseColor = this.serviceData.cubeColor || 0xDBA622;
+    // Create 3D geometry & sub-elements based on shapeType
+    switch (shapeType) {
+      case 'layered-slab':
+        this.buildLayeredSlab(baseColor);
+        break;
+      case 'hydro-crystal':
+        this.buildHydroCrystal(baseColor);
+        break;
+      case 'logistics-matrix':
+        this.buildLogisticsMatrix(baseColor);
+        break;
+      case 'block-assembly':
+      default:
+        this.buildBlockAssembly(baseColor);
+        break;
+    }
 
-    const frontMaterial = new THREE.MeshStandardMaterial({
+    this.animate();
+  }
+
+  /* --- 1. Block Assembly (Demolition & Removal) --- */
+  private buildBlockAssembly(baseColor: number): void {
+    const material = new THREE.MeshStandardMaterial({
       color: baseColor,
       metalness: 0.85,
       roughness: 0.18,
       side: THREE.DoubleSide
     });
-
     const planeGeo = new THREE.PlaneGeometry(1.5, 1.5);
-    const size = 1.5 / 2; // Offset 0.75
-
-    // Configurations for unique directional face explosion based on service index
-    // Each service has a slightly different pattern of explosion vector
-    const patternMultiplier = (this.currentIndex % 2 === 0) ? 2.8 : 2.2;
+    const offset = 0.75;
+    const spread = 2.4;
 
     const faceConfigs = [
-      // 0: Front (+Z)
-      { targetPos: new THREE.Vector3(0, 0, size), targetRot: new THREE.Euler(0, 0, 0), startPos: new THREE.Vector3(0, 0, size + patternMultiplier) },
-      // 1: Back (-Z)
-      { targetPos: new THREE.Vector3(0, 0, -size), targetRot: new THREE.Euler(0, Math.PI, 0), startPos: new THREE.Vector3(0, 0, -size - patternMultiplier) },
-      // 2: Top (+Y)
-      { targetPos: new THREE.Vector3(0, size, 0), targetRot: new THREE.Euler(-Math.PI / 2, 0, 0), startPos: new THREE.Vector3(0, size + patternMultiplier, 0) },
-      // 3: Bottom (-Y)
-      { targetPos: new THREE.Vector3(0, -size, 0), targetRot: new THREE.Euler(Math.PI / 2, 0, 0), startPos: new THREE.Vector3(0, -size - patternMultiplier, 0) },
-      // 4: Right (+X)
-      { targetPos: new THREE.Vector3(size, 0, 0), targetRot: new THREE.Euler(0, Math.PI / 2, 0), startPos: new THREE.Vector3(size + patternMultiplier, 0, 0) },
-      // 5: Left (-X)
-      { targetPos: new THREE.Vector3(-size, 0, 0), targetRot: new THREE.Euler(0, -Math.PI / 2, 0), startPos: new THREE.Vector3(-size - patternMultiplier, 0, 0) }
+      { targetPos: new THREE.Vector3(0, 0, offset), targetRot: new THREE.Euler(0, 0, 0), startPos: new THREE.Vector3(0, 0, offset + spread) },
+      { targetPos: new THREE.Vector3(0, 0, -offset), targetRot: new THREE.Euler(0, Math.PI, 0), startPos: new THREE.Vector3(0, 0, -offset - spread) },
+      { targetPos: new THREE.Vector3(0, offset, 0), targetRot: new THREE.Euler(-Math.PI / 2, 0, 0), startPos: new THREE.Vector3(0, offset + spread, 0) },
+      { targetPos: new THREE.Vector3(0, -offset, 0), targetRot: new THREE.Euler(Math.PI / 2, 0, 0), startPos: new THREE.Vector3(0, -offset - spread, 0) },
+      { targetPos: new THREE.Vector3(offset, 0, 0), targetRot: new THREE.Euler(0, Math.PI / 2, 0), startPos: new THREE.Vector3(offset + spread, 0, 0) },
+      { targetPos: new THREE.Vector3(-offset, 0, 0), targetRot: new THREE.Euler(0, -Math.PI / 2, 0), startPos: new THREE.Vector3(-offset - spread, 0, 0) }
     ];
 
-    this.faceMeshes = [];
-
     faceConfigs.forEach((config) => {
-      const mesh = new THREE.Mesh(planeGeo, frontMaterial);
+      const mesh = new THREE.Mesh(planeGeo, material);
       mesh.position.copy(config.startPos);
       mesh.rotation.copy(config.targetRot);
+      mesh.userData = { targetPos: config.targetPos, startPos: config.startPos, type: 'lerpPos' };
+      this.mainGroup.add(mesh);
+      this.animatedSubObjects.push(mesh);
+    });
+  }
+
+  /* --- 2. Layered Slab (Flooring Specialists) --- */
+  private buildLayeredSlab(baseColor: number): void {
+    const layerCount = 4;
+    const slabGeo = new THREE.BoxGeometry(1.6, 0.22, 1.6);
+
+    for (let i = 0; i < layerCount; i++) {
+      const isTop = i === layerCount - 1;
+      const mat = new THREE.MeshStandardMaterial({
+        color: isTop ? baseColor : new THREE.Color(baseColor).multiplyScalar(0.7 + i * 0.1),
+        metalness: 0.6,
+        roughness: 0.25
+      });
+      const mesh = new THREE.Mesh(slabGeo, mat);
+
+      const targetY = (i - 1.5) * 0.32;
+      const startY = targetY + (i % 2 === 0 ? 2.5 : -2.5);
+
+      mesh.position.set(0, startY, 0);
       mesh.userData = {
-        targetPos: config.targetPos,
-        startPos: config.startPos
+        targetPos: new THREE.Vector3(0, targetY, 0),
+        startPos: new THREE.Vector3(0, startY, 0),
+        type: 'lerpPos',
+        layerIndex: i
       };
-      this.cubeGroup.add(mesh);
-      this.faceMeshes.push(mesh);
+
+      this.mainGroup.add(mesh);
+      this.animatedSubObjects.push(mesh);
+    }
+  }
+
+  /* --- 3. Hydro Crystal (High Pressure Cleaning) --- */
+  private buildHydroCrystal(baseColor: number): void {
+    // Outer wireframe crystal + inner solid core
+    const coreGeo = new THREE.IcosahedronGeometry(1.1, 0);
+    const coreMat = new THREE.MeshStandardMaterial({
+      color: baseColor,
+      metalness: 0.9,
+      roughness: 0.1,
+      wireframe: false
+    });
+    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    coreMesh.userData = { type: 'pulseScale' };
+    this.mainGroup.add(coreMesh);
+    this.animatedSubObjects.push(coreMesh);
+
+    const wireGeo = new THREE.IcosahedronGeometry(1.35, 1);
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.5
+    });
+    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+    wireMesh.userData = { type: 'counterRotate' };
+    this.mainGroup.add(wireMesh);
+    this.animatedSubObjects.push(wireMesh);
+  }
+
+  /* --- 4. Logistics Matrix (Junk Removal & Site Clean) --- */
+  private buildLogisticsMatrix(baseColor: number): void {
+    // Central core cargo box
+    const centerGeo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
+    const centerMat = new THREE.MeshStandardMaterial({
+      color: baseColor,
+      metalness: 0.8,
+      roughness: 0.2
+    });
+    const centerMesh = new THREE.Mesh(centerGeo, centerMat);
+    centerMesh.userData = { type: 'centerCore' };
+    this.mainGroup.add(centerMesh);
+    this.animatedSubObjects.push(centerMesh);
+
+    // Orbiting mini container satellites
+    const satCount = 6;
+    const satGeo = new THREE.BoxGeometry(0.38, 0.38, 0.38);
+    const satMat = new THREE.MeshStandardMaterial({
+      color: 0xFFFFFF,
+      metalness: 0.9,
+      roughness: 0.15
     });
 
-    this.animate();
+    for (let i = 0; i < satCount; i++) {
+      const satMesh = new THREE.Mesh(satGeo, satMat);
+      const angle = (i / satCount) * Math.PI * 2;
+      const radius = 1.4;
+
+      const targetPos = new THREE.Vector3(
+        Math.cos(angle) * radius,
+        (i % 2 === 0 ? 0.3 : -0.3),
+        Math.sin(angle) * radius
+      );
+      const startPos = targetPos.clone().multiplyScalar(2.2);
+
+      satMesh.position.copy(startPos);
+      satMesh.userData = {
+        targetPos,
+        startPos,
+        angle,
+        radius,
+        type: 'orbitSatellite'
+      };
+      this.mainGroup.add(satMesh);
+      this.animatedSubObjects.push(satMesh);
+    }
   }
 
   private animate = (): void => {
     this.animFrameId = requestAnimationFrame(this.animate);
 
-    // Smoothly transition progress based on IntersectionObserver visibility state
     const targetProgress = this.isVisible ? 1 : 0;
-    this.animationProgress += (targetProgress - this.animationProgress) * 0.06;
+    this.animationProgress += (targetProgress - this.animationProgress) * 0.05;
 
-    // Interpolate face positions between startPos (exploded) and targetPos (assembled)
-    this.faceMeshes.forEach((mesh) => {
-      const targetPos: THREE.Vector3 = mesh.userData['targetPos'];
-      const startPos: THREE.Vector3 = mesh.userData['startPos'];
+    const time = performance.now() * 0.0015;
 
-      mesh.position.lerpVectors(startPos, targetPos, this.animationProgress);
+    // Animate sub-objects according to their behavior type
+    this.animatedSubObjects.forEach((obj) => {
+      const type = obj.userData['type'];
+
+      if (type === 'lerpPos') {
+        const targetPos: THREE.Vector3 = obj.userData['targetPos'];
+        const startPos: THREE.Vector3 = obj.userData['startPos'];
+        obj.position.lerpVectors(startPos, targetPos, this.animationProgress);
+      } else if (type === 'pulseScale') {
+        const pulse = 1 + Math.sin(time * 3) * 0.06 * this.animationProgress;
+        obj.scale.set(pulse, pulse, pulse);
+      } else if (type === 'counterRotate') {
+        obj.rotation.x = -time * 0.4;
+        obj.rotation.y = -time * 0.6;
+      } else if (type === 'orbitSatellite') {
+        const targetPos: THREE.Vector3 = obj.userData['targetPos'];
+        const startPos: THREE.Vector3 = obj.userData['startPos'];
+
+        // Dock in when visible
+        const currentPos = new THREE.Vector3().lerpVectors(startPos, targetPos, this.animationProgress);
+
+        // Orbital rotation around center Y axis
+        const baseAngle = obj.userData['angle'] + time * 0.8;
+        const currentRadius = currentPos.length();
+
+        obj.position.x = Math.cos(baseAngle) * currentRadius;
+        obj.position.z = Math.sin(baseAngle) * currentRadius;
+        obj.position.y = currentPos.y;
+
+        obj.rotation.x += 0.02;
+        obj.rotation.y += 0.03;
+      }
     });
 
-    // Continuous 3D Rotation of the cube group
-    if (this.cubeGroup) {
-      this.cubeGroup.rotation.x += 0.008;
-      this.cubeGroup.rotation.y += 0.014;
+    // Continuous smooth group rotation
+    if (this.mainGroup) {
+      this.mainGroup.rotation.x += 0.006;
+      this.mainGroup.rotation.y += 0.012;
     }
 
     if (this.renderer && this.scene && this.camera) {
@@ -223,12 +362,16 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     if (this.animFrameId !== null) {
       cancelAnimationFrame(this.animFrameId);
     }
-    this.faceMeshes.forEach((mesh) => {
-      mesh.geometry.dispose();
-      if (Array.isArray(mesh.material)) {
-        mesh.material.forEach(m => m.dispose());
-      } else {
-        mesh.material.dispose();
+    this.animatedSubObjects.forEach((obj: THREE.Object3D) => {
+      if (obj instanceof THREE.Mesh) {
+        if (obj.geometry) {
+          obj.geometry.dispose();
+        }
+        if (Array.isArray(obj.material)) {
+          obj.material.forEach((m: THREE.Material) => m.dispose());
+        } else if (obj.material) {
+          obj.material.dispose();
+        }
       }
     });
     if (this.renderer) {
