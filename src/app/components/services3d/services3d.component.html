@@ -1,56 +1,349 @@
-<div class="services-3d-wrapper">
-  <!-- Fixed Floating Navigation Arrow Controls -->
-  <div class="nav-arrow-controls">
-    <button 
-      class="nav-arrow-btn prev-btn" 
-      (click)="navigatePrev()" 
-      title="Previous Section"
-    >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"></polyline>
-      </svg>
-    </button>
-    <div class="nav-divider"></div>
-    <button 
-      class="nav-arrow-btn next-btn" 
-      (click)="navigateNext()" 
-      title="Next Section"
-    >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </button>
-  </div>
+<div class="landing-main-wrapper">
 
-  <!-- Hero Showcase Section (Section 0) occupying main view below header -->
-  <section class="viewport-section hero-showcase-section" id="section-0">
-    <div class="hero-brand-card">
-      <span class="hero-badge">PREMIUM SITE SERVICES</span>
-      <h1 class="hero-main-title">COMMERCIAL DEMOLITION & LOGISTICS</h1>
-      <p class="hero-subtitle">High-performance fleet & certified environmental execution across South Florida.</p>
-    </div>
+  <!-- ==========================================
+       SECCIÓN 1: HERO SECTION (FULL VIEWPORT 100VH & ENGLISH CONTENT)
+       ========================================== -->
+  <section class="sec-hero" id="sec-1">
+    <div class="hero-glow-bg"></div>
 
-    <!-- Centered Bottom Scroll Indicator -->
-    <div class="hero-bottom-scroll">
-      <span>SCROLL TO DISCOVER SERVICES</span>
-      <div class="mouse-icon">
-        <div class="wheel"></div>
+    <div class="hero-container">
+      <!-- Subtle Corporate Tag -->
+      <div class="hero-badge-tag fade-in-1">
+        <svg width="14" height="16" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5"/>
+          <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
+          <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="5"/>
+        </svg>
+        <span class="badge-label">SOUTH FLORIDA COMMERCIAL & INDUSTRIAL LOGISTICS</span>
+      </div>
+
+      <!-- Main Impact Headline -->
+      <h1 class="hero-title fade-in-2">
+        Demolition, Logistics & Commercial Projects, <span class="gold-highlight">Delivered in Days</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="hero-subtitle fade-in-3">
+        Comprehensive management with specialized equipment, 100% dust containment, and environmental certifications for industrial and commercial projects in South Florida.
+      </p>
+
+      <!-- Hero CTA Actions (Swapped: Outline First, Primary Gold Second with Icon) -->
+      <div class="hero-cta-actions fade-in-4">
+        <button class="cta-btn-secondary" (click)="scrollToSection(2)">
+          VIEW SERVICES
+        </button>
+
+        <button class="cta-btn-primary" (click)="scrollToSection(7)">
+          GET FAST QUOTE
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- 4 Standalone Modular Service Cards with Independent 3D Cubes -->
-  <section 
-    *ngFor="let item of servicesList; let i = index" 
-    class="viewport-section" 
-    [id]="'section-' + (i + 1)"
-  >
-    <app-service-card 
-      [serviceData]="item" 
-      [alignRight]="i % 2 === 0"
-      [currentIndex]="i + 1"
-      [totalServices]="servicesList.length"
-      (navigateRequested)="scrollToSection($event)"
-    ></app-service-card>
+  <!-- ==========================================
+       SECTION 2: MAIN SERVICES
+       ========================================== -->
+  <section class="sec-services" id="sec-2">
+    <div class="section-container">
+      <div class="section-badge-header">
+        <span class="badge-sub">PREMIUM SERVICES</span>
+        <h2 class="badge-title">INDUSTRIAL & CIVIL CONSTRUCTION SOLUTIONS</h2>
+      </div>
+
+      <div class="services-grid">
+        <div *ngFor="let item of servicesList; let i = index" class="service-card-static">
+          <div class="card-image-box">
+            <div class="card-step-badge">{{ item.step }}</div>
+            <div class="card-img-placeholder" [style.background-image]="'url(assets/img/service-' + (i + 1) + '.jpg)'">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <span class="card-tag">{{ item.badge }}</span>
+            <h3 class="card-title">{{ item.title }}</h3>
+            <p class="card-desc">{{ item.description }}</p>
+
+            <div class="card-bullets">
+              <span *ngFor="let tag of item.tags" class="bullet-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                {{ tag }}
+              </span>
+            </div>
+
+            <div class="card-action">
+              <button class="btn-card-quote" (click)="scrollToSection(7)">Request Quote &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <!-- ==========================================
+       SECTION 3: INTEGRAL PROPOSAL (SPLIT-SCREEN)
+       ========================================== -->
+  <section class="sec-integral" id="sec-3">
+    <div class="section-container split-layout">
+      <div class="split-info-col">
+        <span class="sec-tag">FULL-SERVICE SOLUTION</span>
+        <h2 class="sec-headline">ONE SINGLE COMPANY, THE COMPLETE SOLUTION.</h2>
+        <p class="sec-lead">
+          A single accountable partner from start to finish: planning, civil work, debris logistics, and flawless site handoff. We eliminate operational friction and costly delays.
+        </p>
+
+        <div class="pillars-list">
+          <div class="pillar-item">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="pillar-text">
+              <h4>Centralized Coordination</h4>
+              <p>A single technical contact overseeing strict schedule compliance.</p>
+            </div>
+          </div>
+
+          <div class="pillar-item">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <div class="pillar-text">
+              <h4>Proprietary Fleet & Machinery</h4>
+              <p>Total control with no third-party rentals delaying site progress.</p>
+            </div>
+          </div>
+
+          <div class="pillar-item">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="pillar-text">
+              <h4>Zero Downtime</h4>
+              <p>24/7 coordinated operations aligned with target client opening deadlines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split-media-col">
+        <div class="media-frame">
+          <div class="frame-badge">12+ Years of Proven Industry Authority</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 4: TRACK RECORD PORTFOLIO
+       ========================================== -->
+  <section class="sec-portfolio" id="sec-4">
+    <div class="section-container">
+      <div class="section-badge-header">
+        <span class="badge-sub">PROJECT HISTORY</span>
+        <h2 class="badge-title">OVER 100 SUCCESSFULLY EXECUTED PROJECTS</h2>
+      </div>
+
+      <div class="portfolio-grid">
+        <div *ngFor="let proj of portfolioProjects" class="portfolio-card">
+          <div class="proj-media">
+            <span class="proj-badge-time">{{ proj.recordTime }}</span>
+          </div>
+          <div class="proj-body">
+            <span class="proj-cat">{{ proj.category }}</span>
+            <h3 class="proj-title">{{ proj.title }}</h3>
+            <div class="proj-meta">
+              <span>📍 {{ proj.location }}</span>
+              <span>📐 {{ proj.squareFeet }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 5: EFFICIENCY & DELIVERY TIMES
+       ========================================== -->
+  <section class="sec-efficiency" id="sec-5">
+    <div class="section-container">
+      <div class="section-badge-header">
+        <span class="badge-sub">OPERATIONAL OPTIMIZATION</span>
+        <h2 class="badge-title">THAT'S WHY WE DELIVER IN DAYS, NOT MONTHS.</h2>
+      </div>
+
+      <div class="process-steps-row">
+        <div *ngFor="let step of processSteps" class="step-card">
+          <div class="step-num">{{ step.number }}</div>
+          <span class="step-subtitle">{{ step.subtitle }}</span>
+          <h3 class="step-title">{{ step.title }}</h3>
+          <p class="step-desc">{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 6: SOCIAL PROOF / BRAND PARTNERS
+       ========================================== -->
+  <section class="sec-trust" id="sec-6">
+    <div class="section-container">
+      <span class="trust-title">TRUSTED BY INDUSTRY LEADERS</span>
+
+      <div class="logos-grid">
+        <div *ngFor="let brand of brandPartners" class="logo-box">
+          <span class="brand-name">{{ brand.name }}</span>
+          <span class="brand-sub">{{ brand.tagline }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 7: CONTACT & LEAD FORM
+       ========================================== -->
+  <div class="section-divider-bar">
+    <div class="divider-line"></div>
+    <div class="divider-logo">
+      <svg width="22" height="26" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="4"/>
+        <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="3"/>
+        <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="divider-line"></div>
+  </div>
+
+  <section class="sec-contact" id="sec-7">
+    <div class="contact-pattern-bg"></div>
+
+    <div class="section-container split-contact">
+      <div class="contact-left">
+        <span class="contact-tag">
+          <svg width="14" height="16" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5"/>
+            <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
+            <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="5"/>
+          </svg>
+          CONTACT US
+        </span>
+        <h2 class="contact-headline">TELL US ABOUT YOUR PROJECT.</h2>
+        <p class="contact-subtext">
+          Send us your project details and site specifications. Our engineering team will contact you promptly.
+        </p>
+
+        <div class="direct-channels">
+          <div class="contact-info-list">
+            <div class="contact-item">
+              <span class="logo-icon">
+                <svg width="14" height="16" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5"/>
+                  <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
+                  <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="5"/>
+                </svg>
+              </span>
+              <span>WhatsApp: <strong>+1 (305) 813-8683</strong></span>
+            </div>
+            <div class="contact-item">
+              <span class="logo-icon">
+                <svg width="14" height="16" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5"/>
+                  <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
+                  <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="5"/>
+                </svg>
+              </span>
+              <span>Email: <strong>info@ambergateusa.com</strong></span>
+            </div>
+            <div class="contact-item">
+              <span class="logo-icon">
+                <svg width="14" height="16" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5"/>
+                  <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
+                  <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="5"/>
+                </svg>
+              </span>
+              <span>Location: <strong>Miami-Dade, Broward & Palm Beach Counties, FL</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <form class="quote-form" (submit)="$event.preventDefault()">
+          <div class="form-group-row">
+            <div class="field-box">
+              <label>PROJECT TYPE</label>
+              <select required>
+                <option value="interior">Selective Interior Demolition</option>
+                <option value="flooring">Professional Flooring Removal</option>
+                <option value="pressure">High-Pressure Surface Washing</option>
+                <option value="junk">Debris Removal & Site Logistics</option>
+                <option value="integral">Turnkey Full-Service Solution</option>
+              </select>
+            </div>
+
+            <div class="field-box">
+              <label>TARGET TIMELINE</label>
+              <input type="text" placeholder="e.g. ASAP / Next Month" />
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="field-box">
+              <label>NAME / COMPANY</label>
+              <input type="text" placeholder="Your Name or Business *" required />
+            </div>
+
+            <div class="field-box">
+              <label>LOCATION / COUNTY</label>
+              <input type="text" placeholder="e.g. Miami, Fort Lauderdale" />
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="field-box">
+              <label>PHONE</label>
+              <input type="tel" placeholder="+1 (305) 000-0000 *" required />
+            </div>
+
+            <div class="field-box">
+              <label>EMAIL</label>
+              <input type="email" placeholder="you@company.com *" required />
+            </div>
+          </div>
+
+          <div class="field-box full-width">
+            <label>ADDITIONAL DETAILS</label>
+            <textarea rows="3" placeholder="Approximate square footage, specific site requirements..."></textarea>
+          </div>
+
+          <div class="form-buttons-row">
+            <button type="submit" class="btn-submit-gold">
+              SUBMIT & GET CONTACTED &rarr;
+            </button>
+
+            <a href="https://wa.me/13059795111?text=Hello%20Ambergate%2C%20I%20would%20like%20to%20request%20a%20quote." target="_blank" class="btn-wa-outline">
+              TALK ON WHATSAPP NOW
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider-bar">
+    <div class="divider-line"></div>
+    <div class="divider-logo">
+      <svg width="22" height="26" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="4"/>
+        <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="3"/>
+        <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="divider-line"></div>
+  </div>
+
 </div>

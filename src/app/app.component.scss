@@ -1,7 +1,7 @@
 @use "./../assets/scss/variables.scss" as v;
 @use "./../assets/scss/mixins.scss" as mixins;
 
-/* Header Fijo ocupando el 100% del ancho */
+/* Header Fijo ocupando el 100% del ancho con ~28vh de altura */
 .hero-header {
   width: 100%;
   position: fixed;
@@ -13,10 +13,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.6rem;
+  min-height: 28vh;
+  padding-top: 0.8rem;
   z-index: 999;
   box-sizing: border-box;
-  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: min-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.4s ease;
 
   .header-trust-bar {
@@ -48,6 +50,7 @@
       .mobile-text {
         display: none;
       }
+
       .desktop-text {
         display: inline;
       }
@@ -73,7 +76,7 @@
       max-height: 120px;
       object-fit: contain;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                  max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
   }
 
@@ -85,8 +88,9 @@
 
   /* Compact Sticky State when scrolling */
   &.scrolled {
+    min-height: auto;
     padding-top: 0.25rem;
-    box-shadow: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 
     .header-trust-bar {
       opacity: 0.9;
@@ -122,22 +126,26 @@
 }
 
 /* Parallax wave animation */
-.parallax > use {
+.parallax>use {
   animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
 }
-.parallax > use:nth-child(1) {
+
+.parallax>use:nth-child(1) {
   animation-delay: -2s;
   animation-duration: 7s;
 }
-.parallax > use:nth-child(2) {
+
+.parallax>use:nth-child(2) {
   animation-delay: -3s;
   animation-duration: 10s;
 }
-.parallax > use:nth-child(3) {
+
+.parallax>use:nth-child(3) {
   animation-delay: -4s;
   animation-duration: 13s;
 }
-.parallax > use:nth-child(4) {
+
+.parallax>use:nth-child(4) {
   animation-delay: -5s;
   animation-duration: 20s;
 }
@@ -146,6 +154,7 @@
   0% {
     transform: translate3d(-90px, 0, 0);
   }
+
   100% {
     transform: translate3d(85px, 0, 0);
   }
@@ -178,6 +187,7 @@
         .mobile-text {
           display: inline;
         }
+
         .desktop-text {
           display: none;
         }
