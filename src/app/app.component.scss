@@ -90,7 +90,8 @@
   &.scrolled {
     min-height: auto;
     padding-top: 0.25rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
+    background-color: #000000;
 
     .header-trust-bar {
       opacity: 0.9;
@@ -99,7 +100,7 @@
     }
 
     .header-logo-container {
-      padding: 0.15rem 0 0 0;
+      padding: 0.15rem 0 0.35rem 0;
 
       .hero-logo {
         max-width: 220px;
@@ -107,10 +108,25 @@
       }
     }
 
+    .ola {
+      line-height: 0;
+    }
+
     .waves {
-      height: 32px;
-      min-height: 32px;
-      max-height: 32px;
+      height: 38px;
+      min-height: 38px;
+      max-height: 38px;
+
+      .parallax > use:nth-child(4) {
+        opacity: 0; /* Oculta únicamente el relleno blanco sólido inferior */
+        transition: opacity 0.4s ease;
+      }
+
+      .parallax > use:nth-child(1),
+      .parallax > use:nth-child(2),
+      .parallax > use:nth-child(3) {
+        transition: opacity 0.4s ease;
+      }
     }
   }
 }

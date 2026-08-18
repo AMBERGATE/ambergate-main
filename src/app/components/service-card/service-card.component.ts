@@ -96,6 +96,13 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
+  public scrollToContact(): void {
+    const contactElem = document.getElementById('sec-7');
+    if (contactElem) {
+      contactElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
   public get rotationDegrees(): number {
     let deg = Math.round((this.targetRotationY * 180 / Math.PI) % 360);
     if (deg > 180) deg -= 360;

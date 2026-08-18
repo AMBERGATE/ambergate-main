@@ -65,6 +65,13 @@
       <div class="card-tags">
         <span *ngFor="let tag of serviceData.tags">{{ tag }}</span>
       </div>
+
+      <div class="card-action-bar">
+        <div class="action-divider"></div>
+        <button class="btn-card-quote-gold" (click)="scrollToContact()">
+          REQUEST QUOTE &rarr;
+        </button>
+      </div>
     </div>
   </div>
 </div>
