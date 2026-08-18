@@ -223,32 +223,32 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 1. Map Background: Miami Vice / Magic City Sunset Skyline & Palms
+    // 1. Map Background: Dark Architectural Skyline
     const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    skyGradient.addColorStop(0, '#0B0F19');
-    skyGradient.addColorStop(0.5, '#1E1B4B');
-    skyGradient.addColorStop(1, '#31103F');
+    skyGradient.addColorStop(0, '#000000');
+    skyGradient.addColorStop(0.5, '#0F0F0F');
+    skyGradient.addColorStop(1, '#1A1712');
     ctx.fillStyle = skyGradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     const bgOffset = (this.frameCount * (this.gameSpeed * 0.2)) % 500;
 
-    // Miami Coastal Skyline (High-rises & Art Deco Towers)
-    ctx.fillStyle = '#1E1B4B';
+    // Coastal Skyline (High-rises & Art Deco Towers)
+    ctx.fillStyle = '#181818';
     for (let x = -bgOffset; x < canvas.width + 500; x += 110) {
       // Modern Glass Tower
       ctx.fillRect(x, canvas.height - 140, 50, 95);
       // Tower Neon Trim
       ctx.fillStyle = '#F59E0B';
       ctx.fillRect(x + 23, canvas.height - 140, 4, 95);
-      ctx.fillStyle = '#1E1B4B';
+      ctx.fillStyle = '#181818';
 
       // Art Deco Building with step top
       ctx.fillRect(x + 60, canvas.height - 110, 40, 65);
       ctx.fillRect(x + 68, canvas.height - 125, 24, 15);
       
       // Palm Tree Silhouette
-      ctx.strokeStyle = '#0F172A';
+      ctx.strokeStyle = '#050505';
       ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(x + 105, canvas.height - 45);
@@ -256,7 +256,7 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
       ctx.stroke();
 
       // Palm Fronds
-      ctx.fillStyle = '#0F172A';
+      ctx.fillStyle = '#050505';
       ctx.beginPath();
       ctx.arc(x + 118, canvas.height - 105, 12, 0, Math.PI * 2);
       ctx.fill();
@@ -266,7 +266,7 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
     const groundLevel = this.truck.groundY + this.truck.height;
     
     // Asphalt Road Base
-    ctx.fillStyle = '#1E293B';
+    ctx.fillStyle = '#1A1A1A';
     ctx.fillRect(0, groundLevel - 4, canvas.width, canvas.height - groundLevel + 4);
 
     // Gold Road Top Border
@@ -275,7 +275,7 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
 
     // Moving Dashed Center Line (Asphalt Effect)
     const roadDashOffset = (this.frameCount * this.gameSpeed) % 40;
-    ctx.strokeStyle = '#F1F5F9';
+    ctx.strokeStyle = '#CCCCCC';
     ctx.lineWidth = 2;
     ctx.setLineDash([18, 22]);
     ctx.beginPath();
@@ -291,16 +291,16 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
     const th = this.truck.height;
 
     // Heavy Duty Aluminum Dump Bed (White & Silver)
-    ctx.fillStyle = '#F8FAFC';
+    ctx.fillStyle = '#FAFAFA';
     ctx.beginPath();
     ctx.roundRect(tx, ty, 36, th - 6, [3, 1, 1, 3]);
     ctx.fill();
-    ctx.strokeStyle = '#94A3B8';
+    ctx.strokeStyle = '#9E9E9E';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Dump Bed Reinforcement Ribs
-    ctx.fillStyle = '#CBD5E1';
+    ctx.fillStyle = '#D4D4D4';
     ctx.fillRect(tx + 8, ty + 2, 4, th - 10);
     ctx.fillRect(tx + 18, ty + 2, 4, th - 10);
     ctx.fillRect(tx + 28, ty + 2, 4, th - 10);
@@ -314,18 +314,18 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
     ctx.beginPath();
     ctx.roundRect(tx + 36, ty + 2, 24, th - 8, [4, 6, 2, 2]);
     ctx.fill();
-    ctx.strokeStyle = '#CBD5E1';
+    ctx.strokeStyle = '#D4D4D4';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Windshield & Side Window (Tinted Glass)
-    ctx.fillStyle = '#0F172A';
+    ctx.fillStyle = '#0A0A0A';
     ctx.beginPath();
     ctx.roundRect(tx + 44, ty + 5, 14, 11, [2, 4, 1, 1]);
     ctx.fill();
 
-    // Cyan Windshield Glass Reflection
-    ctx.fillStyle = '#38BDF8';
+    // Gold Windshield Glass Reflection
+    ctx.fillStyle = '#F59E0B';
     ctx.globalAlpha = 0.7;
     ctx.beginPath();
     ctx.moveTo(tx + 50, ty + 6);
@@ -337,9 +337,9 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
     ctx.globalAlpha = 1.0;
 
     // Front Chrome Bumper & Grille
-    ctx.fillStyle = '#64748B';
+    ctx.fillStyle = '#666666';
     ctx.fillRect(tx + 54, ty + 18, 6, 6);
-    ctx.fillStyle = '#E2E8F0';
+    ctx.fillStyle = '#E5E5E5';
     ctx.fillRect(tx + 52, ty + th - 8, 10, 4);
 
     // Amber Headlight / Indicator
@@ -353,19 +353,19 @@ export class ConstructionRunnerComponent implements AfterViewInit, OnDestroy {
 
     wheelPositions.forEach((wx) => {
       // Rubber Tire
-      ctx.fillStyle = '#0F172A';
+      ctx.fillStyle = '#000000';
       ctx.beginPath();
       ctx.arc(wx, wheelY, 7.5, 0, Math.PI * 2);
       ctx.fill();
 
       // Chrome Rim
-      ctx.fillStyle = '#E2E8F0';
+      ctx.fillStyle = '#E5E5E5';
       ctx.beginPath();
       ctx.arc(wx, wheelY, 4, 0, Math.PI * 2);
       ctx.fill();
 
       // Rotating Lug Nut Detail
-      ctx.strokeStyle = '#0F172A';
+      ctx.strokeStyle = '#000000';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.moveTo(wx, wheelY);

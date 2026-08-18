@@ -3,27 +3,19 @@
   <div class="cube-canvas-container">
     <canvas #cubeCanvas></canvas>
 
-    <!-- Sleek Architectural Gold Scene Scroll Navigator Overlay -->
-    <div class="scene-scroll-nav" title="Navegar Fases con Scroll">
-      <div class="scroll-track">
-        <div 
-          class="scroll-active-indicator"
-          [style.transform]="'translateY(' + ((activePhaseIndex - 1) * 34) + 'px)'"
-        ></div>
-        <button 
-          *ngFor="let phase of [1, 2, 3, 4]; let idx = index"
-          class="scroll-step-dot"
-          [class.active]="activePhaseIndex === phase"
-          (click)="selectPhase(phase)"
-          [attr.aria-label]="'Fase ' + phase + ': ' + phaseTitles[idx]"
-        >
-          <span class="step-num">0{{ phase }}</span>
-          <span class="step-tooltip">{{ phaseTitles[idx] }}</span>
-        </button>
-      </div>
+    <!-- Sleek Horizontal Phase Bar Overlay under Canvas -->
+    <div class="canvas-phase-bar" title="Seleccionar Fase 3D">
+      <button 
+        *ngFor="let phase of [1, 2, 3, 4]; let idx = index"
+        class="canvas-phase-pill"
+        [class.active]="activePhaseIndex === phase"
+        (click)="selectPhase(phase)"
+        [title]="'Fase ' + phase + ': ' + phaseTitles[idx]"
+        [attr.aria-label]="'Fase ' + phase + ': ' + phaseTitles[idx]"
+      >
+        <span class="pill-bar"></span>
+      </button>
     </div>
-
-
   </div>
 
   <!-- Clean Professional Corporate Information Card -->

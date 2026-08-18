@@ -24,10 +24,9 @@
   align-items: center;
   justify-content: center;
   background-color: #FFFFFF; /* Fondo Blanco Puro */
-  color: #0F172A;
+  color: #0A0A0A;
   padding-top: 24vh; /* Offset exacto para ubicar el contenido debajo del header negro */
   padding-bottom: 3rem;
-  border-bottom: 1px solid #E2E8F0;
   box-sizing: border-box;
 
   .hero-glow-bg {
@@ -59,18 +58,18 @@
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    background: #F8FAFC;
+    background: #FAFAFA;
     border: 1px solid rgba(219, 166, 34, 0.45);
     border-radius: 0px;
     padding: 0.6rem 1.6rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 
     .badge-label {
       font-size: 0.76rem;
       font-weight: 900;
       letter-spacing: 0.24em;
-      color: #0F172A;
+      color: #0A0A0A;
       text-transform: uppercase;
     }
   }
@@ -82,7 +81,7 @@
     letter-spacing: -0.02em;
     text-transform: uppercase;
     margin: 0 0 1.5rem 0;
-    color: #0F172A;
+    color: #0A0A0A;
 
     .gold-highlight {
       color: #DBA622;
@@ -94,7 +93,7 @@
 
   .hero-subtitle {
     font-size: 1.25rem;
-    color: #475569;
+    color: #4A4A4A;
     max-width: 860px;
     margin: 0 auto 2.8rem auto;
     line-height: 1.6;
@@ -113,34 +112,39 @@
     .cta-btn-primary {
       flex: 1;
       min-width: 260px;
+      height: 60px;
+      box-sizing: border-box;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.75rem;
-      background: #DBA622;
-      color: #0F172A;
+      background: linear-gradient(to right, #000000 50%, #DBA622 50%) 100% 0 / 200% 100% no-repeat;
+      color: #000000;
       font-weight: 900;
       font-size: 0.88rem;
       letter-spacing: 0.08em;
-      padding: 1.25rem 2rem;
-      border: none;
+      padding: 0 2rem;
+      border: 1.5px solid #DBA622;
       border-radius: 0px;
       cursor: pointer;
       box-shadow: 0 8px 25px rgba(219, 166, 34, 0.25);
-      transition: all 0.25s ease;
+      transition: background-position 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease, border-color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
       white-space: nowrap;
 
       .arrow-icon {
-        width: 18px;
-        height: 18px;
+        width: 24px;
+        height: 24px;
+        stroke-width: 3px;
+        flex-shrink: 0;
         transition: transform 0.25s ease;
       }
 
       &:hover {
-        background: #0F172A;
+        background-position: 0 0;
+        border-color: #000000;
         color: #FFFFFF;
         transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 
         .arrow-icon {
           transform: translateX(4px);
@@ -151,25 +155,28 @@
     .cta-btn-secondary {
       flex: 1;
       min-width: 260px;
+      height: 60px;
+      box-sizing: border-box;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: transparent;
-      color: #0F172A;
+      background: linear-gradient(to right, #000000 50%, transparent 50%) 100% 0 / 200% 100% no-repeat;
+      color: #000000;
       font-weight: 800;
       font-size: 0.88rem;
       letter-spacing: 0.08em;
-      padding: 1.25rem 2rem;
-      border: 1.5px solid #0F172A;
+      padding: 0 2rem;
+      border: 1.5px solid #000000;
       border-radius: 0px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: background-position 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
       white-space: nowrap;
 
       &:hover {
-        border-color: #DBA622;
+        background-position: 0 0;
+        border-color: #000000;
         color: #DBA622;
-        background: #0F172A;
+        transform: translateY(-2px);
       }
     }
   }
@@ -225,7 +232,7 @@
   .badge-title {
     font-size: 2.2rem;
     font-weight: 900;
-    color: #0F172A;
+    color: #0A0A0A;
     margin: 0.5rem 0 0 0;
     letter-spacing: -0.01em;
   }
@@ -235,10 +242,10 @@
    SECTION 2: MAIN SERVICES (3D INTERACTIVE CARDS STACK)
    ========================================== */
 .sec-services {
-  background-color: #F8FAFC;
-  color: #0F172A;
+  background-color: #FAFAFA;
+  color: #0A0A0A;
   position: relative;
-  padding: 5rem 0;
+  padding: 3rem 0;
 
   .services-3d-stack {
     display: flex;
@@ -257,7 +264,7 @@
    SECTION 3: INTEGRAL PROPOSAL (DARK ELEGANCE)
    ========================================== */
 .sec-integral {
-  background: #0B0F17;
+  background: #000000;
   color: #FFFFFF;
 
   .split-layout {
@@ -286,7 +293,7 @@
 
     .sec-lead {
       font-size: 1.05rem;
-      color: #94A3B8;
+      color: #A0A0A0;
       line-height: 1.6;
       margin-bottom: 2.2rem;
     }
@@ -304,7 +311,7 @@
         .pillar-icon {
           width: 46px;
           height: 46px;
-          background: #161920;
+          background: #121212;
           border: 1px solid rgba(219, 166, 34, 0.3);
           border-radius: 0px;
           display: flex;
@@ -328,7 +335,7 @@
 
           p {
             font-size: 0.9rem;
-            color: #94A3B8;
+            color: #A0A0A0;
             margin: 0;
             line-height: 1.4;
           }
@@ -343,7 +350,7 @@
     .media-frame {
       width: 100%;
       height: 420px;
-      background: #161920;
+      background: #121212;
       border: 1px solid rgba(219, 166, 34, 0.3);
       border-radius: 0px;
       position: relative;
@@ -353,7 +360,7 @@
         position: absolute;
         bottom: 1.5rem;
         left: 1.5rem;
-        background: #0F172A;
+        background: #000000;
         color: #DBA622;
         font-weight: 900;
         font-size: 0.85rem;
@@ -370,7 +377,7 @@
    ========================================== */
 .sec-portfolio {
   background: #FFFFFF;
-  color: #0F172A;
+  color: #0A0A0A;
 
   .section-badge-header {
     text-align: center;
@@ -386,7 +393,7 @@
     .badge-title {
       font-size: 2.2rem;
       font-weight: 900;
-      color: #0F172A;
+      color: #0A0A0A;
       margin-top: 0.5rem;
     }
   }
@@ -398,8 +405,8 @@
   }
 
   .portfolio-card {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
+    background: #FAFAFA;
+    border: 1px solid #E5E5E5;
     border-radius: 0px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.03);
     transition: transform 0.3s ease;
@@ -410,7 +417,7 @@
 
     .proj-media {
       height: 200px;
-      background: #CBD5E1;
+      background: #D4D4D4;
       position: relative;
 
       .proj-badge-time {
@@ -418,7 +425,7 @@
         top: 1rem;
         right: 1rem;
         background: #DBA622;
-        color: #0F172A;
+        color: #000000;
         font-weight: 900;
         font-size: 0.75rem;
         padding: 0.35rem 0.8rem;
@@ -439,7 +446,7 @@
       .proj-title {
         font-size: 1.2rem;
         font-weight: 900;
-        color: #0F172A;
+        color: #0A0A0A;
         margin: 0.4rem 0 1rem 0;
       }
 
@@ -447,8 +454,8 @@
         display: flex;
         justify-content: space-between;
         font-size: 0.82rem;
-        color: #64748B;
-        border-top: 1px solid #E2E8F0;
+        color: #666666;
+        border-top: 1px solid #E5E5E5;
         padding-top: 0.8rem;
       }
     }
@@ -459,8 +466,8 @@
    SECCIÓN 5: EFICIENCIA (SAND LIGHT)
    ========================================== */
 .sec-efficiency {
-  background: #F3F0E8;
-  color: #0F172A;
+  background: #F4EFE6;
+  color: #0A0A0A;
 
   .section-badge-header {
     text-align: center;
@@ -476,7 +483,7 @@
     .badge-title {
       font-size: 2.2rem;
       font-weight: 900;
-      color: #0F172A;
+      color: #0A0A0A;
       margin-top: 0.5rem;
     }
   }
@@ -489,7 +496,7 @@
 
   .step-card {
     background: #FFFFFF;
-    border: 1px solid #E2E8F0;
+    border: 1px solid #E5E5E5;
     border-top: 3px solid #DBA622;
     border-radius: 0px;
     padding: 2rem 1.5rem;
@@ -507,7 +514,7 @@
     .step-subtitle {
       font-size: 0.72rem;
       font-weight: 800;
-      color: #64748B;
+      color: #666666;
       letter-spacing: 0.15em;
       text-transform: uppercase;
     }
@@ -515,13 +522,13 @@
     .step-title {
       font-size: 1.2rem;
       font-weight: 900;
-      color: #0F172A;
+      color: #0A0A0A;
       margin: 0.3rem 0 0.8rem 0;
     }
 
     .step-desc {
       font-size: 0.88rem;
-      color: #475569;
+      color: #4A4A4A;
       line-height: 1.5;
     }
   }
@@ -531,9 +538,8 @@
    SECCIÓN 6: VALIDACIÓN SOCIAL (CREAM LIGHT)
    ========================================== */
 .sec-trust {
-  background: #FBF9F5;
-  border-top: 1px solid #E2E8F0;
-  border-bottom: 1px solid #E2E8F0;
+  background: #F4EFE6;
+  border: none;
 
   .trust-title {
     display: block;
@@ -541,7 +547,7 @@
     font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 0.2em;
-    color: #64748B;
+    color: #666666;
     margin-bottom: 2.5rem;
   }
 
@@ -554,7 +560,7 @@
 
     .logo-box {
       background: #FFFFFF;
-      border: 1px solid #E2E8F0;
+      border: 1px solid #E5E5E5;
       border-radius: 0px;
       padding: 1.25rem 2.2rem;
       display: flex;
@@ -565,13 +571,13 @@
       .brand-name {
         font-size: 1.1rem;
         font-weight: 900;
-        color: #0F172A;
+        color: #0A0A0A;
         letter-spacing: 0.05em;
       }
 
       .brand-sub {
         font-size: 0.68rem;
-        color: #64748B;
+        color: #666666;
       }
 
       &:hover {
@@ -593,16 +599,19 @@
 .section-divider-bar {
   width: 100%;
   background: #F4EFE6;
-  padding: 0.8rem 0;
+  padding: 0.5rem 0;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 5;
 
   .divider-line {
     flex: 1;
-    height: 1.5px;
-    background: #DBA622;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #DBA622 50%, transparent 100%);
     opacity: 0.6;
   }
 
@@ -610,6 +619,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+
+  &.dark-transition {
+    background: #000000;
+    .divider-line {
+      background: linear-gradient(90deg, transparent 0%, #DBA622 50%, transparent 100%);
+      opacity: 0.9;
+    }
   }
 }
 
@@ -619,7 +644,7 @@
    ========================================== */
 .sec-contact {
   background-color: #F4EFE6; /* Tono crema warm Kamak */
-  color: #0F172A;
+  color: #0A0A0A;
   position: relative;
 
   .split-contact {
@@ -641,7 +666,7 @@
     .contact-headline {
       font-size: 2.8rem;
       font-weight: 900;
-      color: #0F172A;
+      color: #0A0A0A;
       margin: 0.6rem 0 1.2rem 0;
       line-height: 1.1;
       letter-spacing: -0.01em;
@@ -649,7 +674,7 @@
 
     .contact-subtext {
       font-size: 1rem;
-      color: #475569;
+      color: #4A4A4A;
       line-height: 1.6;
       margin-bottom: 2.5rem;
     }
@@ -664,7 +689,7 @@
         align-items: center;
         gap: 0.8rem;
         font-size: 0.92rem;
-        color: #1E293B;
+        color: #1A1A1A;
 
         .diamond-icon {
           color: #DBA622;
@@ -672,7 +697,7 @@
         }
 
         strong {
-          color: #0F172A;
+          color: #000000;
         }
       }
     }
@@ -705,16 +730,16 @@
           font-size: 0.7rem;
           font-weight: 900;
           letter-spacing: 0.15em;
-          color: #475569;
+          color: #555555;
           text-transform: uppercase;
         }
 
         input, select, textarea {
           width: 100%;
           background: #FFFFFF;
-          border: 1px solid #CBD5E1;
+          border: 1px solid #D4D4D4;
           border-radius: 0px;
-          color: #0F172A;
+          color: #0A0A0A;
           font-family: inherit;
           font-size: 0.9rem;
           padding: 0.85rem 1rem;
@@ -740,20 +765,22 @@
 
         .btn-submit-gold {
           flex: 1.2;
-          background: #DBA622; /* Ámbar Gold Ambergate */
-          color: #0F172A;
+          background: linear-gradient(to right, #000000 50%, #DBA622 50%) 100% 0 / 200% 100% no-repeat;
+          color: #000000;
           font-weight: 900;
           font-size: 0.85rem;
           letter-spacing: 0.08em;
-          border: none;
+          border: 1.5px solid #DBA622;
           border-radius: 0px;
           padding: 1.1rem;
           cursor: pointer;
-          transition: background 0.25s ease, transform 0.2s ease;
+          transition: background-position 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 
           &:hover {
-            background: #0F172A;
+            background-position: 0 0;
+            border-color: #000000;
             color: #FFFFFF;
+            transform: translateY(-2px);
           }
         }
 
@@ -762,20 +789,21 @@
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          background: #FFFFFF;
-          color: #0F172A;
+          background: linear-gradient(to right, #000000 50%, #FFFFFF 50%) 100% 0 / 200% 100% no-repeat;
+          color: #000000;
           font-weight: 800;
           font-size: 0.82rem;
           letter-spacing: 0.05em;
-          border: 1.5px solid #0F172A;
+          border: 1.5px solid #000000;
           border-radius: 0px;
           padding: 1.1rem;
           text-decoration: none;
-          transition: all 0.25s ease;
+          transition: background-position 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease, transform 0.2s ease;
 
           &:hover {
-            background: #0F172A;
+            background-position: 0 0;
             color: #FFFFFF;
+            transform: translateY(-2px);
           }
         }
       }

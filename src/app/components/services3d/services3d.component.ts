@@ -70,7 +70,7 @@ export class Services3dComponent {
       stat2Value: 'Eco',
       stat2Label: 'Certified Wash',
       tags: ['Slab Scrubbing', 'Exterior Prep', 'Oil Removal'],
-      cubeColor: 0x38BDF8,
+      cubeColor: 0xDBA622,
       shapeType: 'hydro-crystal'
     },
     {
