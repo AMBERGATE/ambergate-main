@@ -20,12 +20,24 @@ import { Services3dComponent } from './components/services3d/services3d.componen
 export class AppComponent {
   title = 'ambergate-fe';
   isScrolled = signal(false);
+  showStickyCta = signal(false);
 
   constructor() {}
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
-    this.isScrolled.set(window.scrollY > 80);
+    const scrollY = window.scrollY;
+    this.isScrolled.set(scrollY > 80);
+    this.showStickyCta.set(scrollY > 420);
+  }
+
+  scrollToContact(): void {
+    const contactSection = document.getElementById('contact-form') || document.getElementById('contact') || document.querySelector('app-footer');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
   }
 
   interior_selective_demolitions = [
