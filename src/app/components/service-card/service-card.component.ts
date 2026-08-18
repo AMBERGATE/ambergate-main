@@ -10,10 +10,13 @@ import {
   Inject,
   PLATFORM_ID,
   HostListener,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 export interface ServiceItemData {
   step: string;
@@ -27,6 +30,7 @@ export interface ServiceItemData {
   tags: string[];
   cubeColor?: number;
   shapeType?: 'block-assembly' | 'layered-slab' | 'hydro-crystal' | 'logistics-matrix';
+  modelPath?: string;
 }
 
 @Component({
@@ -54,6 +58,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   
   private mainGroup!: THREE.Group;
   private animatedSubObjects: THREE.Object3D[] = [];
+  private loadedModel: THREE.Object3D | null = null;
 
   private animFrameId: number | null = null;
   private isBrowser: boolean;
@@ -61,8 +66,135 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   private isVisible: boolean = false;
   private animationProgress: number = 0;
 
-  constructor(@Inject(PLATFORM_ID) platformId: object) {
+  public activePhaseIndex: number = 1; // 1: Amb. Completo, 2: Selective Strip-Out, 3: Kitchen Demolition, 4: Clean Structure
+  public readonly phaseTitles: string[] = [
+    'Ambiente Completo',
+    'Strip-Out Selectivo',
+    'Preservación MEP',
+    'Estructura Limpia'
+  ];
+
+  private isWheelCooldown: boolean = false;
+  private touchStartY: number = 0;
+
+  private targetRotationY: number = 0;
+  private currentRotationY: number = 0;
+
+  constructor(
+    @Inject(PLATFORM_ID) platformId: object,
+    private cdr: ChangeDetectorRef
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  public selectPhase(phaseNumber: number): void {
+    if (phaseNumber < 1 || phaseNumber > 4) return;
+    this.activePhaseIndex = phaseNumber;
+    if (this.loadedModel) {
+      this.updateMeshVisibilityForPhase(phaseNumber);
+    }
+    this.cdr.markForCheck();
+  }
+
+  public get rotationDegrees(): number {
+    let deg = Math.round((this.targetRotationY * 180 / Math.PI) % 360);
+    if (deg > 180) deg -= 360;
+    if (deg < -180) deg += 360;
+    return deg;
+  }
+
+  public rotateLeft(): void {
+    this.targetRotationY += Math.PI / 4;
+    this.cdr.markForCheck();
+  }
+
+  public rotateRight(): void {
+    this.targetRotationY -= Math.PI / 4;
+    this.cdr.markForCheck();
+  }
+
+  public resetRotation(): void {
+    this.targetRotationY = 0;
+    this.cdr.markForCheck();
+  }
+
+  private setupSceneInteractionListeners(): void {
+    if (!this.isBrowser) return;
+    const container = this.canvasRef.nativeElement.parentElement;
+    if (!container) return;
+
+    container.addEventListener(
+      'wheel',
+      (event: WheelEvent) => {
+        // Bloquear siempre el scroll global de la página mientras el cursor esté dentro de la escena 3D
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (this.isWheelCooldown) return;
+
+        const delta = event.deltaY;
+        if (Math.abs(delta) < 12) return;
+
+        if (delta > 0) {
+          if (this.activePhaseIndex < 4) {
+            this.selectPhase(this.activePhaseIndex + 1);
+            this.triggerCooldown();
+          } else {
+            this.triggerCooldown();
+          }
+        } else if (delta < 0) {
+          if (this.activePhaseIndex > 1) {
+            this.selectPhase(this.activePhaseIndex - 1);
+            this.triggerCooldown();
+          } else {
+            this.triggerCooldown();
+          }
+        }
+      },
+      { passive: false }
+    );
+
+    container.addEventListener(
+      'touchstart',
+      (event: TouchEvent) => {
+        if (event.touches && event.touches.length === 1) {
+          this.touchStartY = event.touches[0].clientY;
+        }
+      },
+      { passive: true }
+    );
+
+    container.addEventListener(
+      'touchmove',
+      (event: TouchEvent) => {
+        if (!event.touches || event.touches.length !== 1) return;
+        const currentY = event.touches[0].clientY;
+        const diffY = this.touchStartY - currentY;
+
+        if (Math.abs(diffY) > 25) {
+          if (event.cancelable) event.preventDefault();
+          if (this.isWheelCooldown) return;
+
+          if (diffY > 0 && this.activePhaseIndex < 4) {
+            this.selectPhase(this.activePhaseIndex + 1);
+            this.touchStartY = currentY;
+            this.triggerCooldown();
+          } else if (diffY < 0 && this.activePhaseIndex > 1) {
+            this.selectPhase(this.activePhaseIndex - 1);
+            this.touchStartY = currentY;
+            this.triggerCooldown();
+          }
+        }
+      },
+      { passive: false }
+    );
+  }
+
+  private triggerCooldown(): void {
+    this.isWheelCooldown = true;
+    setTimeout(() => {
+      this.isWheelCooldown = false;
+    }, 260);
   }
 
   public navigatePrev(): void {
@@ -75,24 +207,38 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     this.navigateRequested.emit(target);
   }
 
+  private resizeObserver: ResizeObserver | null = null;
+
   ngAfterViewInit(): void {
     if (this.isBrowser) {
       setTimeout(() => {
         this.init3DScene();
         this.setupIntersectionObserver();
+        this.setupResizeObserver();
+        this.setupSceneInteractionListeners();
       }, 0);
     }
   }
 
+  private setupResizeObserver(): void {
+    const container = this.canvasRef.nativeElement.parentElement;
+    if (!container) return;
+    this.resizeObserver = new ResizeObserver(() => {
+      this.onResize();
+    });
+    this.resizeObserver.observe(container);
+  }
+
   private setupIntersectionObserver(): void {
     const element = this.canvasRef.nativeElement;
+    this.isVisible = true;
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           this.isVisible = entry.isIntersecting;
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0 }
     );
     this.observer.observe(element);
   }
@@ -104,7 +250,11 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    this.camera.position.set(0, 0, 4.5);
+    
+    // 1. BLOQUEO DE CÁMARA Y PERSPECTIVA FIJA CINEMÁTICA
+    // Vista estática y cinematográfica perfectamente angulada para encuadrar la tarjeta y el espacio.
+    this.camera.position.set(4.2, 3.2, 5.2);
+    this.camera.lookAt(0, -0.2, 0);
 
     this.renderer = new THREE.WebGLRenderer({
       canvas,
@@ -113,27 +263,258 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     });
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    // Balanced Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    // Iluminación Profesional de Estudio
+    const ambientLight = new THREE.AmbientLight(0xfff8e7, 1.4);
     this.scene.add(ambientLight);
 
-    const mainLight = new THREE.DirectionalLight(0xffffff, 2.5);
-    mainLight.position.set(4, 5, 4);
+    const mainLight = new THREE.DirectionalLight(0xffdf9e, 3.0);
+    mainLight.position.set(5, 8, 5);
     this.scene.add(mainLight);
 
-    const shapeType = this.serviceData.shapeType || 'block-assembly';
     const baseColor = this.serviceData.cubeColor || 0xDBA622;
-
-    const accentLight = new THREE.DirectionalLight(baseColor, 1.8);
-    accentLight.position.set(-4, -3, -2);
+    const accentLight = new THREE.DirectionalLight(baseColor, 2.0);
+    accentLight.position.set(-6, -2, -4);
     this.scene.add(accentLight);
+
+    const fillLight = new THREE.PointLight(0xffe6a3, 1.5, 15);
+    fillLight.position.set(0, 3, 2);
+    this.scene.add(fillLight);
 
     this.mainGroup = new THREE.Group();
     this.scene.add(this.mainGroup);
     this.animatedSubObjects = [];
 
-    // Create 3D geometry & sub-elements based on shapeType
+    const shapeType = this.serviceData.shapeType || 'block-assembly';
+    const modelPath = this.serviceData.modelPath;
+
+    if (modelPath) {
+      this.loadGLTFModel(modelPath);
+    } else {
+      this.buildFallbackGeometry(shapeType, baseColor);
+    }
+
+    this.animate();
+  }
+
+  private loadGLTFModel(modelPath: string): void {
+    // 3. FLUIDEZ Y OPTIMIZACIÓN WEB: GLTFLoader con compresión Draco
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/assets/draco/');
+
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.setDRACOLoader(dracoLoader);
+
+    const normalizedPath = modelPath.startsWith('/') ? modelPath : '/' + modelPath;
+
+    gltfLoader.load(
+      normalizedPath,
+      (gltf) => {
+        const model = gltf.scene;
+        this.loadedModel = model;
+
+        model.traverse((child) => {
+          if (child instanceof THREE.Mesh) {
+            if (child.geometry) {
+              child.geometry.computeVertexNormals();
+            }
+            if (child.material) {
+              const materials = Array.isArray(child.material) ? child.material : [child.material];
+              materials.forEach((mat) => {
+                mat.side = THREE.DoubleSide;
+                if (mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial) {
+                  mat.roughness = Math.min(mat.roughness, 0.5);
+                  mat.metalness = Math.max(mat.metalness, 0.2);
+                  mat.needsUpdate = true;
+                }
+              });
+            }
+          }
+        });
+
+        // Luz puntual de apoyo interior
+        const centerInteriorLight = new THREE.PointLight(0xffdf9e, 2.5, 10);
+        centerInteriorLight.position.set(0, 1.5, 0);
+        this.mainGroup.add(centerInteriorLight);
+
+        // Bounding box nativo de Three.js para centrado y escalado perfecto
+        model.updateMatrixWorld(true);
+        const box = new THREE.Box3().setFromObject(model);
+
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+
+        const wrapper = new THREE.Group();
+        wrapper.add(model);
+        model.position.set(-center.x, -center.y, -center.z);
+
+        const targetSize = 4.0;
+        const scaleFactor = (maxDim > 0 && isFinite(maxDim)) ? targetSize / maxDim : 1;
+        wrapper.scale.setScalar(scaleFactor);
+
+        const isServiceModel3 = this.serviceData.modelPath?.includes('amber_service_model_3');
+
+        // Ajuste de cámara según el modelo cargado
+        if (this.camera) {
+          if (isServiceModel3) {
+            this.camera.position.set(-3.0, 1.4, 4.6);
+            this.camera.lookAt(0, -0.15, 0);
+          } else {
+            this.camera.position.set(4.2, 3.2, 5.2);
+            this.camera.lookAt(0, -0.2, 0);
+          }
+          this.camera.updateProjectionMatrix();
+        }
+
+        // Aplicar visibilidad de mallas según la fase activa
+        this.updateMeshVisibilityForPhase(this.activePhaseIndex);
+
+        this.mainGroup.add(wrapper);
+        this.cdr.markForCheck();
+      },
+      undefined,
+      (error) => {
+        console.warn(`Could not load GLTF model at ${normalizedPath}, using procedural geometry fallback.`, error);
+        const baseColor = this.serviceData.cubeColor || 0xDBA622;
+        this.buildBlockAssembly(baseColor);
+        this.cdr.markForCheck();
+      }
+    );
+  }
+
+  // 2. SISTEMA DE FASES DE DEMOLICIÓN INTERACTIVO POR BOTONES (CLASIFICACIÓN DETERMINISTA GLB)
+  private updateMeshVisibilityForPhase(phase: number): void {
+    if (!this.loadedModel) return;
+
+    const isServiceModel3 = this.serviceData.modelPath?.includes('amber_service_model_3');
+
+    // Si el modelo no es el amber_service_model_3, asegurar visibilidad completa de todas las mallas
+    if (!isServiceModel3) {
+      this.loadedModel.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.visible = true;
+        }
+      });
+      this.cdr.markForCheck();
+      return;
+    }
+
+    this.loadedModel.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) return;
+
+      let nameStr = child.name || '';
+      if (child.parent && child.parent.name) {
+        nameStr += ' ' + child.parent.name;
+      }
+
+      // Elementos específicos requeridos para ser eliminados en Tab 3
+      const isExplicitlyTab3Removed =
+        child.name === 'Phase1_Structure_Phase2_Furniture_Phase2_Furniture_Phase2_F.009' ||
+        child.name === 'Phase1_Structure_Plane.002_Material.012_0' ||
+        child.name === 'Phase1_Structure_Plane.006_Material.014_0' ||
+        child.name === 'Phase1_Structure_Plane.004_Material.013_0' ||
+        nameStr.includes('F.009') ||
+        nameStr.includes('Plane.002') ||
+        nameStr.includes('Plane.006') ||
+        nameStr.includes('Plane.004');
+
+      // 0. ESTRUCTURA BASE Y MARCO ARQUITECTÓNICO (Piso, Techo, Paredes, Vigas) -> NUNCA SE ELIMINAN
+      const isStructure: boolean = Boolean(
+        !isExplicitlyTab3Removed &&
+        (nameStr.includes('Phase1_Structure') ||
+         nameStr.includes('Cube_Material.003_0') ||
+         child.name === 'Phase1_Structure_Phase2_Furniture_Phase2_Furniture_Phase2_F' ||
+         (child.parent && child.parent.name === 'Phase1_Structure_Phase2_Furniture_Phase2_Furniture_Phase2_F')) &&
+        !nameStr.includes('Phase2_Furniture') &&
+        !nameStr.includes('Phase3_Kitchen')
+      );
+
+      // 1. MARCO DE MADERA EXTERIOR
+      const isFrame: boolean = isStructure;
+
+      // 2. MESITAS DE CENTRO / LUZ (F.001, F.006) -> Se van en Tab 3 y Tab 4
+      const isSideTable: boolean = Boolean(
+        !isStructure &&
+        (nameStr.includes('Phase2_F.001') ||
+         nameStr.includes('Phase2_F.006') ||
+         nameStr.includes('Cube.002') ||
+         nameStr.includes('Cube.007'))
+      );
+
+      // 3. MESADA, BARRA DE COMEDOR Y SILLAS (F.002, F.003, F.004, F.008, F.009) -> Se van en Tab 4
+      const isCounterBar: boolean = Boolean(
+        !isStructure &&
+        (nameStr.includes('Phase2_F.002') ||
+         nameStr.includes('Phase2_F.003') ||
+         nameStr.includes('Phase2_F.004') ||
+         nameStr.includes('Phase2_F.008') ||
+         nameStr.includes('Phase2_F.009') ||
+         nameStr.includes('Cube.003') ||
+         nameStr.includes('Cube.004') ||
+         nameStr.includes('Cube.005') ||
+         nameStr.includes('Cylinder'))
+      );
+
+      // 4. MUEBLES GENERALES DE SALA (Sofás) -> Se van desde Tab 2
+      const isGenFurniture: boolean = Boolean(
+        !isStructure &&
+        !isSideTable &&
+        !isCounterBar &&
+        (nameStr.includes('Phase2_Furniture') || nameStr.includes('Cube'))
+      );
+
+      // 5. COCINA COMPLETA (node_0*) -> Se va en Tab 3 y Tab 4
+      const isKitchen: boolean = Boolean(
+        !isStructure &&
+        (nameStr.includes('Phase3_Kitchen') || nameStr.includes('node_0'))
+      );
+
+      // 6. DECORACIÓN (Alfombra Plane.002 + Cuadros Plane.004, Plane.005, Plane.006) -> Se van en Tab 3 y Tab 4
+      const isDecor: boolean = Boolean(
+        !isStructure &&
+        (nameStr.includes('Plane.002') ||
+         nameStr.includes('Plane.004') ||
+         nameStr.includes('Plane.005') ||
+         nameStr.includes('Plane.006'))
+      );
+
+      switch (phase) {
+        case 1:
+          // Tab 1 (Ambiente Completo): Todo visible
+          child.visible = true;
+          break;
+
+        case 2:
+          // Tab 2 (Strip-Out Selectivo): Ocultar sofás y muebles generales. Estructura SIEMPRE visible.
+          child.visible = isStructure || !isGenFurniture;
+          break;
+
+        case 3:
+          // Tab 3 (Preservación MEP): Ocultar sofás, cocina, decor, mesitas de luz. Estructura SIEMPRE visible.
+          if (isExplicitlyTab3Removed) {
+            child.visible = false;
+          } else {
+            child.visible = isStructure || (!isGenFurniture && !isKitchen && !isDecor && !isSideTable);
+          }
+          break;
+
+        case 4:
+          // Tab 4 (Estructura Limpia): Mantiene visible la estructura arquitectónica limpia pura.
+          child.visible = isStructure;
+          break;
+
+        default:
+          child.visible = true;
+          break;
+      }
+    });
+
+    this.cdr.markForCheck();
+  }
+
+  private buildFallbackGeometry(shapeType: string, baseColor: number): void {
     switch (shapeType) {
       case 'layered-slab':
         this.buildLayeredSlab(baseColor);
@@ -149,11 +530,8 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
         this.buildBlockAssembly(baseColor);
         break;
     }
-
-    this.animate();
   }
 
-  /* --- 1. Block Assembly (Demolition & Removal) --- */
   private buildBlockAssembly(baseColor: number): void {
     const material = new THREE.MeshStandardMaterial({
       color: baseColor,
@@ -184,7 +562,6 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  /* --- 2. Layered Slab (Flooring Specialists) --- */
   private buildLayeredSlab(baseColor: number): void {
     const layerCount = 4;
     const slabGeo = new THREE.BoxGeometry(1.6, 0.22, 1.6);
@@ -214,15 +591,12 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  /* --- 3. Hydro Crystal (High Pressure Cleaning) --- */
   private buildHydroCrystal(baseColor: number): void {
-    // Outer wireframe crystal + inner solid core
     const coreGeo = new THREE.IcosahedronGeometry(1.1, 0);
     const coreMat = new THREE.MeshStandardMaterial({
       color: baseColor,
       metalness: 0.9,
-      roughness: 0.1,
-      wireframe: false
+      roughness: 0.1
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     coreMesh.userData = { type: 'pulseScale' };
@@ -242,9 +616,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     this.animatedSubObjects.push(wireMesh);
   }
 
-  /* --- 4. Logistics Matrix (Junk Removal & Site Clean) --- */
   private buildLogisticsMatrix(baseColor: number): void {
-    // Central core cargo box
     const centerGeo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
     const centerMat = new THREE.MeshStandardMaterial({
       color: baseColor,
@@ -256,7 +628,6 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     this.mainGroup.add(centerMesh);
     this.animatedSubObjects.push(centerMesh);
 
-    // Orbiting mini container satellites
     const satCount = 6;
     const satGeo = new THREE.BoxGeometry(0.38, 0.38, 0.38);
     const satMat = new THREE.MeshStandardMaterial({
@@ -290,6 +661,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  // 3. FLUIDEZ Y OPTIMIZACIÓN WEB (LOOP DE RENDERIZADO 60 FPS ESTABLES)
   private animate = (): void => {
     this.animFrameId = requestAnimationFrame(this.animate);
 
@@ -298,7 +670,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
 
     const time = performance.now() * 0.0015;
 
-    // Animate sub-objects according to their behavior type
+    // Animación suave de fallbacks geométricos procedurales si aplican
     this.animatedSubObjects.forEach((obj) => {
       const type = obj.userData['type'];
 
@@ -316,10 +688,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
         const targetPos: THREE.Vector3 = obj.userData['targetPos'];
         const startPos: THREE.Vector3 = obj.userData['startPos'];
 
-        // Dock in when visible
         const currentPos = new THREE.Vector3().lerpVectors(startPos, targetPos, this.animationProgress);
-
-        // Orbital rotation around center Y axis
         const baseAngle = obj.userData['angle'] + time * 0.8;
         const currentRadius = currentPos.length();
 
@@ -332,10 +701,10 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Continuous smooth group rotation
+    // Animación suave de rotación de la escena 3D con inercia
     if (this.mainGroup) {
-      this.mainGroup.rotation.x += 0.006;
-      this.mainGroup.rotation.y += 0.012;
+      this.currentRotationY += (this.targetRotationY - this.currentRotationY) * 0.08;
+      this.mainGroup.rotation.y = this.currentRotationY;
     }
 
     if (this.renderer && this.scene && this.camera) {
@@ -347,15 +716,19 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   onResize(): void {
     if (!this.isBrowser || !this.renderer || !this.camera) return;
     const canvas = this.canvasRef.nativeElement;
-    const width = canvas.clientWidth || 300;
-    const height = canvas.clientHeight || 300;
+    const container = canvas.parentElement;
+    const width = container?.clientWidth || canvas.clientWidth || 300;
+    const height = container?.clientHeight || canvas.clientHeight || 300;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(width, height, false);
   }
 
   ngOnDestroy(): void {
     if (!this.isBrowser) return;
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
     if (this.observer) {
       this.observer.disconnect();
     }
@@ -374,8 +747,21 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
         }
       }
     });
+    if (this.loadedModel) {
+      this.loadedModel.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          if (child.geometry) child.geometry.dispose();
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m: THREE.Material) => m.dispose());
+          } else if (child.material) {
+            child.material.dispose();
+          }
+        }
+      });
+    }
     if (this.renderer) {
       this.renderer.dispose();
     }
   }
 }
+

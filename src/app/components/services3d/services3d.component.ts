@@ -24,7 +24,8 @@ export class Services3dComponent {
       stat2Label: 'Containment',
       tags: ['Selective Strip-Out', 'MEP Preservation', 'Zero Structural Impact'],
       cubeColor: 0xDBA622,
-      shapeType: 'block-assembly'
+      shapeType: 'block-assembly',
+      modelPath: 'assets/models/amber_service_model_3.glb'
     },
     {
       step: '02 / 04',
@@ -37,7 +38,8 @@ export class Services3dComponent {
       stat2Label: 'Filtered',
       tags: ['Tile & VCT Removal', 'Adhesive Grinding', 'Subfloor Repair'],
       cubeColor: 0x10B981,
-      shapeType: 'layered-slab'
+      shapeType: 'layered-slab',
+      modelPath: 'assets/models/amber_loft.glb'
     },
     {
       step: '03 / 04',
