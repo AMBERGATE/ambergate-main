@@ -7,39 +7,70 @@
     <div class="hero-glow-bg"></div>
 
     <div class="hero-container">
-      <!-- Subtle Corporate Tag -->
-      <div class="hero-badge-tag fade-in-1">
-        <svg width="14" height="16" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5"/>
-          <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
-          <line x1="22.5" y1="36" x2="22.5" y2="52" stroke="#DBA622" stroke-width="5"/>
-        </svg>
+      <!-- Architectural Left Staff Header (Icono Bastón Dorado + Badge sin Cuadro) -->
+      <div class="hero-staff-header fade-in-1">
+        <div class="staff-icon-anchor">
+          <svg width="26" height="30" viewBox="0 0 45 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.5 0L45 22.5L22.5 45L0 22.5L22.5 0Z" stroke="#DBA622" stroke-width="5" fill="#FFFFFF"/>
+            <path d="M22.5 12L34.5 24L22.5 36L10.5 24L22.5 12Z" stroke="#DBA622" stroke-width="4"/>
+          </svg>
+        </div>
         <span class="badge-label">SOUTH FLORIDA COMMERCIAL & INDUSTRIAL LOGISTICS</span>
       </div>
 
-      <!-- Main Impact Headline -->
-      <h1 class="hero-title fade-in-2">
-        Demolition, Logistics & Commercial Projects, <span class="gold-highlight">Delivered in Days</span>
-      </h1>
+      <!-- Left-Aligned Content with Vertical Staff Accent -->
+      <div class="hero-body-left">
+        <!-- Main Impact Headline -->
+        <h1 class="hero-title fade-in-2">
+          Demolition, Logistics &<br>
+          Commercial Projects,<br>
+          <span class="gold-highlight">Delivered in Days</span>
+        </h1>
 
-      <!-- Subtitle -->
-      <p class="hero-subtitle fade-in-3">
-        Comprehensive management with specialized equipment, 100% dust containment, and environmental certifications for industrial and commercial projects in South Florida.
-      </p>
+        <!-- Subtitle -->
+        <p class="hero-subtitle fade-in-3">
+          Comprehensive management with specialized equipment, 100% dust containment, and environmental certifications for industrial and commercial projects in South Florida.
+        </p>
 
-      <!-- Hero CTA Actions -->
-      <div class="hero-cta-actions fade-in-4">
-        <button class="cta-btn-secondary" (click)="scrollToSection(2)">
-          VIEW REAL-TIME PROJECTS
-        </button>
+        <!-- Trust & Licensing Bar (Moved Above Action Buttons) -->
+        <div class="hero-trust-bar fade-in-4">
+          <div class="trust-item">
+            <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="#DBA622">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span>LICENSED & INSURED</span>
+          </div>
+          <span class="trust-divider">•</span>
+          <div class="trust-item">
+            <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="#DBA622">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <span>MIAMI-DADE • BROWARD • PALM BEACH</span>
+          </div>
+          <span class="trust-divider">•</span>
+          <div class="trust-item">
+            <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="#DBA622">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>FREE ESTIMATES</span>
+          </div>
+        </div>
 
-        <button class="cta-btn-primary" (click)="scrollToSection(7)">
-          GET AN EXPEDITED QUOTE
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </button>
+        <!-- Hero CTA Actions (Left Aligned) -->
+        <div class="hero-cta-actions fade-in-5">
+          <button class="cta-btn-secondary" (click)="scrollToSection(2)">
+            VIEW REAL-TIME PROJECTS
+          </button>
+
+          <button class="cta-btn-primary" (click)="scrollToSection(7)">
+            GET AN EXPEDITED QUOTE
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
