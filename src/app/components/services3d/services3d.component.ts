@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 import { ServiceCardComponent, ServiceItemData } from '../service-card/service-card.component';
 
 export interface PortfolioProject {
+  id: string;
   title: string;
   category: string;
   location: string;
-  squareFeet: string;
+  details: string;
   recordTime: string;
-  imageUrl: string;
+  beforeImg: string;
+  afterImg: string;
+  thumbnail: string;
 }
 
 export interface ProcessStep {
@@ -32,6 +35,10 @@ export interface BrandPartner {
 })
 export class Services3dComponent {
   public activeSectionIndex: number = 0;
+
+  // Lógica del Slider Antes / Después
+  public sliderPosition: number = 50; // Porcentaje (0 a 100)
+  public isDraggingSlider: boolean = false;
 
   public servicesList: ServiceItemData[] = [
     {
@@ -90,30 +97,77 @@ export class Services3dComponent {
 
   public portfolioProjects: PortfolioProject[] = [
     {
+      id: 'retail-plaza',
       title: 'Commercial Demolition Retail Plaza',
-      category: 'Selective Demolition',
+      category: 'SELECTIVE DEMOLITION',
       location: 'Miami-Dade, FL',
-      squareFeet: '45,000 sq ft',
+      details: 'Full commercial strip-out & dust containment • 45,000 sq ft',
       recordTime: 'Executed in 5 Days',
-      imageUrl: 'assets/img/service-1.jpg'
+      beforeImg: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=1400&q=85',
+      afterImg: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
+      thumbnail: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'
     },
     {
+      id: 'flooring-extraction',
       title: 'Industrial Flooring Extraction',
-      category: 'Surfaces & Slab',
+      category: 'SURFACES & SLAB',
       location: 'Fort Lauderdale, FL',
-      squareFeet: '28,000 sq ft',
+      details: 'High-output tile & carpet removal with HEPA prep • 28,000 sq ft',
       recordTime: 'Executed in 3 Days',
-      imageUrl: 'assets/img/service-2.jpg'
+      beforeImg: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1400&q=85',
+      afterImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85',
+      thumbnail: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'
     },
     {
+      id: 'facility-reconditioning',
       title: 'Logistics Facility Reconditioning',
-      category: 'Power Washing & Logistics',
+      category: 'POWER WASHING & LOGISTICS',
       location: 'West Palm Beach, FL',
-      squareFeet: '60,000 sq ft',
+      details: 'Industrial slab restoration & 4000+ PSI power wash • 60,000 sq ft',
       recordTime: 'Executed in 4 Days',
-      imageUrl: 'assets/img/service-3.jpg'
+      beforeImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=85',
+      afterImg: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85',
+      thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80'
     }
   ];
+
+  public selectedProject: PortfolioProject = this.portfolioProjects[0];
+
+  public selectProject(project: PortfolioProject): void {
+    this.selectedProject = project;
+    this.sliderPosition = 50; // Resetea a la mitad al cambiar de obra
+  }
+
+  public onSliderInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.sliderPosition = parseFloat(input.value);
+  }
+
+  public startSliderDrag(event: MouseEvent | TouchEvent): void {
+    this.isDraggingSlider = true;
+    this.updateSliderPositionFromEvent(event);
+  }
+
+  public stopSliderDrag(): void {
+    this.isDraggingSlider = false;
+  }
+
+  public onSliderMove(event: MouseEvent | TouchEvent): void {
+    if (!this.isDraggingSlider) return;
+    this.updateSliderPositionFromEvent(event);
+  }
+
+  private updateSliderPositionFromEvent(event: MouseEvent | TouchEvent): void {
+    const container = (event.currentTarget as HTMLElement) || (event.target as HTMLElement).closest('.before-after-container');
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+    const offsetX = clientX - rect.left;
+    let percentage = (offsetX / rect.width) * 100;
+    if (percentage < 0) percentage = 0;
+    if (percentage > 100) percentage = 100;
+    this.sliderPosition = percentage;
+  }
 
   public processSteps: ProcessStep[] = [
     {

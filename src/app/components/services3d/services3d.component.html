@@ -185,30 +185,111 @@
   </section>
 
   <!-- ==========================================
-       SECTION 4: TRACK RECORD PORTFOLIO
+       SECTION 4: PROJECT HISTORY & BEFORE/AFTER COMPARISON (AMBERGATE BRAND)
        ========================================== -->
   <section class="sec-portfolio" id="sec-4">
     <div class="section-container">
+      
+      <!-- Encabezado Oficial Ambergate: PROJECT HISTORY -->
       <div class="section-badge-header">
+        <div class="staff-icon-anchor">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="2" width="14" height="14" transform="rotate(45 12 2)" stroke="#DBA622" stroke-width="2"/>
+            <rect x="12" y="6" width="8" height="8" transform="rotate(45 12 6)" fill="#DBA622"/>
+          </svg>
+        </div>
         <span class="badge-sub">PROJECT HISTORY</span>
         <h2 class="badge-title">OVER 100 SUCCESSFULLY EXECUTED PROJECTS</h2>
       </div>
 
-      <div class="portfolio-grid">
-        <div *ngFor="let proj of portfolioProjects" class="portfolio-card">
-          <div class="proj-media">
-            <span class="proj-badge-time">{{ proj.recordTime }}</span>
+      <!-- Tarjetas de Proyectos Reales de Ambergate (Grid Superior) -->
+      <div class="portfolio-cards-row">
+        <div 
+          *ngFor="let proj of portfolioProjects" 
+          class="portfolio-project-card"
+          [class.active]="selectedProject.id === proj.id"
+          (click)="selectProject(proj)"
+        >
+          <div class="card-thumb-wrap">
+            <img [src]="proj.thumbnail" [alt]="proj.title" class="card-thumb-img" />
+            <span class="badge-tag-gold">{{ proj.recordTime }}</span>
           </div>
-          <div class="proj-body">
-            <span class="proj-cat">{{ proj.category }}</span>
-            <h3 class="proj-title">{{ proj.title }}</h3>
-            <div class="proj-meta">
-              <span>📍 {{ proj.location }}</span>
-              <span>📐 {{ proj.squareFeet }}</span>
+
+          <div class="card-info">
+            <span class="card-category-gold">{{ proj.category }}</span>
+            <h3 class="proj-name">{{ proj.title }}</h3>
+            
+            <div class="card-meta-row">
+              <span class="meta-item">📍 {{ proj.location }}</span>
+              <span class="btn-select-view">VIEW TRANSFORMATION &rarr;</span>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Módulo del Comparador Grande Manipulable (Before / After) -->
+      <div class="before-after-wrapper">
+        <div class="before-after-header-tag">
+          <span class="pulse-dot-gold"></span>
+          <span>INTERACTIVE TRANSFORMATION: {{ selectedProject.title | uppercase }}</span>
+        </div>
+
+        <div 
+          class="before-after-container" 
+          (mousedown)="startSliderDrag($event)"
+          (touchstart)="startSliderDrag($event)"
+          (mousemove)="onSliderMove($event)"
+          (touchmove)="onSliderMove($event)"
+          (mouseup)="stopSliderDrag()"
+          (touchend)="stopSliderDrag()"
+          (mouseleave)="stopSliderDrag()"
+        >
+          <!-- Capa DESPUÉS (Base derecha) -->
+          <div class="image-layer after-layer">
+            <img [src]="selectedProject.afterImg" [alt]="selectedProject.title + ' After'" />
+            <div class="status-badge after-badge">AFTER</div>
+          </div>
+
+          <!-- Capa ANTES (Superpuesta izquierda) -->
+          <div class="image-layer before-layer" [style.width.%]="sliderPosition">
+            <img [src]="selectedProject.beforeImg" [alt]="selectedProject.title + ' Before'" />
+            <div class="status-badge before-badge">BEFORE</div>
+            
+            <div class="project-details-overlay">
+              <span class="proj-loc-name">📍 {{ selectedProject.location }}</span>
+              <span class="details-divider">•</span>
+              <span class="proj-desc-text">{{ selectedProject.details }}</span>
+            </div>
+          </div>
+
+          <!-- Divisor Central con Botón Dorado (↔) -->
+          <div class="slider-divider" [style.left.%]="sliderPosition">
+            <div class="handle-button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Input Slider Range Manipulable -->
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            [value]="sliderPosition" 
+            (input)="onSliderInput($event)" 
+            class="slider-input-overlay"
+            aria-label="Drag before and after comparator"
+          />
+        </div>
+
+        <div class="portfolio-cta-footer">
+          <button class="btn-ver-mas-obras" (click)="scrollToSection(7)">
+            REQUEST PROJECT EVALUATION &rarr;
+          </button>
+        </div>
+      </div>
+
     </div>
   </section>
 
