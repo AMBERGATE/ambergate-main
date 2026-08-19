@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceCardComponent, ServiceItemData } from '../service-card/service-card.component';
 
@@ -33,12 +33,48 @@ export interface BrandPartner {
   templateUrl: './services3d.component.html',
   styleUrl: './services3d.component.scss'
 })
-export class Services3dComponent {
+export class Services3dComponent implements OnInit {
   public activeSectionIndex: number = 0;
+  public minDate: string = '';
+
+  ngOnInit(): void {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    this.minDate = `${year}-${month}-${day}`;
+  }
 
   // Lógica del Slider Antes / Después
   public sliderPosition: number = 50; // Porcentaje (0 a 100)
   public isDraggingSlider: boolean = false;
+
+  // Selector de Tipo de Proyecto Personalizado
+  public isProjectTypeOpen: boolean = false;
+  public selectedProjectType: string = 'Selective Interior Demolition';
+  public projectTypeOptions: string[] = [
+    'Selective Interior Demolition',
+    'Professional Flooring Removal',
+    'High-Pressure Surface Washing',
+    'Debris Removal & Site Logistics',
+    'Turnkey Full-Service Solution'
+  ];
+
+  public toggleProjectTypeDropdown(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isProjectTypeOpen = !this.isProjectTypeOpen;
+  }
+
+  public selectProjectType(option: string, event: MouseEvent): void {
+    event.stopPropagation();
+    this.selectedProjectType = option;
+    this.isProjectTypeOpen = false;
+  }
+
+  @HostListener('document:click')
+  public closeDropdownsOnOutsideClick(): void {
+    this.isProjectTypeOpen = false;
+  }
 
   public servicesList: ServiceItemData[] = [
     {
@@ -252,7 +288,41 @@ export class Services3dComponent {
     modelPath: '/assets/models/amber_service_model_3.glb'
   };
 
-  public scrollToSection(index: number): void {
+  public isProjectTypeHighlighted: boolean = false;
+
+  public onQuoteRequested(serviceTitle?: string): void {
+    if (serviceTitle) {
+      const lower = serviceTitle.toLowerCase();
+      if (lower.includes('interior')) {
+        this.selectedProjectType = 'Selective Interior Demolition';
+      } else if (lower.includes('flooring')) {
+        this.selectedProjectType = 'Professional Flooring Removal';
+      } else if (lower.includes('pressure') || lower.includes('washing')) {
+        this.selectedProjectType = 'High-Pressure Surface Washing';
+      } else if (lower.includes('debris') || lower.includes('logistics') || lower.includes('clearance')) {
+        this.selectedProjectType = 'Debris Removal & Site Logistics';
+      } else if (lower.includes('building') || lower.includes('turnkey') || lower.includes('full')) {
+        this.selectedProjectType = 'Turnkey Full-Service Solution';
+      }
+    }
+
+    this.scrollToSection(7);
+
+    // Activar resplandor animado de confirmación en el selector
+    this.isProjectTypeHighlighted = true;
+    setTimeout(() => {
+      this.isProjectTypeHighlighted = false;
+    }, 2400);
+  }
+
+  public scrollToSection(index: number, optionName?: string): void {
+    if (optionName) {
+      this.selectedProjectType = optionName;
+      this.isProjectTypeHighlighted = true;
+      setTimeout(() => {
+        this.isProjectTypeHighlighted = false;
+      }, 2400);
+    }
     this.activeSectionIndex = index;
     const targetElement = document.getElementById(`sec-${index}`);
     if (targetElement) {

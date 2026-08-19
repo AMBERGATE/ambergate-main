@@ -99,7 +99,7 @@
 
       <div class="services-3d-stack">
         <div *ngFor="let item of servicesList; let i = index" class="service-item-block">
-          <app-service-card [serviceData]="item" [alignRight]="i % 2 === 0"></app-service-card>
+          <app-service-card [serviceData]="item" [alignRight]="i % 2 === 0" (quoteRequested)="onQuoteRequested($event)"></app-service-card>
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@
           </div>
 
           <div class="integral-cta-wrap">
-            <button class="btn-card-quote-gold" (click)="scrollToSection(7)">
+            <button class="btn-card-quote-gold" (click)="scrollToSection(7, 'Turnkey Full-Service Solution')">
               GET AN EXPEDITED QUOTE
               <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -402,21 +402,22 @@
 
         <div class="contact-right">
           <form class="quote-form" (submit)="$event.preventDefault()">
-            <div class="form-group-row">
-              <div class="field-box">
-                <label>PROJECT TYPE</label>
-                <select required>
-                  <option value="interior">Selective Interior Demolition</option>
-                  <option value="flooring">Professional Flooring Removal</option>
-                  <option value="pressure">High-Pressure Surface Washing</option>
-                  <option value="junk">Debris Removal & Site Logistics</option>
-                  <option value="integral">Turnkey Full-Service Solution</option>
-                </select>
-              </div>
-
-              <div class="field-box">
-                <label>TARGET TIMELINE</label>
-                <input type="text" placeholder="e.g. ASAP / Next Month" />
+            <div class="field-box full-width">
+              <label>PROJECT TYPE</label>
+              <div class="custom-select-wrapper">
+                <div class="custom-select-trigger" [class.open]="isProjectTypeOpen" [class.highlighted]="isProjectTypeHighlighted" (click)="toggleProjectTypeDropdown($event)">
+                  <span>{{ selectedProjectType }}</span>
+                  <svg class="dropdown-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <div class="custom-select-menu" *ngIf="isProjectTypeOpen">
+                  <div *ngFor="let opt of projectTypeOptions" class="custom-option"
+                       [class.selected]="opt === selectedProjectType"
+                       (click)="selectProjectType(opt, $event)">
+                    {{ opt }}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -442,6 +443,11 @@
                 <label>EMAIL</label>
                 <input type="email" placeholder="you@company.com *" required />
               </div>
+            </div>
+
+            <div class="field-box full-width">
+              <label>TARGET TIMELINE / ESTIMATED START DATE</label>
+              <input type="date" [min]="minDate" class="date-input" required />
             </div>
 
             <div class="field-box full-width">

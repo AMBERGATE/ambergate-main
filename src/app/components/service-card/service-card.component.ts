@@ -49,6 +49,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   @Input() totalServices: number = 4;
 
   @Output() navigateRequested = new EventEmitter<number>();
+  @Output() quoteRequested = new EventEmitter<string>();
 
   @ViewChild('cubeCanvas', { static: true })
   private canvasRef!: ElementRef<HTMLCanvasElement>;
@@ -125,6 +126,7 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   }
 
   public scrollToContact(): void {
+    this.quoteRequested.emit(this.serviceData.title);
     const contactElem = document.getElementById('sec-7');
     if (contactElem) {
       contactElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
