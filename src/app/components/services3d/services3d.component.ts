@@ -150,6 +150,21 @@ export class Services3dComponent {
     { name: 'FAN DE PAN', tagline: 'Commercial Chains' }
   ];
 
+  public integralShowcaseData: ServiceItemData = {
+    step: 'COMPLETE LIFECYCLE',
+    badge: 'TURNKEY EXECUTION',
+    title: 'End-to-End Building Demolition',
+    description: 'Real-time 3D simulation of a complete commercial building demolition, from initial structural evaluation and hazardous strip-out to final clear slab handover.',
+    stat1Value: '100%',
+    stat1Label: 'Turnkey Delivery',
+    stat2Value: '0%',
+    stat2Label: 'Site Friction',
+    tags: ['Full Building Strip', 'Civil Debris Hauling', 'Final Site Handoff'],
+    cubeColor: 0xDBA622,
+    shapeType: 'block-assembly',
+    modelPath: '/assets/models/amber_service_model_3.glb'
+  };
+
   public scrollToSection(index: number): void {
     this.activeSectionIndex = index;
     const targetElement = document.getElementById(`sec-${index}`);

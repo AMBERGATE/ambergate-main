@@ -107,51 +107,78 @@
        SECTION 3: INTEGRAL PROPOSAL (SPLIT-SCREEN)
        ========================================== -->
   <section class="sec-integral" id="sec-3">
-    <div class="integral-bg-glow"></div>
-    <div class="section-container split-layout">
-      <div class="split-info-col">
-        <span class="sec-tag">FULL-SERVICE SOLUTION</span>
-        <h2 class="sec-headline">ONE SINGLE COMPANY, THE COMPLETE SOLUTION.</h2>
-        <p class="sec-lead">
-          A single accountable partner from start to finish: planning, civil work, debris logistics, and flawless site handoff. We eliminate operational friction and costly delays.
-        </p>
-
-        <div class="pillars-list">
-          <div class="pillar-item">
-            <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="pillar-text">
-              <h4>Centralized Coordination</h4>
-              <p>A single technical contact overseeing strict schedule compliance.</p>
-            </div>
-          </div>
-
-          <div class="pillar-item">
-            <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            </div>
-            <div class="pillar-text">
-              <h4>Proprietary Fleet & Machinery</h4>
-              <p>Total control with no third-party rentals delaying site progress.</p>
-            </div>
-          </div>
-
-          <div class="pillar-item">
-            <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div class="pillar-text">
-              <h4>Zero Downtime</h4>
-              <p>24/7 coordinated operations aligned with target client opening deadlines.</p>
-            </div>
-          </div>
+    <div class="integral-pattern-grid"></div>
+    <div class="section-container">
+      <div class="section-badge-header">
+        <div class="staff-icon-anchor">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="2" width="14" height="14" transform="rotate(45 12 2)" stroke="#DBA622" stroke-width="2"/>
+            <rect x="12" y="6" width="8" height="8" transform="rotate(45 12 6)" fill="#DBA622"/>
+          </svg>
         </div>
+        <span class="badge-sub">FULL-SERVICE SOLUTION</span>
+        <h2 class="badge-title">ONE SINGLE COMPANY, THE COMPLETE SOLUTION.</h2>
       </div>
 
-      <div class="split-media-col">
-        <div class="media-frame">
-          <div class="frame-badge">12+ Years of Proven Industry Authority</div>
+      <div class="split-layout">
+        <div class="split-info-col">
+          <p class="sec-lead">
+            A single accountable partner from start to finish: planning, civil work, debris logistics, and flawless site handoff. We eliminate operational friction and costly delays.
+          </p>
+
+          <div class="pillars-list">
+            <div class="pillar-item">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="pillar-text">
+                <h4>Centralized Coordination</h4>
+                <p>A single technical contact overseeing strict schedule compliance.</p>
+              </div>
+            </div>
+
+            <div class="pillar-item">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div class="pillar-text">
+                <h4>Proprietary Fleet & Machinery</h4>
+                <p>Total control with no third-party rentals delaying site progress.</p>
+              </div>
+            </div>
+
+            <div class="pillar-item">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="pillar-text">
+                <h4>Zero Downtime</h4>
+                <p>24/7 coordinated operations aligned with target client opening deadlines.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="integral-cta-wrap">
+            <button class="btn-card-quote-gold" (click)="scrollToSection(7)">
+              GET AN EXPEDITED QUOTE
+              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="split-media-col">
+          <div class="architectural-render-card">
+            <div class="render-card-badge">
+              <span class="pulse-dot"></span>
+              <span>BUILDING DEMOLITION 3D SCENE</span>
+            </div>
+            <app-service-card
+              [serviceData]="integralShowcaseData"
+              [canvasOnly]="true"
+            ></app-service-card>
+          </div>
         </div>
       </div>
     </div>

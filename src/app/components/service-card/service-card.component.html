@@ -19,7 +19,7 @@
   </div>
 
   <!-- Clean Professional Corporate Information Card -->
-  <div class="pro-card">
+  <div *ngIf="!canvasOnly" class="pro-card">
     <div class="card-header">
       <span class="card-step">{{ serviceData.step }}</span>
       <span class="card-badge">{{ serviceData.badge }}</span>

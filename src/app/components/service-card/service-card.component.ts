@@ -44,6 +44,7 @@ export interface ServiceItemData {
 export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   @Input({ required: true }) serviceData!: ServiceItemData;
   @Input() alignRight: boolean = false;
+  @Input() canvasOnly: boolean = false;
   @Input() currentIndex: number = 1;
   @Input() totalServices: number = 4;
 
@@ -90,10 +91,37 @@ export class ServiceCardComponent implements AfterViewInit, OnDestroy {
   public selectPhase(phaseNumber: number): void {
     if (phaseNumber < 1 || phaseNumber > 4) return;
     this.activePhaseIndex = phaseNumber;
+
+    // Smooth rotational transition for each tab (90 degree rotation per phase)
+    this.targetRotationY = (phaseNumber - 1) * (Math.PI / 2);
+
     if (this.loadedModel) {
       this.updateMeshVisibilityForPhase(phaseNumber);
     }
+
+    if (this.animatedSubObjects.length > 0 && !this.loadedModel) {
+      this.updateProceduralPhaseEffect(phaseNumber);
+    }
+
     this.cdr.markForCheck();
+  }
+
+  private updateProceduralPhaseEffect(phase: number): void {
+    const spreadFactors = [0, 0.4, 0.85, 1.4];
+    const factor = spreadFactors[phase - 1] ?? 0;
+
+    this.animatedSubObjects.forEach((obj) => {
+      const targetPos: THREE.Vector3 | undefined = obj.userData['targetPos'];
+      const startPos: THREE.Vector3 | undefined = obj.userData['startPos'];
+
+      if (targetPos && startPos) {
+        const offsetVec = new THREE.Vector3().subVectors(startPos, targetPos).multiplyScalar(factor);
+        obj.position.copy(targetPos).add(offsetVec);
+      } else if (obj.userData['type'] === 'pulseScale') {
+        const scaleVal = 1 + factor * 0.35;
+        obj.scale.set(scaleVal, scaleVal, scaleVal);
+      }
+    });
   }
 
   public scrollToContact(): void {
