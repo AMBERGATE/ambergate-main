@@ -211,25 +211,41 @@
         <h2 class="badge-title">OVER 100 SUCCESSFULLY EXECUTED PROJECTS</h2>
       </div>
 
-      <!-- Tarjetas de Proyectos Reales de Ambergate (Grid Superior) -->
-      <div class="portfolio-cards-row">
-        <div *ngFor="let proj of portfolioProjects" class="portfolio-project-card"
-          [class.active]="selectedProject.id === proj.id" (click)="selectProject(proj)">
-          <div class="card-thumb-wrap">
-            <img [src]="proj.thumbnail" [alt]="proj.title" class="card-thumb-img" />
-            <span class="badge-tag-gold">{{ proj.recordTime }}</span>
-          </div>
+      <!-- Tarjetas de Proyectos Reales de Ambergate (Carrusel Horizontal con Franjas de Gradiente Unificadas) -->
+      <div class="portfolio-carousel-wrapper">
+        <!-- Edge Nav Button Left (Unified Full Height) -->
+        <button class="carousel-edge-button left-edge" [class.visible]="canScrollLeft" (click)="scrollPortfolioCarousel('left')" aria-label="Previous Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
 
-          <div class="card-info">
-            <span class="card-category-gold">{{ proj.category }}</span>
-            <h3 class="proj-name">{{ proj.title }}</h3>
+        <div class="portfolio-cards-row" #cardsRow (scroll)="checkScrollState($any($event.target))">
+          <div *ngFor="let proj of portfolioProjects" class="portfolio-project-card"
+            [class.active]="selectedProject.id === proj.id" (click)="selectProject(proj)">
+            <div class="card-thumb-wrap">
+              <img [src]="proj.thumbnail" [alt]="proj.title" class="card-thumb-img" />
+              <span class="badge-tag-gold">{{ proj.recordTime }}</span>
+            </div>
 
-            <div class="card-meta-row">
-              <span class="meta-item">📍 {{ proj.location }}</span>
-              <span class="btn-select-view">VIEW TRANSFORMATION &rarr;</span>
+            <div class="card-info">
+              <span class="card-category-gold">{{ proj.category }}</span>
+              <h3 class="proj-name">{{ proj.title }}</h3>
+
+              <div class="card-meta-row">
+                <span class="meta-item">📍 {{ proj.location }}</span>
+                <span class="btn-select-view">VIEW TRANSFORMATION &rarr;</span>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Edge Nav Button Right (Unified Full Height) -->
+        <button class="carousel-edge-button right-edge" [class.visible]="canScrollRight" (click)="scrollPortfolioCarousel('right')" aria-label="Next Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
 
       <!-- Módulo del Comparador Grande Manipulable (Before / After) -->
@@ -248,8 +264,8 @@
             <div class="status-badge after-badge">AFTER</div>
           </div>
 
-          <!-- Capa ANTES (Superpuesta izquierda) -->
-          <div class="image-layer before-layer" [style.width.%]="sliderPosition">
+          <!-- Capa ANTES (Superpuesta izquierda con clip-path dinámico de alta fidelidad) -->
+          <div class="image-layer before-layer" [style.clipPath]="'polygon(0 0, ' + sliderPosition + '% 0, ' + sliderPosition + '% 100%, 0 100%)'">
             <img [src]="selectedProject.beforeImg" [alt]="selectedProject.title + ' Before'" class="before-img-full" />
             <div class="status-badge before-badge">BEFORE</div>
           </div>

@@ -103,9 +103,20 @@ export class Services3dComponent {
       location: 'Miami-Dade, FL',
       details: 'Full commercial strip-out & dust containment • 45,000 sq ft',
       recordTime: 'Executed in 5 Days',
-      beforeImg: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=1400&q=85',
-      afterImg: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
-      thumbnail: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'
+      beforeImg: './assets/img/1-interior-selective-demolitions/01.webp',
+      afterImg: './assets/img/1-interior-selective-demolitions/03.webp',
+      thumbnail: './assets/img/1-interior-selective-demolitions/03.webp'
+    },
+    {
+      id: 'commercial-loft',
+      title: 'Commercial Loft & Hospitality Strip-Out',
+      category: 'INTERIOR DEMOLITION',
+      location: 'Miami Beach, FL',
+      details: 'Interior fixtures dismantling & structural slab cleanup • 32,000 sq ft',
+      recordTime: 'Executed in 4 Days',
+      beforeImg: './assets/img/1-interior-selective-demolitions/01.webp',
+      afterImg: './assets/img/1-interior-selective-demolitions/03.webp',
+      thumbnail: './assets/img/1-interior-selective-demolitions/03.webp'
     },
     {
       id: 'flooring-extraction',
@@ -114,9 +125,9 @@ export class Services3dComponent {
       location: 'Fort Lauderdale, FL',
       details: 'High-output tile & carpet removal with HEPA prep • 28,000 sq ft',
       recordTime: 'Executed in 3 Days',
-      beforeImg: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1400&q=85',
-      afterImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85',
-      thumbnail: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'
+      beforeImg: './assets/img/2-flooring-demolition-removal/01.webp',
+      afterImg: './assets/img/2-flooring-demolition-removal/02.webp',
+      thumbnail: './assets/img/2-flooring-demolition-removal/02.webp'
     },
     {
       id: 'facility-reconditioning',
@@ -125,13 +136,35 @@ export class Services3dComponent {
       location: 'West Palm Beach, FL',
       details: 'Industrial slab restoration & 4000+ PSI power wash • 60,000 sq ft',
       recordTime: 'Executed in 4 Days',
-      beforeImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=85',
-      afterImg: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85',
-      thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80'
+      beforeImg: './assets/img/3-high-pressure/01.webp',
+      afterImg: './assets/img/3-high-pressure/02.webp',
+      thumbnail: './assets/img/3-high-pressure/02.webp'
     }
   ];
 
   public selectedProject: PortfolioProject = this.portfolioProjects[0];
+  public canScrollLeft: boolean = false;
+  public canScrollRight: boolean = true;
+
+  public checkScrollState(container: HTMLElement): void {
+    if (!container) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    // Margen de tolerancia de 5px
+    this.canScrollLeft = container.scrollLeft > 5;
+    this.canScrollRight = container.scrollLeft < maxScroll - 5;
+  }
+
+  public scrollPortfolioCarousel(direction: 'left' | 'right'): void {
+    const container = document.querySelector('.portfolio-cards-row') as HTMLElement;
+    if (!container) return;
+    const scrollAmount = 380;
+    if (direction === 'left') {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+    setTimeout(() => this.checkScrollState(container), 350);
+  }
 
   public selectProject(project: PortfolioProject): void {
     this.selectedProject = project;
