@@ -103,9 +103,9 @@ export class Services3dComponent {
       location: 'Miami-Dade, FL',
       details: 'Full commercial strip-out & dust containment • 45,000 sq ft',
       recordTime: 'Executed in 5 Days',
-      beforeImg: './assets/img/1-interior-selective-demolitions/01.webp',
-      afterImg: './assets/img/1-interior-selective-demolitions/03.webp',
-      thumbnail: './assets/img/1-interior-selective-demolitions/03.webp'
+      beforeImg: './assets/img/5-full/bde4fcd0-2ea8-4758-a73b-e57ff336b2d3.jpeg',
+      afterImg: './assets/img/5-full/Gemini_Generated_Image_umz3k0umz3k0umz3 (1).jpeg',
+      thumbnail: './assets/img/5-full/Gemini_Generated_Image_umz3k0umz3k0umz3 (1).jpeg'
     },
     {
       id: 'commercial-loft',
