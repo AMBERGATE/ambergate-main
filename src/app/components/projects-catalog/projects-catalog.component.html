@@ -60,19 +60,10 @@
           *ngFor="let proj of filteredProjects" 
           class="project-catalog-card">
 
-          <div class="card-media-wrapper">
+          <div class="card-media-wrapper" (click)="inspectProject(proj)">
             <img [src]="proj.thumbnail" [alt]="proj.title" class="card-img" />
             <span class="badge-record-time">{{ proj.recordTime }}</span>
             <span class="badge-cat-tag">{{ proj.category }}</span>
-
-            <div class="card-hover-overlay">
-              <button class="btn-inspect-before-after" (click)="inspectProject(proj)">
-                <span>VER ANTES / DESPUÉS</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" />
-                </svg>
-              </button>
-            </div>
           </div>
 
           <div class="card-content-body">
@@ -83,8 +74,11 @@
 
           <div class="card-action-footer">
             <button class="btn-card-action" (click)="inspectProject(proj)">
-              <span>INSPECCIONAR TRANSFORMACIÓN</span>
-              <span class="arrow-symbol">&rarr;</span>
+              <span class="btn-action-text">INSPECCIONAR TRANSFORMACIÓN</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="arrow-svg-icon">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
             </button>
           </div>
         </div>
