@@ -242,6 +242,12 @@
       }
     }
   }
+
+  .waves {
+    .parallax > use:nth-child(4) {
+      fill: #FFFFFF; /* Garantiza fondo blanco sutil para la landing clara */
+    }
+  }
 }
 
 .waves {

@@ -7,7 +7,8 @@ import { SwiperOptions } from 'swiper/types';
 // register Swiper custom elements
 register();
 
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { Services3dComponent } from './components/services3d/services3d.component';
 
 @Component({
@@ -24,7 +25,24 @@ export class AppComponent {
   showStickyCta = signal(false);
   isDarkSection = signal(false);
 
-  constructor() {}
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      const url = event.urlAfterRedirects || event.url;
+      if (url.includes('/proyectos') || url.includes('/proyecto/')) {
+        this.isDarkSection.set(false);
+      }
+      
+      if (typeof window !== 'undefined') {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }, 10);
+      }
+    });
+  }
 
   ngOnInit(): void {
     if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {

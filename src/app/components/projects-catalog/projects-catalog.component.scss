@@ -292,8 +292,8 @@
 /* REJILLA DE TARJETAS DE PROYECTOS */
 .projects-grid-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

@@ -1,0 +1,174 @@
+<div class="project-detail-landing" *ngIf="project">
+
+  <!-- HEADER DE NAVEGACIÓN Y TITULO PRINCIPAL (ESTILO CORPORATIVO BLANCO & DORADO AMBERGATE) -->
+  <section class="project-header-hero">
+    <div class="header-container">
+      
+      <!-- CABECERA DEL BASTÓN DORADO CON ROMBO ANCHOR -->
+      <div class="hero-staff-header">
+        <div class="staff-icon-anchor">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="2" width="14" height="14" transform="rotate(45 12 2)" stroke="#DBA622" stroke-width="2" />
+            <rect x="12" y="6" width="8" height="8" transform="rotate(45 12 6)" fill="#DBA622" />
+          </svg>
+        </div>
+        <div class="breadcrumb-bar">
+          <a routerLink="/proyectos" class="btn-category-tag">{{ project.category }}</a>
+          <span class="divider-dash">—</span>
+          <a routerLink="/proyectos" class="btn-all-works">TODAS LAS OBRAS</a>
+        </div>
+      </div>
+
+      <!-- TITULO PRINCIPAL DE LA OBRA Y UBICACIÓN -->
+      <div class="title-block">
+        <h1 class="main-project-title">{{ project.title }}</h1>
+      </div>
+
+      <!-- UBICACIÓN & ESTADO -->
+      <div class="meta-location-block">
+        <span class="meta-label">UBICACIÓN / ESTADO</span>
+        <h3 class="meta-location-val">📍 {{ project.location }}, {{ project.state }}</h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN PRINCIPAL: IMAGEN DESTACADA Y FICHA TÉCNICA (FONDO CREMA / BEIGE CLARO ESTRUCTURAL) -->
+  <section class="project-case-study-section">
+    <div class="study-grid-container">
+      
+      <!-- COLUMNA IZQUIERDA: EL CASO / DESCRIPCIÓN -->
+      <div class="case-info-col">
+        <div class="case-badge">
+          <span class="diamond-icon">◆</span>
+          <span class="badge-text">EL CASO / RESUMEN EJECUTIVO</span>
+        </div>
+
+        <h2 class="case-heading">{{ project.caseStudyTitle }}</h2>
+
+        <p class="case-description">
+          {{ project.caseStudyDescription }}
+        </p>
+
+        <p class="case-subdescription">
+          Gestión técnica integral llave en mano construida por <strong>AMBERGATE USA</strong>. Equipamiento técnico especializado, control de polvo 100% HEPA, desmantelamiento de alta precisión e imagen corporativa garantizada.
+        </p>
+
+        <!-- VISOR INTERACTIVO ANTES / DESPUÉS DENTRO DE LA FICHA DE PROYECTO -->
+        <div class="inline-before-after-wrapper">
+          <div class="wrapper-header">
+            <span class="wrap-title">COMPARATIVA TÉCNICA ANTES / DESPUÉS</span>
+            <span class="wrap-time">{{ project.recordTime }}</span>
+          </div>
+
+          <div class="interactive-slider-box">
+            <img [src]="project.beforeImg" alt="Before" class="slider-img before-img" />
+            
+            <div class="after-crop-layer" [style.width.%]="inspectSliderPosition">
+              <img [src]="project.afterImg" alt="After" class="slider-img after-img" />
+              <span class="img-tag tag-after">DESPUÉS (ENTREGADO)</span>
+            </div>
+
+            <span class="img-tag tag-before">ANTES</span>
+
+            <div class="slider-handle-line" [style.left.%]="inspectSliderPosition">
+              <div class="handle-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" />
+                </svg>
+              </div>
+            </div>
+
+            <input 
+              type="range" 
+              min="0" 
+              max="100" 
+              [value]="inspectSliderPosition" 
+              (input)="onSliderInput($event)"
+              class="range-control" />
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA: FICHA TÉCNICA CORPORATIVA (CARD OSCURO CON PUNTITOS DORADOS) -->
+      <div class="tech-sheet-col">
+        <div class="tech-sheet-card">
+          <div class="gold-dot-overlay"></div>
+          <h3 class="sheet-title">FICHA TÉCNICA</h3>
+          <div class="sheet-divider"></div>
+
+          <div class="sheet-row">
+            <span class="field-label">CATEGORÍA</span>
+            <span class="field-value">{{ project.specs.category }}</span>
+          </div>
+
+          <div class="sheet-row">
+            <span class="field-label">UBICACIÓN</span>
+            <span class="field-value">{{ project.specs.location }}</span>
+          </div>
+
+          <div class="sheet-row">
+            <span class="field-label">PROVINCIA / ESTADO</span>
+            <span class="field-value">{{ project.specs.state }}</span>
+          </div>
+
+          <div class="sheet-row rubros-row">
+            <span class="field-label">RUBROS DE EJECUCIÓN</span>
+            <ul class="rubros-list">
+              <li *ngFor="let r of project.specs.rubros">• {{ r }}</li>
+            </ul>
+          </div>
+
+          <div class="sheet-cta-box">
+            <a routerLink="/" fragment="contact" class="btn-quote-similar">
+              <span>COTIZAR UNA OBRA ASÍ</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="arrow-icon">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GALERÍA DE FOTOS DE LA OBRA -->
+    <div class="project-gallery-block">
+      <div class="gallery-header-badge">
+        <span class="diamond-icon">◆</span>
+        <span class="badge-text">GALERÍA DE FOTOS DEL PROYECTO</span>
+        <span class="diamond-icon">◆</span>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" *ngFor="let imgUrl of project.gallery">
+          <img [src]="imgUrl" [alt]="project.title" class="gallery-img" />
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVEGACIÓN ENTRE OBRAS (OBRA ANTERIOR - VER TODAS - OBRA SIGUIENTE) -->
+    <div class="project-nav-footer">
+      <div class="nav-col nav-prev" *ngIf="prevProject">
+        <span class="nav-sub">— OBRA ANTERIOR</span>
+        <a [routerLink]="['/proyecto', prevProject.slug]" class="nav-project-link">
+          {{ prevProject.title }}
+        </a>
+      </div>
+
+      <div class="nav-col nav-center">
+        <a routerLink="/proyectos" class="btn-nav-all-works">VER LAS OBRAS</a>
+      </div>
+
+      <div class="nav-col nav-next" *ngIf="nextProject">
+        <span class="nav-sub">OBRA SIGUIENTE —</span>
+        <a [routerLink]="['/proyecto', nextProject.slug]" class="nav-project-link">
+          {{ nextProject.title }}
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+</div>
