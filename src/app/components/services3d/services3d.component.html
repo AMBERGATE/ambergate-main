@@ -120,6 +120,18 @@
         </div>
         <span class="badge-sub">FULL-SERVICE SOLUTION</span>
         <h2 class="badge-title">ONE SINGLE COMPANY, THE COMPLETE SOLUTION.</h2>
+
+        <!-- SISTEMA DE FASES DE DEMOLICIÓN INTERACTIVO POR BOTONES -->
+        <div class="divition" title="Seleccionar Fase de Demolición">
+          <button 
+            *ngFor="let phase of [1, 2, 3, 4]"
+            class="phase-dot" 
+            [class.active]="integralCard.activePhaseIndex === phase"
+            (click)="integralCard.selectPhase(phase)"
+            [attr.aria-label]="'Ver Fase ' + phase"
+            [title]="'Fase ' + phase">
+          </button>
+        </div>
       </div>
 
       <div class="split-layout">
@@ -177,7 +189,7 @@
               <span class="pulse-dot"></span>
               <span>BUILDING DEMOLITION 3D SCENE</span>
             </div>
-            <app-service-card [serviceData]="integralShowcaseData" [canvasOnly]="true"></app-service-card>
+            <app-service-card #integralCard [serviceData]="integralShowcaseData" [canvasOnly]="true"></app-service-card>
           </div>
         </div>
       </div>
@@ -215,7 +227,7 @@
       <!-- Tarjetas de Proyectos Reales de Ambergate (Carrusel Horizontal con Franjas de Gradiente Unificadas) -->
       <div class="portfolio-carousel-wrapper">
         <!-- Edge Nav Button Left (Unified Full Height) -->
-        <button class="carousel-edge-button left-edge" [class.visible]="canScrollLeft" (click)="scrollPortfolioCarousel('left')" aria-label="Previous Project">
+        <button type="button" class="carousel-edge-button left-edge" [class.visible]="canScrollLeft" (click)="$event.stopPropagation(); scrollPortfolioCarousel('left')" aria-label="Previous Project">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
@@ -242,7 +254,7 @@
         </div>
 
         <!-- Edge Nav Button Right (Unified Full Height) -->
-        <button class="carousel-edge-button right-edge" [class.visible]="canScrollRight" (click)="scrollPortfolioCarousel('right')" aria-label="Next Project">
+        <button type="button" class="carousel-edge-button right-edge" [class.visible]="canScrollRight" (click)="$event.stopPropagation(); scrollPortfolioCarousel('right')" aria-label="Next Project">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>

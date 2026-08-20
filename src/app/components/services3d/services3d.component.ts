@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceCardComponent, ServiceItemData } from '../service-card/service-card.component';
 
@@ -33,7 +33,8 @@ export interface BrandPartner {
   templateUrl: './services3d.component.html',
   styleUrl: './services3d.component.scss'
 })
-export class Services3dComponent implements OnInit {
+export class Services3dComponent implements OnInit, AfterViewInit {
+  @ViewChild('cardsRow') cardsRow!: ElementRef<HTMLElement>;
   public activeSectionIndex: number = 0;
   public minDate: string = '';
 
@@ -178,6 +179,24 @@ export class Services3dComponent implements OnInit {
     }
   ];
 
+  ngAfterViewInit(): void {
+    const updateScroll = () => {
+      if (this.cardsRow?.nativeElement) {
+        this.checkScrollState(this.cardsRow.nativeElement);
+      }
+    };
+    setTimeout(updateScroll, 100);
+    setTimeout(updateScroll, 400);
+    setTimeout(updateScroll, 1000);
+  }
+
+  @HostListener('window:resize')
+  public onWindowResize(): void {
+    if (this.cardsRow?.nativeElement) {
+      this.checkScrollState(this.cardsRow.nativeElement);
+    }
+  }
+
   public selectedProject: PortfolioProject = this.portfolioProjects[0];
   public canScrollLeft: boolean = false;
   public canScrollRight: boolean = true;
@@ -185,13 +204,19 @@ export class Services3dComponent implements OnInit {
   public checkScrollState(container: HTMLElement): void {
     if (!container) return;
     const maxScroll = container.scrollWidth - container.clientWidth;
-    // Margen de tolerancia de 5px
-    this.canScrollLeft = container.scrollLeft > 5;
-    this.canScrollRight = container.scrollLeft < maxScroll - 5;
+    // Si no hay overflow (maxScroll <= 5px), asumir que no se puede scrollear a ningún lado
+    if (maxScroll <= 5) {
+      this.canScrollLeft = false;
+      this.canScrollRight = false;
+      return;
+    }
+    // Tolerancia de 10px para extrema precisión
+    this.canScrollLeft = container.scrollLeft > 10;
+    this.canScrollRight = container.scrollLeft < maxScroll - 10;
   }
 
   public scrollPortfolioCarousel(direction: 'left' | 'right'): void {
-    const container = document.querySelector('.portfolio-cards-row') as HTMLElement;
+    const container = this.cardsRow?.nativeElement || (document.querySelector('.portfolio-cards-row') as HTMLElement);
     if (!container) return;
     const scrollAmount = 380;
     if (direction === 'left') {
@@ -199,7 +224,10 @@ export class Services3dComponent implements OnInit {
     } else {
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
+    // Verificar en múltiples intervalos durante el desplazamiento suave
+    setTimeout(() => this.checkScrollState(container), 150);
     setTimeout(() => this.checkScrollState(container), 350);
+    setTimeout(() => this.checkScrollState(container), 600);
   }
 
   public selectProject(project: PortfolioProject): void {
