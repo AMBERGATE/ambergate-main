@@ -21,8 +21,36 @@ export class AppComponent {
   title = 'ambergate-fe';
   isScrolled = signal(false);
   showStickyCta = signal(false);
+  isDarkSection = signal(false);
 
   constructor() {}
+
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      this.initSectionObserver();
+    }
+  }
+
+  private initSectionObserver(): void {
+    const darkSectionIds = ['sec-3', 'sec-5'];
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const isDark = darkSectionIds.includes(entry.target.id) || entry.target.tagName.toLowerCase() === 'app-footer';
+          this.isDarkSection.set(isDark);
+        }
+      });
+    }, {
+      rootMargin: '-50px 0px -80% 0px',
+      threshold: 0
+    });
+
+    setTimeout(() => {
+      const sections = document.querySelectorAll('section[id], app-footer');
+      sections.forEach(sec => observer.observe(sec));
+    }, 500);
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {

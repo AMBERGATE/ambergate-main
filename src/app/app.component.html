@@ -1,4 +1,4 @@
-<div class="hero-header" [class.scrolled]="isScrolled()">
+<div class="hero-header" [class.scrolled]="isScrolled()" [class.dark-bg]="isDarkSection()">
   <div class="header-inner">
     <div class="header-logo-container">
       <img src="./assets/img/logo-transparent-svg.svg" alt="AMBERGATE USA" class="hero-logo" />
@@ -49,7 +49,7 @@
           y="5"
           fill="rgba(255,255,255,0.12)"
         />
-        <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(10,10,10,0.85)" />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#FAFAFA" />
       </g>
     </svg>
   </div>
