@@ -15,11 +15,11 @@ export class ProjectsCatalogComponent implements OnInit {
   public portfolioProjects: ProjectDetail[] = [];
 
   public galleryCategories = [
-    { id: 'all', label: 'TODAS' },
-    { id: 'SELECTIVE DEMOLITION', label: 'DEMOLICIÓN SELECTIVA' },
-    { id: 'INTERIOR DEMOLITION', label: 'INTERIOR / TIENDAS' },
-    { id: 'SURFACES & SLAB', label: 'PISOS & SUPERFICIES' },
-    { id: 'POWER WASHING & LOGISTICS', label: 'LAVADO ALTA PRESIÓN' }
+    { id: 'all', label: 'ALL PROJECTS' },
+    { id: 'SELECTIVE DEMOLITION', label: 'SELECTIVE DEMOLITION' },
+    { id: 'INTERIOR DEMOLITION', label: 'INTERIOR / RETAIL' },
+    { id: 'SURFACES & SLAB', label: 'FLOORING & SURFACES' },
+    { id: 'POWER WASHING & LOGISTICS', label: 'HIGH-PRESSURE WASHING' }
   ];
 
   constructor(

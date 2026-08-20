@@ -15,7 +15,7 @@
         <div class="breadcrumb-bar">
           <a routerLink="/proyectos" class="btn-category-tag">{{ project.category }}</a>
           <span class="divider-dash">—</span>
-          <a routerLink="/proyectos" class="btn-all-works">TODAS LAS OBRAS</a>
+          <a routerLink="/proyectos" class="btn-all-works">ALL PROJECTS</a>
         </div>
       </div>
 
@@ -26,7 +26,7 @@
 
       <!-- UBICACIÓN & ESTADO -->
       <div class="meta-location-block">
-        <span class="meta-label">UBICACIÓN / ESTADO</span>
+        <span class="meta-label">LOCATION / STATE</span>
         <h3 class="meta-location-val">📍 {{ project.location }}, {{ project.state }}</h3>
       </div>
 
@@ -41,7 +41,7 @@
       <div class="case-info-col">
         <div class="case-badge">
           <span class="diamond-icon">◆</span>
-          <span class="badge-text">EL CASO / RESUMEN EJECUTIVO</span>
+          <span class="badge-text">CASE STUDY / EXECUTIVE SUMMARY</span>
         </div>
 
         <h2 class="case-heading">{{ project.caseStudyTitle }}</h2>
@@ -51,13 +51,13 @@
         </p>
 
         <p class="case-subdescription">
-          Gestión técnica integral llave en mano construida por <strong>AMBERGATE USA</strong>. Equipamiento técnico especializado, control de polvo 100% HEPA, desmantelamiento de alta precisión e imagen corporativa garantizada.
+          Comprehensive turnkey technical management executed by <strong>AMBERGATE USA</strong>. Specialized heavy equipment, 100% HEPA dust containment, high-precision dismantling, and guaranteed corporate image standards.
         </p>
 
         <!-- VISOR INTERACTIVO ANTES / DESPUÉS DENTRO DE LA FICHA DE PROYECTO -->
         <div class="inline-before-after-wrapper">
           <div class="wrapper-header">
-            <span class="wrap-title">COMPARATIVA TÉCNICA ANTES / DESPUÉS</span>
+            <span class="wrap-title">BEFORE / AFTER TECHNICAL COMPARISON</span>
             <span class="wrap-time">{{ project.recordTime }}</span>
           </div>
 
@@ -66,10 +66,10 @@
             
             <div class="after-crop-layer" [style.width.%]="inspectSliderPosition">
               <img [src]="project.afterImg" alt="After" class="slider-img after-img" />
-              <span class="img-tag tag-after">DESPUÉS (ENTREGADO)</span>
+              <span class="img-tag tag-after">AFTER (DELIVERED)</span>
             </div>
 
-            <span class="img-tag tag-before">ANTES</span>
+            <span class="img-tag tag-before">BEFORE</span>
 
             <div class="slider-handle-line" [style.left.%]="inspectSliderPosition">
               <div class="handle-btn">
@@ -94,26 +94,26 @@
       <div class="tech-sheet-col">
         <div class="tech-sheet-card">
           <div class="gold-dot-overlay"></div>
-          <h3 class="sheet-title">FICHA TÉCNICA</h3>
+          <h3 class="sheet-title">TECHNICAL SPECIFICATIONS</h3>
           <div class="sheet-divider"></div>
 
           <div class="sheet-row">
-            <span class="field-label">CATEGORÍA</span>
+            <span class="field-label">CATEGORY</span>
             <span class="field-value">{{ project.specs.category }}</span>
           </div>
 
           <div class="sheet-row">
-            <span class="field-label">UBICACIÓN</span>
+            <span class="field-label">LOCATION</span>
             <span class="field-value">{{ project.specs.location }}</span>
           </div>
 
           <div class="sheet-row">
-            <span class="field-label">PROVINCIA / ESTADO</span>
+            <span class="field-label">STATE / PROVINCE</span>
             <span class="field-value">{{ project.specs.state }}</span>
           </div>
 
           <div class="sheet-row rubros-row">
-            <span class="field-label">RUBROS DE EJECUCIÓN</span>
+            <span class="field-label">EXECUTION SCOPE</span>
             <ul class="rubros-list">
               <li *ngFor="let r of project.specs.rubros">• {{ r }}</li>
             </ul>
@@ -121,7 +121,7 @@
 
           <div class="sheet-cta-box">
             <a routerLink="/" fragment="contact" class="btn-quote-similar">
-              <span>COTIZAR UNA OBRA ASÍ</span>
+              <span>GET A SIMILAR QUOTE</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="arrow-icon">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -137,7 +137,7 @@
     <div class="project-gallery-block">
       <div class="gallery-header-badge">
         <span class="diamond-icon">◆</span>
-        <span class="badge-text">GALERÍA DE FOTOS DEL PROYECTO</span>
+        <span class="badge-text">PROJECT PHOTO GALLERY</span>
         <span class="diamond-icon">◆</span>
       </div>
 
@@ -151,18 +151,18 @@
     <!-- NAVEGACIÓN ENTRE OBRAS (OBRA ANTERIOR - VER TODAS - OBRA SIGUIENTE) -->
     <div class="project-nav-footer">
       <div class="nav-col nav-prev" *ngIf="prevProject">
-        <span class="nav-sub">— OBRA ANTERIOR</span>
+        <span class="nav-sub">— PREVIOUS PROJECT</span>
         <a [routerLink]="['/proyecto', prevProject.slug]" class="nav-project-link">
           {{ prevProject.title }}
         </a>
       </div>
 
       <div class="nav-col nav-center">
-        <a routerLink="/proyectos" class="btn-nav-all-works">VER LAS OBRAS</a>
+        <a routerLink="/proyectos" class="btn-nav-all-works">VIEW ALL PROJECTS</a>
       </div>
 
       <div class="nav-col nav-next" *ngIf="nextProject">
-        <span class="nav-sub">OBRA SIGUIENTE —</span>
+        <span class="nav-sub">NEXT PROJECT —</span>
         <a [routerLink]="['/proyecto', nextProject.slug]" class="nav-project-link">
           {{ nextProject.title }}
         </a>

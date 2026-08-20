@@ -41,18 +41,18 @@ export class ProjectService {
       thumbnail: './assets/img/5-full/Gemini_Generated_Image_umz3k0umz3k0umz3 (1).jpeg',
       beforeImg: './assets/img/5-full/bde4fcd0-2ea8-4758-a73b-e57ff336b2d3.jpeg',
       afterImg: './assets/img/5-full/Gemini_Generated_Image_umz3k0umz3k0umz3 (1).jpeg',
-      subtitle: 'RENOVACIÓN COMERCIAL & DEMOLICIÓN DE INTERIORES',
-      caseStudyTitle: 'DE ESPACIO OBSOLETO A PLAZA COMERCIAL DE ALTO TRÁFICO',
-      caseStudyDescription: 'Desmantelamiento selectivo completo y aislamiento con tecnología HEPA 100% libre de polvo en espacio comercial de 45,000 sq ft. Trabajo ejecutado bajo estrictas normas de seguridad industrial en tiempo récord.',
+      subtitle: 'COMMERCIAL RENOVATION & INTERIOR DEMOLITION',
+      caseStudyTitle: 'FROM OBSOLETE SPACE TO HIGH-TRAFFIC COMMERCIAL PLAZA',
+      caseStudyDescription: 'Full selective dismantling and 100% HEPA dust-free containment in a 45,000 sq ft commercial space. Executed under strict industrial safety standards in record time.',
       specs: {
-        category: 'Demolición Selectiva / Comercio',
+        category: 'Selective Demolition / Commercial',
         location: 'Miami-Dade',
         state: 'Florida',
         rubros: [
-          'Desmantelamiento Comercial',
-          'Aislamiento de Polvo HEPA',
-          'Retiro de Muros y Placas',
-          'Gestión de Escombros y Reciclaje'
+          'Commercial Strip-Out',
+          'HEPA Dust Containment',
+          'Wall & Slab Removal',
+          'Debris Management & Recycling'
         ]
       },
       gallery: [
@@ -72,18 +72,18 @@ export class ProjectService {
       thumbnail: './assets/img/1-interior-selective-demolitions/03.webp',
       beforeImg: './assets/img/1-interior-selective-demolitions/01.webp',
       afterImg: './assets/img/1-interior-selective-demolitions/03.webp',
-      subtitle: 'RESTRUCUTURACIÓN DE INTERIORES HOTELERA & LOFTS',
-      caseStudyTitle: 'TRANSFORMACIÓN ESTRUCTURAL INTERIOR EN HOTEL DE LUJO',
-      caseStudyDescription: 'Remoción técnica de mobiliario fijo, techos suspendidos e instalaciones obsoletas en 32,000 sq ft garantizando la integridad estructural del edificio original.',
+      subtitle: 'HOSPITALITY & LOFT INTERIOR RESTRUCTURING',
+      caseStudyTitle: 'INTERIOR STRUCTURAL TRANSFORMATION IN LUXURY HOTEL',
+      caseStudyDescription: 'Technical removal of fixed furniture, suspended ceilings, and obsolete systems across 32,000 sq ft while safeguarding original building integrity.',
       specs: {
-        category: 'Interiorismo & Demolición',
+        category: 'Interior Design & Demolition',
         location: 'Miami Beach',
         state: 'Florida',
         rubros: [
-          'Strip-Out Interior',
-          'Limpieza de Losa Estructural',
-          'Desmantelamiento Gastronómico',
-          'Logística de Retiro Pesado'
+          'Interior Strip-Out',
+          'Structural Slab Cleanup',
+          'Gastronomic Dismantling',
+          'Heavy Removal Logistics'
         ]
       },
       gallery: [
@@ -104,18 +104,18 @@ export class ProjectService {
       thumbnail: './assets/img/2-flooring-demolition-removal/02.webp',
       beforeImg: './assets/img/2-flooring-demolition-removal/01.webp',
       afterImg: './assets/img/2-flooring-demolition-removal/02.webp',
-      subtitle: 'REVESTIMIENTOS Y REMOCIÓN MECANIZADA DE PISOS',
-      caseStudyTitle: 'EXTRACCIÓN MECANIZADA DE PISOS INDUSTRIALES Y PREPARACIÓN DE SUPERFICIE',
-      caseStudyDescription: 'Remoción intensiva de 28,000 sq ft de epoxi y cerámicos industriales con maquinaria pesada y nivelación listos para nueva terminación.',
+      subtitle: 'COATINGS & MECHANIZED FLOOR REMOVAL',
+      caseStudyTitle: 'MECHANIZED INDUSTRIAL FLOOR EXTRACTION & SURFACE PREPARATION',
+      caseStudyDescription: 'Intensive removal of 28,000 sq ft of epoxy and industrial tiles using heavy machinery and precision levelling ready for new finishes.',
       specs: {
-        category: 'Superficies & Pisos',
+        category: 'Surfaces & Flooring',
         location: 'Fort Lauderdale',
         state: 'Florida',
         rubros: [
-          'Extracción de Cerámicos y Epoxi',
-          'Preparación de Losa HEPA',
-          'Desbastado Diamond Grinding',
-          'Restauración de Juntas'
+          'Ceramic & Epoxy Extraction',
+          'HEPA Slab Preparation',
+          'Diamond Grinding & Resurfacing',
+          'Joint Restoration'
         ]
       },
       gallery: [
@@ -135,18 +135,18 @@ export class ProjectService {
       thumbnail: './assets/img/3-high-pressure/02.webp',
       beforeImg: './assets/img/3-high-pressure/01.webp',
       afterImg: './assets/img/3-high-pressure/02.webp',
-      subtitle: 'HIDROLAVADO INDUSTRIAL & DECONTAMINACIÓN',
-      caseStudyTitle: 'REACONDICIONAMIENTO COMPLETO DE NAVE LOGÍSTICA',
-      caseStudyDescription: 'Limpieza profunda a 4000+ PSI, desengrasado técnico y sellado de soleras en 60,000 sq ft para centro logístico de alta exigencia.',
+      subtitle: 'INDUSTRIAL POWER WASHING & DECONTAMINATION',
+      caseStudyTitle: 'COMPLETE RECONDITIONING OF LOGISTICS WAREHOUSE',
+      caseStudyDescription: 'Deep cleaning at 4000+ PSI, technical degreasing, and slab sealing across 60,000 sq ft for high-demanding logistics hubs.',
       specs: {
-        category: 'Lavado Industrial & Logística',
+        category: 'Industrial Washing & Logistics',
         location: 'West Palm Beach',
         state: 'Florida',
         rubros: [
-          'Hidrolavado 4000+ PSI',
-          'Descontaminación de Aceites',
-          'Sellado de Microfisuras',
-          'Pintura de Señalización'
+          '4000+ PSI Power Washing',
+          'Oil & Chemical Decontamination',
+          'Micro-crack Sealing',
+          'Line Striping & Safety Paint'
         ]
       },
       gallery: [
