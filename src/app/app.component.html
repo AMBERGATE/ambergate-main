@@ -1,8 +1,8 @@
 <div class="hero-header" [class.scrolled]="isScrolled()" [class.dark-bg]="isDarkSection()">
   <div class="header-inner">
-    <div class="header-logo-container">
+    <a routerLink="/" class="header-logo-container">
       <img src="./assets/img/logo-transparent-svg.svg" alt="AMBERGATE USA" class="hero-logo" />
-    </div>
+    </a>
 
     <div class="header-cta-wrapper" [class.visible]="showStickyCta()">
       <button class="header-cta-btn" (click)="scrollToContact()">
@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<app-services3d></app-services3d>
+<router-outlet></router-outlet>
 
 <app-footer></app-footer>
 

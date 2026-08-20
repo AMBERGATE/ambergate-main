@@ -7,11 +7,12 @@ import { SwiperOptions } from 'swiper/types';
 // register Swiper custom elements
 register();
 
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { Services3dComponent } from './components/services3d/services3d.component';
 
 @Component({
     selector: 'app-root',
-    imports: [FooterComponent, Services3dComponent],
+    imports: [FooterComponent, Services3dComponent, RouterOutlet, RouterLink],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.Default,

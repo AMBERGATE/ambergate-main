@@ -26,10 +26,12 @@ export interface BrandPartner {
   tagline: string;
 }
 
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-services3d',
   standalone: true,
-  imports: [CommonModule, ServiceCardComponent],
+  imports: [CommonModule, ServiceCardComponent, RouterLink],
   templateUrl: './services3d.component.html',
   styleUrl: './services3d.component.scss'
 })
@@ -70,6 +72,63 @@ export class Services3dComponent implements OnInit, AfterViewInit {
     event.stopPropagation();
     this.selectedProjectType = option;
     this.isProjectTypeOpen = false;
+  }
+
+  // Modal de Catálogo Completo de Proyectos (Ambergate Luxury Gallery)
+  public isAllProjectsModalOpen: boolean = false;
+  public selectedCategoryFilter: string = 'all';
+
+  public galleryCategories = [
+    { id: 'all', label: 'ALL PROJECTS' },
+    { id: 'SELECTIVE DEMOLITION', label: 'SELECTIVE DEMOLITION' },
+    { id: 'INTERIOR DEMOLITION', label: 'INTERIOR DEMOLITION' },
+    { id: 'SURFACES & SLAB', label: 'SURFACES & SLAB' },
+    { id: 'POWER WASHING & LOGISTICS', label: 'POWER WASHING & LOGISTICS' }
+  ];
+
+  public get filteredProjects(): PortfolioProject[] {
+    if (this.selectedCategoryFilter === 'all') {
+      return this.portfolioProjects;
+    }
+    return this.portfolioProjects.filter(p => p.category === this.selectedCategoryFilter);
+  }
+
+  public getCategoryCount(catId: string): number {
+    if (catId === 'all') {
+      return this.portfolioProjects.length;
+    }
+    return this.portfolioProjects.filter(p => p.category === catId).length;
+  }
+
+  public openAllProjectsModal(): void {
+    this.isAllProjectsModalOpen = true;
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  public closeAllProjectsModal(): void {
+    this.isAllProjectsModalOpen = false;
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+  }
+
+  public setCategoryFilter(catId: string): void {
+    this.selectedCategoryFilter = catId;
+  }
+
+  public selectProjectFromModal(project: PortfolioProject): void {
+    this.selectProject(project);
+    this.closeAllProjectsModal();
+    this.scrollToSection(4);
+  }
+
+  @HostListener('document:keydown.escape')
+  public onEscapeKey(): void {
+    if (this.isAllProjectsModalOpen) {
+      this.closeAllProjectsModal();
+    }
   }
 
   @HostListener('document:click')
