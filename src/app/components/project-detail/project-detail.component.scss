@@ -171,7 +171,11 @@
   width: 100%;
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0 1.2rem;
+  }
 
   .study-grid-container {
     display: grid;
@@ -592,6 +596,16 @@
         text-decoration: none;
         cursor: pointer;
         transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        box-sizing: border-box;
+
+        @media (max-width: 768px) {
+          justify-content: center;
+          gap: 0.5rem;
+          height: auto;
+          font-size: 0.65rem;
+          letter-spacing: 0.05em;
+          padding: 1.1rem 0.5rem;
+        }
 
         &::before {
           content: '';
@@ -767,6 +781,15 @@
     letter-spacing: 0.15em;
     text-decoration: none;
     transition: all 0.3s ease;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      text-align: center;
+      padding: 1.1rem 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+    }
 
     &:hover {
       background: #000000;
