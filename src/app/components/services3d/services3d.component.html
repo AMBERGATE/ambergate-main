@@ -99,7 +99,8 @@
 
       <div class="services-3d-stack">
         <div *ngFor="let item of servicesList; let i = index" class="service-item-block">
-          <app-service-card [serviceData]="item" [alignRight]="i % 2 === 0" (quoteRequested)="onQuoteRequested($event)"></app-service-card>
+          <app-service-card [serviceData]="item" [alignRight]="i % 2 === 0"
+            (quoteRequested)="onQuoteRequested($event)"></app-service-card>
         </div>
       </div>
     </div>
@@ -123,13 +124,9 @@
 
         <!-- SISTEMA DE FASES DE DEMOLICIÓN INTERACTIVO POR BOTONES -->
         <div class="divition" title="Seleccionar Fase de Demolición">
-          <button 
-            *ngFor="let phase of [1, 2, 3, 4]"
-            class="phase-dot" 
-            [class.active]="integralCard.activePhaseIndex === phase"
-            (click)="integralCard.selectPhase(phase)"
-            [attr.aria-label]="'Ver Fase ' + phase"
-            [title]="'Fase ' + phase">
+          <button *ngFor="let phase of [1, 2, 3, 4]" class="phase-dot"
+            [class.active]="integralCard.activePhaseIndex === phase" (click)="integralCard.selectPhase(phase)"
+            [attr.aria-label]="'Ver Fase ' + phase" [title]="'Fase ' + phase">
           </button>
         </div>
       </div>
@@ -183,6 +180,7 @@
           </div>
         </div>
 
+
         <div class="split-media-col">
           <div class="architectural-render-card">
             <div class="render-card-badge">
@@ -221,14 +219,17 @@
           </svg>
         </div>
         <span class="badge-sub">PROJECT HISTORY</span>
-        <h2 class="badge-title">OVER <span class="highlight-num">{{ portfolioProjects.length }}</span> SUCCESSFULLY EXECUTED PROJECTS</h2>
+        <h2 class="badge-title">OVER <span class="highlight-num">{{ portfolioProjects.length }}</span> SUCCESSFULLY
+          EXECUTED PROJECTS</h2>
       </div>
 
       <!-- Tarjetas de Proyectos Reales de Ambergate (Carrusel Horizontal con Franjas de Gradiente Unificadas) -->
       <div class="portfolio-carousel-wrapper">
         <!-- Edge Nav Button Left (Unified Full Height) -->
-        <button type="button" class="carousel-edge-button left-edge" [class.visible]="canScrollLeft" (click)="$event.stopPropagation(); scrollPortfolioCarousel('left')" aria-label="Previous Project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="carousel-edge-button left-edge" [class.visible]="canScrollLeft"
+          (click)="$event.stopPropagation(); scrollPortfolioCarousel('left')" aria-label="Previous Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </button>
@@ -254,8 +255,10 @@
         </div>
 
         <!-- Edge Nav Button Right (Unified Full Height) -->
-        <button type="button" class="carousel-edge-button right-edge" [class.visible]="canScrollRight" (click)="$event.stopPropagation(); scrollPortfolioCarousel('right')" aria-label="Next Project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="carousel-edge-button right-edge" [class.visible]="canScrollRight"
+          (click)="$event.stopPropagation(); scrollPortfolioCarousel('right')" aria-label="Next Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
@@ -278,7 +281,8 @@
           </div>
 
           <!-- Capa ANTES (Superpuesta izquierda con clip-path dinámico de alta fidelidad) -->
-          <div class="image-layer before-layer" [style.clipPath]="'polygon(0 0, ' + sliderPosition + '% 0, ' + sliderPosition + '% 100%, 0 100%)'">
+          <div class="image-layer before-layer"
+            [style.clipPath]="'polygon(0 0, ' + sliderPosition + '% 0, ' + sliderPosition + '% 100%, 0 100%)'">
             <img [src]="selectedProject.beforeImg" [alt]="selectedProject.title + ' Before'" class="before-img-full" />
             <div class="status-badge before-badge">BEFORE</div>
           </div>
@@ -307,7 +311,8 @@
         <div class="portfolio-cta-footer">
           <a routerLink="/proyectos" class="btn-ver-mas-obras secondary-view-all">
             <span>EXPLORE ALL EXECUTED PROJECTS</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" class="btn-arrow-icon">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
               <rect x="14" y="14" width="7" height="7"></rect>
@@ -316,7 +321,8 @@
           </a>
           <button class="btn-ver-mas-obras" (click)="scrollToSection(7)">
             <span>REQUEST PROJECT EVALUATION</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" class="btn-arrow-icon">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
@@ -394,15 +400,18 @@
               <div class="contact-item">
                 <span class="logo-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="#DBA622" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
-                    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.119.553 4.11 1.519 5.836L0 24l6.326-1.492C8.01 23.447 9.948 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.848 0-3.58-.493-5.078-1.353l-.364-.21-3.77.89.907-3.676-.234-.378A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                    <path
+                      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z" />
+                    <path
+                      d="M12 0C5.373 0 0 5.373 0 12c0 2.119.553 4.11 1.519 5.836L0 24l6.326-1.492C8.01 23.447 9.948 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.848 0-3.58-.493-5.078-1.353l-.364-.21-3.77.89.907-3.676-.234-.378A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
                   </svg>
                 </span>
                 <span>WhatsApp: <strong>+1 (305) 813-8683</strong></span>
               </div>
               <div class="contact-item">
                 <span class="logo-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                   </svg>
@@ -411,7 +420,8 @@
               </div>
               <div class="contact-item">
                 <span class="logo-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DBA622" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
@@ -427,16 +437,17 @@
             <div class="field-box full-width">
               <label>PROJECT TYPE</label>
               <div class="custom-select-wrapper">
-                <div class="custom-select-trigger" [class.open]="isProjectTypeOpen" [class.highlighted]="isProjectTypeHighlighted" (click)="toggleProjectTypeDropdown($event)">
+                <div class="custom-select-trigger" [class.open]="isProjectTypeOpen"
+                  [class.highlighted]="isProjectTypeHighlighted" (click)="toggleProjectTypeDropdown($event)">
                   <span>{{ selectedProjectType }}</span>
-                  <svg class="dropdown-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <svg class="dropdown-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </div>
                 <div class="custom-select-menu" *ngIf="isProjectTypeOpen">
                   <div *ngFor="let opt of projectTypeOptions" class="custom-option"
-                       [class.selected]="opt === selectedProjectType"
-                       (click)="selectProjectType(opt, $event)">
+                    [class.selected]="opt === selectedProjectType" (click)="selectProjectType(opt, $event)">
                     {{ opt }}
                   </div>
                 </div>
@@ -480,16 +491,20 @@
             <div class="form-buttons-row">
               <a href="https://wa.me/13059795111?text=Hello%20Ambergate%2C%20I%20would%20like%20to%20request%20a%20quote."
                 target="_blank" class="btn-wa-outline">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="btn-icon">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
-                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.119.553 4.11 1.519 5.836L0 24l6.326-1.492C8.01 23.447 9.948 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.848 0-3.58-.493-5.078-1.353l-.364-.21-3.77.89.907-3.676-.234-.378A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                  class="btn-icon">
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z" />
+                  <path
+                    d="M12 0C5.373 0 0 5.373 0 12c0 2.119.553 4.11 1.519 5.836L0 24l6.326-1.492C8.01 23.447 9.948 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.848 0-3.58-.493-5.078-1.353l-.364-.21-3.77.89.907-3.676-.234-.378A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
                 </svg>
                 <span>TALK ON WHATSAPP</span>
               </a>
 
               <button type="submit" class="btn-submit-gold">
                 <span>SUBMIT & GET CONTACTED</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon-arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round" class="btn-icon-arrow">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>

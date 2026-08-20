@@ -81,8 +81,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0.4rem 0 0.15rem 0;
-    margin-left: -24px; /* Alinea el tallo del logo exactamente sobre el bastón de 2px */
+    padding: 1.8rem 0 1.2rem 0;
+    margin-left: -28px; /* Alinea el tallo del logo exactamente sobre el bastón de 2px */
     transition: padding 0.4s ease, margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
     @media (max-width: 768px) {
@@ -91,13 +91,15 @@
 
     .hero-logo {
       width: auto;
-      max-width: 380px;
+      max-width: 650px;
       height: auto;
-      max-height: 100px;
+      max-height: 210px;
       object-fit: contain;
       object-position: left center;
+      filter: drop-shadow(0 6px 20px rgba(219, 166, 34, 0.22));
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.4s ease;
     }
   }
 
