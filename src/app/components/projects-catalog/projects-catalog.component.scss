@@ -10,7 +10,8 @@
    ========================================== */
 .catalog-hero-section {
   position: relative;
-  background-color: #FFFFFF; /* Fondo Blanco Puro como el Hero principal */
+  background-color: #FFFFFF;
+  /* Fondo Blanco Puro como el Hero principal */
   color: #0A0A0A;
   padding: calc(28vh + 2rem) 1.5rem 3rem 1.5rem;
   overflow: hidden;
@@ -36,12 +37,13 @@
     margin: 0 auto;
     position: relative;
     z-index: 2;
-    padding: 1rem 1.5rem 1rem 3.5rem;
+    padding: 1rem 1.5rem 1rem 3rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border-left: 2px solid #DBA622; /* El bastón dorado continuo a la izquierda idéntico al Home */
+    border-left: 2px solid #DBA622;
+    /* El bastón dorado continuo a la izquierda idéntico al Home */
 
     @media (max-width: 768px) {
       padding-left: 1.8rem;
@@ -57,7 +59,8 @@
 
     .staff-icon-anchor {
       position: absolute;
-      left: calc(-3.5rem - 12px); /* Centrado exacto del rombo sobre la línea dorada */
+      left: calc(-3rem - 12px);
+      /* Centrado exacto del rombo sobre la línea dorada */
       top: 50%;
       transform: translateY(-50%);
       background: #FFFFFF;
@@ -188,8 +191,10 @@
 
   .section-container {
     max-width: 1200px;
+    width: 100%;
+    box-sizing: border-box;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0;
   }
 }
 
@@ -430,7 +435,8 @@
       letter-spacing: 0.08em;
       border-radius: 0px;
       cursor: pointer;
-      white-space: nowrap; /* Fuerza que el texto 'INSPECCIONAR TRANSFORMACIÓN' vaya en 1 sola línea */
+      white-space: nowrap;
+      /* Fuerza que el texto 'INSPECCIONAR TRANSFORMACIÓN' vaya en 1 sola línea */
       transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
       .btn-action-text {

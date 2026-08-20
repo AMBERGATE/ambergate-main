@@ -9,11 +9,10 @@ register();
 
 import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Services3dComponent } from './components/services3d/services3d.component';
 
 @Component({
     selector: 'app-root',
-    imports: [FooterComponent, Services3dComponent, RouterOutlet, RouterLink],
+    imports: [FooterComponent, RouterOutlet, RouterLink],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.Default,

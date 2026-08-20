@@ -18,8 +18,8 @@
   z-index: 999;
   box-sizing: border-box;
   transition: min-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s ease;
+    padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
 
   .header-trust-bar {
     display: flex;
@@ -65,7 +65,7 @@
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 1.5rem 0 0;
+    padding: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -82,7 +82,8 @@
     justify-content: flex-start;
     align-items: center;
     padding: 1.8rem 0 1.2rem 0;
-    margin-left: -28px; /* Alinea el tallo del logo exactamente sobre el bastón de 2px */
+    margin-left: -24px;
+    /* Alinea el tallo vertical del isotipo exactamente sobre la línea dorada */
     transition: padding 0.4s ease, margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
     @media (max-width: 768px) {
@@ -217,11 +218,11 @@
       min-height: 38px;
       max-height: 38px;
 
-      .parallax > use {
+      .parallax>use {
         transition: fill 0.5s ease;
       }
 
-      .parallax > use:nth-child(4) {
+      .parallax>use:nth-child(4) {
         fill: #FAFAFA;
       }
     }
@@ -230,24 +231,31 @@
   /* Cuando el fondo de la sección actual es Oscuro/Negro (sec-3, sec-5, footer) */
   &.dark-bg {
     .waves {
-      .parallax > use:nth-child(1) {
+      .parallax>use:nth-child(1) {
         fill: rgba(255, 255, 255, 0.05);
       }
-      .parallax > use:nth-child(2) {
-        fill: rgba(219, 166, 34, 0.25); /* Dorado translucido brillante */
+
+      .parallax>use:nth-child(2) {
+        fill: rgba(219, 166, 34, 0.25);
+        /* Dorado translucido brillante */
       }
-      .parallax > use:nth-child(3) {
-        fill: rgba(219, 166, 34, 0.55); /* Cresta dorada corporativa */
+
+      .parallax>use:nth-child(3) {
+        fill: rgba(219, 166, 34, 0.55);
+        /* Cresta dorada corporativa */
       }
-      .parallax > use:nth-child(4) {
-        fill: #0B0B0B; /* Se integra perfecto con el fondo de la sección oscura */
+
+      .parallax>use:nth-child(4) {
+        fill: #0B0B0B;
+        /* Se integra perfecto con el fondo de la sección oscura */
       }
     }
   }
 
   .waves {
-    .parallax > use:nth-child(4) {
-      fill: #FFFFFF; /* Garantiza fondo blanco sutil para la landing clara */
+    .parallax>use:nth-child(4) {
+      fill: #FFFFFF;
+      /* Garantiza fondo blanco sutil para la landing clara */
     }
   }
 }
