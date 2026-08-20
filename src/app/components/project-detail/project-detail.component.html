@@ -13,9 +13,15 @@
           </svg>
         </div>
         <div class="breadcrumb-bar">
-          <a routerLink="/proyectos" class="btn-category-tag">{{ project.category }}</a>
+          <a routerLink="/proyectos" class="btn-all-works">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="back-arrow-icon">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>ALL PROJECTS</span>
+          </a>
           <span class="divider-dash">—</span>
-          <a routerLink="/proyectos" class="btn-all-works">ALL PROJECTS</a>
+          <span class="btn-category-tag">{{ project.category }}</span>
         </div>
       </div>
 
@@ -56,36 +62,49 @@
 
         <!-- VISOR INTERACTIVO ANTES / DESPUÉS DENTRO DE LA FICHA DE PROYECTO -->
         <div class="inline-before-after-wrapper">
-          <div class="wrapper-header">
-            <span class="wrap-title">BEFORE / AFTER TECHNICAL COMPARISON</span>
-            <span class="wrap-time">{{ project.recordTime }}</span>
+          <div class="before-after-header-tag">
+            <span class="pulse-dot-gold"></span>
+            <span>INTERACTIVE TRANSFORMATION: {{ project.title | uppercase }}</span>
           </div>
 
-          <div class="interactive-slider-box">
-            <img [src]="project.beforeImg" alt="Before" class="slider-img before-img" />
+          <div class="before-after-container" 
+            #sliderContainer 
+            (mousedown)="startSliderDrag($event)"
+            (touchstart)="startSliderDrag($event)" 
+            (mousemove)="onSliderMove($event)" 
+            (touchmove)="onSliderMove($event)"
+            (mouseup)="stopSliderDrag()" 
+            (touchend)="stopSliderDrag()" 
+            (mouseleave)="stopSliderDrag()">
             
-            <div class="after-crop-layer" [style.width.%]="inspectSliderPosition">
-              <img [src]="project.afterImg" alt="After" class="slider-img after-img" />
-              <span class="img-tag tag-after">AFTER (DELIVERED)</span>
+            <!-- Capa AFTER (Base derecha) -->
+            <div class="image-layer after-layer">
+              <img [src]="project.afterImg" [alt]="project.title + ' After'" (dragstart)="$event.preventDefault()" />
+              <div class="status-badge after-badge">AFTER</div>
             </div>
 
-            <span class="img-tag tag-before">BEFORE</span>
+            <!-- Capa BEFORE (Superpuesta izquierda con clip-path dinámico) -->
+            <div class="image-layer before-layer"
+              [style.clipPath]="'polygon(0 0, ' + inspectSliderPosition + '% 0, ' + inspectSliderPosition + '% 100%, 0 100%)'">
+              <img [src]="project.beforeImg" [alt]="project.title + ' Before'" class="before-img-full" (dragstart)="$event.preventDefault()" />
+              <div class="status-badge before-badge">BEFORE</div>
+            </div>
 
-            <div class="slider-handle-line" [style.left.%]="inspectSliderPosition">
-              <div class="handle-btn">
+            <!-- Overlay Fijo de Información del Proyecto -->
+            <div class="project-details-overlay">
+              <span class="proj-loc-name">📍 {{ project.location }}, {{ project.state }}</span>
+              <span class="details-divider">•</span>
+              <span class="proj-desc-text">{{ project.details }}</span>
+            </div>
+
+            <!-- Divisor Central con Botón Dorado Circular (↔) -->
+            <div class="slider-divider" [style.left.%]="inspectSliderPosition">
+              <div class="handle-button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" />
                 </svg>
               </div>
             </div>
-
-            <input 
-              type="range" 
-              min="0" 
-              max="100" 
-              [value]="inspectSliderPosition" 
-              (input)="onSliderInput($event)"
-              class="range-control" />
           </div>
         </div>
       </div>
