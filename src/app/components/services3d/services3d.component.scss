@@ -29,6 +29,12 @@
   padding-bottom: 3rem;
   box-sizing: border-box;
 
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    padding-top: 22vh;
+    min-height: auto;
+  }
+
   .hero-glow-bg {
     position: absolute;
     top: 50%;
@@ -52,11 +58,6 @@
     flex-direction: column;
     align-items: flex-start;
     border-left: 2px solid #DBA622; /* El bastón dorado continuo a la izquierda */
-
-    @media (max-width: 768px) {
-      padding-left: 1.8rem;
-      border-left-width: 2px;
-    }
   }
 
   /* Cabecera del Bastón Dorado + Insignia sin marco rectangular */
@@ -122,7 +123,7 @@
     }
 
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
     }
   }
 
@@ -353,15 +354,7 @@
     top: -12px;
     bottom: -12px;
     width: 2px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(219, 166, 34, 0.35) 15%,
-      #DBA622 35%,
-      #DBA622 65%,
-      rgba(219, 166, 34, 0.35) 85%,
-      transparent 100%
-    );
+    background: #DBA622;
     pointer-events: none;
     z-index: 1;
   }
@@ -764,15 +757,7 @@
       top: -12px;
       bottom: -12px;
       width: 2px;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(219, 166, 34, 0.35) 15%,
-        #DBA622 35%,
-        #DBA622 65%,
-        rgba(219, 166, 34, 0.35) 85%,
-        transparent 100%
-      );
+      background: #DBA622;
       pointer-events: none;
       z-index: 1;
     }
@@ -1414,15 +1399,7 @@
       top: -12px;
       bottom: -12px;
       width: 2px;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(219, 166, 34, 0.35) 15%,
-        #DBA622 35%,
-        #DBA622 65%,
-        rgba(219, 166, 34, 0.35) 85%,
-        transparent 100%
-      );
+      background: #DBA622;
       pointer-events: none;
       z-index: 1;
     }
@@ -1630,15 +1607,7 @@
       top: -12px;
       bottom: -12px;
       width: 2px;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(219, 166, 34, 0.35) 15%,
-        #DBA622 35%,
-        #DBA622 65%,
-        rgba(219, 166, 34, 0.35) 85%,
-        transparent 100%
-      );
+      background: #DBA622;
       pointer-events: none;
       z-index: 1;
     }
@@ -2099,19 +2068,40 @@
 @media (max-width: 768px) {
   .sec-hero {
     min-height: auto;
-    padding-top: 120px;
+    padding-top: 22vh;
     padding-bottom: 3rem;
 
+    .hero-container {
+      margin-left: 1.8rem;
+      padding-left: 1.2rem;
+      padding-right: 1.5rem;
+      width: calc(100% - 1.8rem);
+    }
+
+    .hero-staff-header .staff-icon-anchor {
+      left: calc(-1.2rem - 12px);
+    }
+
     .hero-title {
-      font-size: 2.1rem;
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
     }
 
     .hero-cta-actions {
       flex-direction: column;
       gap: 0.8rem;
+      width: 100%;
 
-      button {
+      .cta-btn-primary, .cta-btn-secondary {
         width: 100%;
+        height: 50px;
+        min-width: unset;
+        font-size: 0.75rem;
+        padding: 0 1rem;
+      }
+
+      .cta-btn-primary .arrow-icon {
+        width: 18px;
+        height: 18px;
       }
     }
   }

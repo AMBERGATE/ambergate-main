@@ -44,30 +44,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-      this.initSectionObserver();
-    }
-  }
-
-  private initSectionObserver(): void {
-    const darkSectionIds = ['sec-3', 'sec-5'];
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const isDark = darkSectionIds.includes(entry.target.id) || entry.target.tagName.toLowerCase() === 'app-footer';
-          this.isDarkSection.set(isDark);
-        }
-      });
-    }, {
-      rootMargin: '-50px 0px -80% 0px',
-      threshold: 0
-    });
-
-    setTimeout(() => {
-      const sections = document.querySelectorAll('section[id], app-footer');
-      sections.forEach(sec => observer.observe(sec));
-    }, 500);
+    // La detección de secciones ahora se maneja en onWindowScroll para mayor precisión en móviles
   }
 
   @HostListener('window:scroll', [])
@@ -75,6 +52,27 @@ export class AppComponent {
     const scrollY = window.scrollY;
     this.isScrolled.set(scrollY > 80);
     this.showStickyCta.set(scrollY > 420);
+
+    if (typeof window !== 'undefined') {
+      const darkSectionIds = ['sec-3', 'sec-5'];
+      let isDark = false;
+      const checkY = window.innerHeight * 0.2; // Detectar justo debajo del header
+      
+      const sections = document.querySelectorAll('section[id], app-footer');
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= checkY && rect.bottom >= checkY) {
+          if (darkSectionIds.includes(sections[i].id) || sections[i].tagName.toLowerCase() === 'app-footer') {
+            isDark = true;
+          }
+          break;
+        }
+      }
+
+      if (this.isDarkSection() !== isDark) {
+        this.isDarkSection.set(isDark);
+      }
+    }
   }
 
   scrollToContact(): void {
