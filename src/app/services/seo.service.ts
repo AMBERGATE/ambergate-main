@@ -16,7 +16,7 @@ export interface SeoConfig {
   providedIn: 'root'
 })
 export class SeoService {
-  private readonly defaultBaseUrl = 'https://ambergateusa.com'; // Dominio final principal
+  private readonly defaultBaseUrl = 'https://ambergateusa.com';
   private readonly defaultOgImage = 'https://ambergateusa.com/assets/img/og-ambergate.jpg';
 
   constructor(
@@ -36,7 +36,7 @@ export class SeoService {
       this.metaService.updateTag({ name: 'keywords', content: config.keywords });
     }
 
-    // 3. Open Graph (Para Facebook, WhatsApp, LinkedIn, etc.)
+    // 3. Open Graph
     this.metaService.updateTag({ property: 'og:title', content: config.title });
     this.metaService.updateTag({ property: 'og:description', content: config.description });
     this.metaService.updateTag({ property: 'og:type', content: config.ogType || 'website' });
@@ -54,7 +54,7 @@ export class SeoService {
     // 5. Canonical Link
     this.updateCanonicalUrl(currentUrl);
 
-    // 6. Schema.org JSON-LD Structuring
+    // 6. Schema.org JSON-LD
     if (config.schemaJson) {
       this.injectSchemaJson(config.schemaJson);
     } else {
@@ -90,7 +90,7 @@ export class SeoService {
       "image": this.defaultOgImage,
       "@id": "https://ambergateusa.com/",
       "url": "https://ambergateusa.com/",
-      "telephone": "+1-305-555-0123",
+      "telephone": "+1-305-813-8683",
       "priceRange": "$$$",
       "address": {
         "@type": "PostalAddress",
