@@ -28,6 +28,8 @@ export interface BrandPartner {
 
 import { RouterLink } from '@angular/router';
 
+import { SeoService } from '../../services/seo.service';
+
 @Component({
   selector: 'app-services3d',
   standalone: true,
@@ -40,7 +42,16 @@ export class Services3dComponent implements OnInit, AfterViewInit {
   public activeSectionIndex: number = 0;
   public minDate: string = '';
 
+  constructor(private seoService: SeoService) {}
+
   ngOnInit(): void {
+    this.seoService.updateSeo({
+      title: 'Ambergate USA | Selective Demolition & Commercial Services Miami',
+      description: 'Especialistas en demolición selectiva de interiores, remoción de pisos y preparación de obra en Miami Beach y Florida. Ejecución rápida y precisa.',
+      keywords: 'Demolición Comercial Miami, Selective Demolition Florida, Interior Strip Out, Demolición en Miami Beach, Floor Removal South Florida',
+      ogType: 'website'
+    });
+
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { ProjectService, ProjectDetail } from '../../services/project.service';
 
+import { SeoService } from '../../services/seo.service';
+
 @Component({
   selector: 'app-projects-catalog',
   standalone: true,
@@ -24,10 +26,18 @@ export class ProjectsCatalogComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private seoService: SeoService
   ) {}
 
   ngOnInit(): void {
+    this.seoService.updateSeo({
+      title: 'Portafolio de Demolición Comercial y Proyectos | Ambergate USA',
+      description: 'Explora el catálogo de obras de demolición selectiva, strip-out interior y preparación de superficies ejecutadas por Ambergate USA en South Florida.',
+      keywords: 'Portafolio Demolición Miami, Obras de Demolición Florida, Interior Strip Out, Demolición Comercial Ambergate',
+      ogType: 'website'
+    });
+
     this.portfolioProjects = this.projectService.getAllProjects();
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'instant' });

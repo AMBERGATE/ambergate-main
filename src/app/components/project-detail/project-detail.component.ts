@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectService, ProjectDetail } from '../../services/project.service';
 
+import { SeoService } from '../../services/seo.service';
+
 @Component({
   selector: 'app-project-detail',
   standalone: true,
@@ -23,7 +25,8 @@ export class ProjectDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private seoService: SeoService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,15 @@ export class ProjectDetailComponent implements OnInit {
   private loadProject(slug: string): void {
     this.project = this.projectService.getProjectBySlug(slug);
     if (this.project) {
+      const description = this.project.caseStudyDescription || this.project.details;
+      this.seoService.updateSeo({
+        title: `${this.project.title} | Selective Demolition Miami`,
+        description: `${description.slice(0, 140)}... Proyecto de demolición ejecutado por Ambergate USA en ${this.project.location}.`,
+        keywords: `${this.project.title}, Demolición ${this.project.location}, Demolición Comercial Miami, Ambergate USA, ${this.project.category}`,
+        ogImage: this.project.thumbnail || this.project.afterImg,
+        ogType: 'article'
+      });
+
       const adjacent = this.projectService.getAdjacentProjects(slug);
       this.prevProject = adjacent.prev;
       this.nextProject = adjacent.next;
